@@ -7,6 +7,8 @@
 }
 body {
   	background-color: #435165;
+  	max-width: 500px;
+  	margin: auto;
 }
 .login {
   	width: 90%;
