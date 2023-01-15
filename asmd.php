@@ -55,7 +55,7 @@ if(count($_GET)) {
 	if(isset($_GET['addition']) && $_GET['addition'] == 1) $operations .= "'addition', ";
 	if(isset($_GET['soustraction']) && $_GET['soustraction'] == 1) $operations .= "'soustraction', ";
 	if(isset($_GET['multiplication']) && $_GET['multiplication'] == 1) $operations .= "'multiplication', ";
-	if(isset($_GET['division']) && $_GET['division'] == 1) $operations .= "division, ";
+	if(isset($_GET['division']) && $_GET['division'] == 1) $operations .= "'division', ";
 
 	if ($operations == "") erreurSelection();
 
@@ -88,7 +88,7 @@ if(count($_GET)) {
 			function nouveauCalcul() {
 				operation = operations[Math.floor(Math.random() * operations.length)];
 				valeur1 = generateRandomInteger(nbmax);
-				if (operation == 'soustraction') {
+				if (operation == 'soustraction' || operation == 'division') {
 					valeur2 = generateRandomInteger(valeur1);
 				} else {
 					valeur2 = generateRandomInteger(nbmax);
@@ -188,11 +188,11 @@ if(count($_GET)) {
 				<h2>Séléction de l'exercice</h2>
 				<p><i class="fa-solid fa-list"></i> Nombre de calculs:&nbsp;<input type="text" size="4" name="nbcalcul" value="20" id="nbcalcul" required autofocus><br /><br />
 				<i class="fa-solid fa-maximize"></i> Plus grand nombre:&nbsp;<input type="text" size="4" name="nbmax" value="100" id="nbmax" required><br /><br />
-				<i class="fa-solid fa-calculator"></i> Opération:<br>
-				&nbsp;&nbsp;&nbsp;<input type="checkbox" name="addition" value="1" checked>Addition<br>
-				&nbsp;&nbsp;&nbsp;<input type="checkbox" name="soustraction" value="1" checked>Soustraction<br>
-				&nbsp;&nbsp;&nbsp;<input type="checkbox" name="multiplication" value="1">Multiplication<br>
-				&nbsp;&nbsp;&nbsp;<input type="checkbox" name="division" value="1">Division <br /><br />
+				<i class="fa-solid fa-calculator"></i> Opérations:<br>
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<label><input type="checkbox" name="addition" value="1" checked>Addition</label><br>
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<label><input type="checkbox" name="soustraction" value="1" checked>Soustraction</label><br>
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<label><input type="checkbox" name="multiplication" value="1">Multiplication</label><br>
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<label><input type="checkbox" name="division" value="1">Division</label><br /><br />
 				<i class="fa-solid fa-hourglass-end"></i> Durée: <input type="text" size="4" name="duree" value="5" id="duree" required> minutes<br /><br /><input type="submit" id="submit" value="Valider"></p>
 			</div>
 		</form>
