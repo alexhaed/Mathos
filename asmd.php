@@ -185,7 +185,7 @@ if(count($_GET)) {
 ?>
 		<form id="formCalcul" method="GET" action="asmd.php">
 			<div class="content">
-				<h2>Séléction</h2>
+				<h2>Séléction de l'exercice</h2>
 				<p><i class="fa-solid fa-list"></i> Nombre de calculs:&nbsp;<input type="text" size="4" name="nbcalcul" value="20" id="nbcalcul" required autofocus><br /><br />
 				<i class="fa-solid fa-maximize"></i> Plus grand nombre:&nbsp;<input type="text" size="4" name="nbmax" value="100" id="nbmax" required><br /><br />
 				<i class="fa-solid fa-calculator"></i> Opération:<br>
