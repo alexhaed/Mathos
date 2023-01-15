@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 		<nav class="navtop">
 			<div>
 				<h1>Mathos</h1>
