@@ -32,6 +32,7 @@ body {
   	height: 50px;
   	background-color: #3274d6;
   	color: #ffffff;
+  	padding-left: 5px;
 }
 .login form input[type="password"], .login form input[type="text"] {
   	width: 310px;

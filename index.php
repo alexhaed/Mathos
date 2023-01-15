@@ -12,23 +12,22 @@ if (!isset($_SESSION['loggedin'])) {
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<title>Index</title>
+		<title>Mathos - Accueil</title>
 		<link href="style.css" rel="stylesheet" type="text/css">
 		<script src="https://kit.fontawesome.com/16b34d58e9.js" crossorigin="anonymous"></script>
 	</head>
 	<body class="loggedin">
-		<nav class="navtop">
-			<div>
-				<h1>Mathos</h1>
-				<a href="profile.php"><i class="fas fa-user-circle"></i>Profile</a>
-				<a href="logout.php"><i class="fas fa-sign-out-alt"></i>Logout</a>
-			</div>
-		</nav>
+<?php
+	include 'navbar.php';
+?>
+
 		<div class="content">
-			<h2>Exercices</h2>
+			<h2>Accueil</h2>
 			<p>Salut <?=$_SESSION['name']?>!<br><br>
-			Choisis ce que tu veux entraîner:<br>
-			- <a href="asmd.php">Addition, soustraction, multiplication et division</a></p>
+				Choisis ce que tu veux entraîner:<br>
+				&#8226; <a href="asmd.php">Addition, soustraction, multiplication et division</a><br>
+				&#8226; Priorité des opérations<br>
+			</p>
 		</div>
 	</body>
 </html>

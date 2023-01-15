@@ -18,15 +18,9 @@ if (!isset($_SESSION['loggedin'])) {
 	</head>
 	<body class="loggedin">
 
-		<nav class="navtop">
-			<div>
-				<h1>Mathos</h1>
-				<a href="profile.php"><i class="fas fa-user-circle"></i>Profile</a>
-				<a href="logout.php"><i class="fas fa-sign-out-alt"></i>Logout</a>
-			</div>
-		</nav>
-
 <?php
+
+include 'navbar.php';
 
 // si séléction déjà faite
 if(count($_GET)) {
@@ -34,7 +28,8 @@ if(count($_GET)) {
 	echo "		<script>\n";
 
 	function erreurSelection() {
-		echo "			Erreur\n";
+		echo '</script><br><br>Erreur dans la séléction<br><a href="asmd.php">Retour</a>';
+		exit();
 	}
 
 	if(isset($_GET['nbcalcul']) && is_numeric($_GET['nbcalcul'])) {
@@ -61,6 +56,8 @@ if(count($_GET)) {
 	if(isset($_GET['soustraction']) && $_GET['soustraction'] == 1) $operations .= "'soustraction', ";
 	if(isset($_GET['multiplication']) && $_GET['multiplication'] == 1) $operations .= "'multiplication', ";
 	if(isset($_GET['division']) && $_GET['division'] == 1) $operations .= "division, ";
+
+	if ($operations == "") erreurSelection();
 
  		echo "			operations = [".$operations."]\n";
 
@@ -192,8 +189,8 @@ if(count($_GET)) {
 				<p><i class="fa-solid fa-list"></i> Nombre calculs:&nbsp;<input type="text" size="4" name="nbcalcul" value="20" id="nbcalcul" required autofocus><br /><br />
 				<i class="fa-solid fa-maximize"></i> Nombre max:&nbsp;<input type="text" size="4" name="nbmax" value="100" id="nbmax" required><br /><br />
 				<i class="fa-solid fa-calculator"></i> Opération:<br>
-				&nbsp;&nbsp;&nbsp;<input type="checkbox" name="addition" value="1">Addition<br>
-				&nbsp;&nbsp;&nbsp;<input type="checkbox" name="soustraction" value="1">Soustraction<br>
+				&nbsp;&nbsp;&nbsp;<input type="checkbox" name="addition" value="1" checked>Addition<br>
+				&nbsp;&nbsp;&nbsp;<input type="checkbox" name="soustraction" value="1" checked>Soustraction<br>
 				&nbsp;&nbsp;&nbsp;<input type="checkbox" name="multiplication" value="1">Multiplication<br>
 				&nbsp;&nbsp;&nbsp;<input type="checkbox" name="division" value="1">Division <br /><br />
 				<i class="fa-solid fa-hourglass-end"></i> Durée: <input type="text" size="4" name="duree" value="5" id="duree" required><br /><br /><input type="submit" id="submit" value="Valider"></p>
