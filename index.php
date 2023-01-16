@@ -26,7 +26,8 @@ if (!isset($_SESSION['loggedin'])) {
 				Choisis ce que tu veux entraîner:<br>
 				&#8226; <a href="addsous.php">Addition et soustraction</a><br>
 				&#8226; <a href="multidiv.php">Multiplication et division</a><br>
-				&#8226; <a href="prio.php">Priorité des opérations</a><br>
+				&#8226; <a href="prio.php">Priorité des opérations</a><br><br>
+			Amuse-toi bien! &#128515;
 			</p>
 		</div>
 	</body>

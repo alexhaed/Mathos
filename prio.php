@@ -80,11 +80,11 @@ if(count($_GET)) {
 			function nouveauCalcul() {
 				op1 = randomOp();
 				op2 = randomOp();
-				while(op1 == op2) op2 = randomOp();
+				while (op1 == op2) op2 = randomOp();
 
 				if(op1 == "/" ) {
 			    	valeurs = newValuesDiv();
-				    while(valeurs[0]%valeurs[1] != 0) {
+				    while(valeurs[0]%valeurs[1] !== 0) {
 				      valeurs = newValuesDiv();
 				    }
 				    valeur1 = valeurs[0];
@@ -92,7 +92,7 @@ if(count($_GET)) {
 				    valeur3 = Math.floor(Math.random()*(nbmax+1)); 
 			  	} else if (op2 == "/") {
 				    valeurs = newValuesDiv();
-				    while(valeurs[0]%valeurs[1] != 0) {
+				    while(valeurs[0]%valeurs[1] !== 0) {
 				     	valeurs = newValuesDiv();
 				    }
 				    valeur1 = Math.floor(Math.random()*(nbmax+1));
@@ -108,7 +108,7 @@ if(count($_GET)) {
   				correct = eval(resultat);
   				calcul = resultat.replace("/", " : ").replace("*", " x ").replace("+", " + ").replace("-"," - ");
 
-			  	while(correct<0) nouveauCalcul();
+			  	while (correct<0) nouveauCalcul();
 
 				nbcalcul += 1;
 				essai = 1;
@@ -118,7 +118,6 @@ if(count($_GET)) {
 			}
 
 			function termine(arg) {
-
 				if (arg == "temps") {
 					feedback = 'Temps écoulé, dommage!<br><a href="multidiv.php">Recommencer</a>';
 				}
@@ -133,7 +132,7 @@ if(count($_GET)) {
 				event.preventDefault();
 				var reponse = document.getElementById("reponse").value;
 				if (reponse == correct) {
-					if (essai == 1 ) nbcorrect += 1;
+					if (essai == 1) nbcorrect += 1;
 					document.getElementById('corrige').innerHTML = 'Juste! <i class="fa-solid fa-check"></i>';
 					document.getElementById('stats').innerHTML = ' | Réussi: ' + nbcorrect + ' sur ' + nbcalcul;
 					if(nbcalcul < totalCalcul) {
@@ -186,7 +185,6 @@ if(count($_GET)) {
 				<i class="fa-solid fa-hourglass-end"></i> Durée: <input type="text" size="4" name="duree" value="5" id="duree" required> minutes<br /><br /><input type="submit" id="submit" value="Valider"></p>
 			</div>
 		</form>
-
 <?php
 }
 ?>
