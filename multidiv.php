@@ -19,12 +19,10 @@ if (!isset($_SESSION['loggedin'])) {
 	<body class="loggedin">
 
 <?php
-
 include 'navbar.php';
 
 // si séléction déjà faite
 if(count($_GET)) {
-
 	echo "		<script>\n";
 
 	function erreurSelection() {
@@ -52,8 +50,6 @@ if(count($_GET)) {
 
 	$operations = "";
 
-	if(isset($_GET['addition']) && $_GET['addition'] == 1) $operations .= "'addition', ";
-	if(isset($_GET['soustraction']) && $_GET['soustraction'] == 1) $operations .= "'soustraction', ";
 	if(isset($_GET['multiplication']) && $_GET['multiplication'] == 1) $operations .= "'multiplication', ";
 	if(isset($_GET['division']) && $_GET['division'] == 1) $operations .= "'division', ";
 
@@ -62,9 +58,7 @@ if(count($_GET)) {
  		echo "			operations = [".$operations."]\n";
 
 	echo "		</script>\n";
-
 ?>
-
 		<form id="formCalcul" onsubmit="checkReponse()">
 			<div class="content">
 				<h2>Exercices</h2>
@@ -72,42 +66,39 @@ if(count($_GET)) {
 				<p><i class="fa-solid fa-hourglass-end"></i> <span id="timer"></span><span id="stats"></span></p>
 			</div>
 		</form>
-
 		<script>
-
 			nbcorrect = 0;
 			nbcalcul = 0;
 			essai = 0;
 			op = "";
 
 			function generateRandomInteger(max) {
-    			return Math.floor(Math.random() * max) + 1;
+    			return Math.floor(Math.random() * (max+1));
 			}
+
+			function newValuesDiv() {
+				val1 = generateRandomInteger(nbmax);
+			  	val2 = generateRandomInteger(val1);
+				return [val1,val2];
+			 }
 
 			// NOUVEAU CALCUL
 			function nouveauCalcul() {
 				operation = operations[Math.floor(Math.random() * operations.length)];
-				valeur1 = generateRandomInteger(nbmax);
-				if (operation == 'soustraction' || operation == 'division') {
-					valeur2 = generateRandomInteger(valeur1);
-				} else {
-					valeur2 = generateRandomInteger(nbmax);
-				}
-
 				switch (operation) {
-					case 'addition':
-						correct = valeur1 + valeur2;
-						op = ' + ';
-						break;
-					case 'soustraction':
-						correct = valeur1 - valeur2;
-						op = ' - ';
-						break;
 					case 'multiplication':
+						valeur1 = generateRandomInteger(nbmax);
+						valeur2 = generateRandomInteger(nbmax);
 						correct = valeur1 * valeur2;
 						op = ' x ';
 						break;
 					case 'division':
+						valeurs = newValuesDiv();
+						while (valeurs[0] % valeurs[1] !== 0) {
+							valeurs = newValuesDiv();
+						}
+						valeur1 = valeurs[0];
+						valeur2 = valeurs[1];
 						correct = valeur1 / valeur2;
 						op = ' : ';
 						break;
@@ -158,27 +149,24 @@ if(count($_GET)) {
 			timerElement = document.getElementById("timer");
 
 			intervalID = setInterval(() => {
-			  minutes = parseInt(temps / 60, 10);
-			  secondes = parseInt(temps % 60, 10);
+				minutes = parseInt(temps / 60, 10);
+				secondes = parseInt(temps % 60, 10);
 
-			  minutes = minutes < 10 ? "0" + minutes : minutes;
-			  secondes = secondes < 10 ? "0" + secondes : secondes;
+				minutes = minutes < 10 ? "0" + minutes : minutes;
+				secondes = secondes < 10 ? "0" + secondes : secondes;
 
-			  timerElement.innerText = `${minutes}:${secondes}`;
-			  temps = temps <= 0 ? 0 : temps - 1;
+				timerElement.innerText = `${minutes}:${secondes}`;
+				temps = temps <= 0 ? 0 : temps - 1;
 
-			  if (temps <= 0) {
-			  	timerElement.innerText = "00:00";
-			  	clearInterval(intervalID);
-			  	termine("temps");
-			  }
+				if (temps <= 0) {
+					timerElement.innerText = "00:00";
+				  	clearInterval(intervalID);
+				  	termine("temps");
+				}
 			}, 1000);
 
 			nouveauCalcul();
-			
 		</script>
-
-
 <?php 
 // si pas de séléection
 } else {
@@ -195,7 +183,6 @@ if(count($_GET)) {
 
 <?php
 }
-
 ?>
 	</body>
 </html>
