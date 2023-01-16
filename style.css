@@ -24,6 +24,7 @@ body {
   	border-bottom: 1px solid #dee0e4;
 }
 .login form {
+  	text-align: center;
   	justify-content: center;
   	padding-top: 20px;
 }
@@ -53,6 +54,7 @@ body {
   	font-weight: bold;
   	color: #ffffff;
   	transition: background-color 0.2s;
+  	border-radius: 0;
 }
 .login form input[type="submit"]:hover {
 	background-color: #2868c7;
