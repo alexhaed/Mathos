@@ -20,13 +20,13 @@ if (!isset($_SESSION['loggedin'])) {
 <?php
 	include 'navbar.php';
 ?>
-
 		<div class="content">
 			<h2>Accueil</h2>
 			<p>Salut <?=$_SESSION['name']?>!<br><br>
 				Choisis ce que tu veux entraîner:<br>
-				&#8226; <a href="asmd.php">Addition, soustraction, multiplication et division</a><br>
-				&#8226; Priorité des opérations<br>
+				&#8226; <a href="addsous.php">Addition et soustraction</a><br>
+				&#8226; <a href="multidiv.php">Multiplication et division</a><br>
+				&#8226; <a href="prio.php">Priorité des opérations</a><br>
 			</p>
 		</div>
 	</body>

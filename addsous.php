@@ -122,10 +122,10 @@ if(count($_GET)) {
 			function termine(arg) {
 
 				if (arg == "temps") {
-					feedback = 'Temps écoulé, dommage!';
+					feedback = 'Temps écoulé, dommage!<br><a href="addsous.php">Recommencer</a>';
 				}
 				if (arg == "totalCalcul") {
-					feedback = 'Fin des calculs, bravo!';
+					feedback = 'Fin des calculs, bravo!<br><a href="addsous.php">Recommencer</a>';
 				}
 				document.getElementById('pcalcul').innerHTML = feedback;	
 			}
@@ -183,16 +183,12 @@ if(count($_GET)) {
 // si pas de séléection
 } else {
 ?>
-		<form id="formCalcul" method="GET" action="asmd.php">
+		<form id="formCalcul" method="GET" action="addsous.php">
 			<div class="content">
-				<h2>Séléction de l'exercice</h2>
+				<h2>Options de l'exercice</h2>
 				<p><i class="fa-solid fa-list"></i> Nombre de calculs:&nbsp;<input type="text" size="4" name="nbcalcul" value="20" id="nbcalcul" required autofocus><br /><br />
 				<i class="fa-solid fa-maximize"></i> Plus grand nombre:&nbsp;<input type="text" size="4" name="nbmax" value="100" id="nbmax" required><br /><br />
-				<i class="fa-solid fa-calculator"></i> Opérations:<br>
-				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<label><input type="checkbox" name="addition" value="1" checked>Addition</label><br>
-				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<label><input type="checkbox" name="soustraction" value="1" checked>Soustraction</label><br>
-				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<label><input type="checkbox" name="multiplication" value="1">Multiplication</label><br>
-				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<label><input type="checkbox" name="division" value="1">Division</label><br /><br />
+				<i class="fa-solid fa-calculator"></i> Opérations: <label><input type="checkbox" name="addition" value="1" checked>Addition</label> <label><input type="checkbox" name="soustraction" value="1" checked>Soustraction</label><br><br>
 				<i class="fa-solid fa-hourglass-end"></i> Durée: <input type="text" size="4" name="duree" value="5" id="duree" required> minutes<br /><br /><input type="submit" id="submit" value="Valider"></p>
 			</div>
 		</form>
