@@ -12,7 +12,7 @@ if (!isset($_SESSION['loggedin'])) {
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<title>Exercices</title>
+		<title>Mathos - Exercices</title>
 		<link href="style.css" rel="stylesheet" type="text/css">
 		<script src="https://kit.fontawesome.com/16b34d58e9.js" crossorigin="anonymous"></script>
 	</head>

@@ -47,18 +47,7 @@ if(count($_GET)) {
 	} else {
 		erreurSelection();
 	}
-
-	$operations = "";
-
-	if(isset($_GET['addition']) && $_GET['addition'] == 1) $operations .= "'addition', ";
-	if(isset($_GET['soustraction']) && $_GET['soustraction'] == 1) $operations .= "'soustraction', ";
-
-	if ($operations == "") erreurSelection();
-
- 		echo "			operations = [".$operations."]\n";
-
 	echo "		</script>\n";
-
 ?>
 		<form id="formCalcul" onsubmit="checkReponse()">
 			<div class="content">
@@ -71,44 +60,70 @@ if(count($_GET)) {
 			nbcorrect = 0;
 			nbcalcul = 0;
 			essai = 0;
-			op = "";
+			operations = ["+", "-", "*", "/"];
 
 			function generateRandomInteger(max) {
-    			return Math.floor(Math.random() * (max +1)) ;
+    			return Math.floor(Math.random() * (max+1));
+			}
+
+			function newValuesDiv() {
+				val1 = generateRandomInteger(nbmax);
+			  	val2 = generateRandomInteger(val1);
+				return [val1,val2];
+			 }
+
+			function randomOp() {
+				return operations[Math.floor(Math.random() * operations.length)];
 			}
 
 			// NOUVEAU CALCUL
 			function nouveauCalcul() {
-				operation = operations[Math.floor(Math.random() * operations.length)];
-				valeur1 = generateRandomInteger(nbmax);
-				if (operation == 'soustraction') {
-					valeur2 = generateRandomInteger(valeur1);
-				} else {
-					valeur2 = generateRandomInteger(nbmax);
-				}
-				switch (operation) {
-					case 'addition':
-						correct = valeur1 + valeur2;
-						op = ' + ';
-						break;
-					case 'soustraction':
-						correct = valeur1 - valeur2;
-						op = ' - ';
-						break;
-				}
+				op1 = randomOp();
+				op2 = randomOp();
+				while(op1 == op2) op2 = randomOp();
+
+				if(op1 == "/" ) {
+			    	valeurs = newValuesDiv();
+				    while(valeurs[0]%valeurs[1] != 0) {
+				      valeurs = newValuesDiv();
+				    }
+				    valeur1 = valeurs[0];
+				    valeur2 = valeurs[1];
+				    valeur3 = Math.floor(Math.random()*(nbmax+1)); 
+			  	} else if (op2 == "/") {
+				    valeurs = newValuesDiv();
+				    while(valeurs[0]%valeurs[1] != 0) {
+				     	valeurs = newValuesDiv();
+				    }
+				    valeur1 = Math.floor(Math.random()*(nbmax+1));
+				    valeur2 = valeurs[0];
+				    valeur3 = valeurs[1];
+			  	} else {
+				    valeur1 = Math.floor(Math.random()*(nbmax+1));
+				    valeur2 = Math.floor(Math.random()*(nbmax+1));
+				    valeur3 = Math.floor(Math.random()*(nbmax+1)); 
+			  	}
+
+  				resultat = valeur1 + op1 + valeur2 + op2 + valeur3;
+  				correct = eval(resultat);
+  				calcul = resultat.replace("/", " : ").replace("*", " x ").replace("+", " + ").replace("-"," - ");
+
+			  	while(correct<0) nouveauCalcul();
+
 				nbcalcul += 1;
 				essai = 1;
-				document.getElementById('calcul').innerHTML = valeur1 + op + valeur2;
+				document.getElementById('calcul').innerHTML = calcul;
 				document.getElementById('corrige').innerHTML = '';
 				document.getElementById('reponse').value = '';
 			}
 
 			function termine(arg) {
+
 				if (arg == "temps") {
-					feedback = 'Temps écoulé, dommage!<br><a href="addsous.php">Essaie encore</a>';
+					feedback = 'Temps écoulé, dommage!<br><a href="multidiv.php">Recommencer</a>';
 				}
 				if (arg == "totalCalcul") {
-					feedback = 'Fin des calculs, bravo!<br><a href="addsous.php">Recommencer</a>';
+					feedback = 'Fin des calculs, bravo!<br><a href="multidiv.php">Recommencer</a>';
 				}
 				document.getElementById('pcalcul').innerHTML = feedback;	
 			}
@@ -141,20 +156,20 @@ if(count($_GET)) {
 			timerElement = document.getElementById("timer");
 
 			intervalID = setInterval(() => {
-			 	minutes = parseInt(temps / 60, 10);
-			 	secondes = parseInt(temps % 60, 10);
+				minutes = parseInt(temps / 60, 10);
+				secondes = parseInt(temps % 60, 10);
 
-			 	minutes = minutes < 10 ? "0" + minutes : minutes;
-			 	secondes = secondes < 10 ? "0" + secondes : secondes;
+				minutes = minutes < 10 ? "0" + minutes : minutes;
+				secondes = secondes < 10 ? "0" + secondes : secondes;
 
-			 	timerElement.innerText = `${minutes}:${secondes}`;
-			 	temps = temps <= 0 ? 0 : temps - 1;
+				timerElement.innerText = `${minutes}:${secondes}`;
+				temps = temps <= 0 ? 0 : temps - 1;
 
-			  	if (temps <= 0) {
-			  		timerElement.innerText = "00:00";
-			  		clearInterval(intervalID);
-			  		termine("temps");
-			  	}
+				if (temps <= 0) {
+					timerElement.innerText = "00:00";
+				  	clearInterval(intervalID);
+				  	termine("temps");
+				}
 			}, 1000);
 
 			nouveauCalcul();
@@ -163,12 +178,11 @@ if(count($_GET)) {
 // si pas de séléection
 } else {
 ?>
-		<form id="formCalcul" method="GET" action="addsous.php">
+		<form id="formCalcul" method="GET" action="prio.php">
 			<div class="content">
 				<h2>Options de l'exercice</h2>
 				<p><i class="fa-solid fa-list"></i> Nombre de calculs:&nbsp;<input type="text" size="4" name="nbcalcul" value="20" id="nbcalcul" required autofocus><br /><br />
-				<i class="fa-solid fa-maximize"></i> Plus grand nombre:&nbsp;<input type="text" size="4" name="nbmax" value="100" id="nbmax" required><br /><br />
-				<i class="fa-solid fa-calculator"></i> Opérations: <label><input type="checkbox" name="addition" value="1" checked>Addition</label> <label><input type="checkbox" name="soustraction" value="1" checked>Soustraction</label><br><br>
+				<i class="fa-solid fa-maximize"></i> Plus grand nombre:&nbsp;<input type="text" size="4" name="nbmax" value="12" id="nbmax" required><br /><br />
 				<i class="fa-solid fa-hourglass-end"></i> Durée: <input type="text" size="4" name="duree" value="5" id="duree" required> minutes<br /><br /><input type="submit" id="submit" value="Valider"></p>
 			</div>
 		</form>
