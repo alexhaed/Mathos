@@ -26,7 +26,7 @@ if(count($_GET)) {
 	echo "		<script>\n";
 
 	function erreurSelection() {
-		echo '</script><br><br>Erreur dans la séléction<br><a href="asmd.php">Retour</a>';
+		echo '</script><br><br>Erreur dans la séléction<br><a href="addsous.php">Retour</a>';
 		exit();
 	}
 
@@ -178,7 +178,7 @@ if(count($_GET)) {
 				<p><i class="fa-solid fa-list"></i> Nombre de calculs:&nbsp;<input type="text" size="4" name="nbcalcul" value="20" id="nbcalcul" required autofocus><br /><br />
 				<i class="fa-solid fa-maximize"></i> Plus grand nombre:&nbsp;<input type="text" size="4" name="nbmax" value="100" id="nbmax" required><br /><br />
 				<i class="fa-solid fa-calculator"></i> Opérations: <label><input type="checkbox" name="addition" value="1" checked>Addition</label> <label><input type="checkbox" name="soustraction" value="1" checked>Soustraction</label><br><br>
-				<i class="fa-solid fa-hourglass-start"></i> Durée: <input type="text" size="4" name="duree" value="5" id="duree" required> minutes<br /><br /><input type="submit" id="submit" value="Valider"></p>
+				<i class="fa-solid fa-hourglass-start"></i> Durée: <input type="text" size="4" name="duree" value="5" id="duree" required> minutes<br /><br /><input type="submit" id="submit" value="C'est parti!"></p>
 			</div>
 		</form>
 
