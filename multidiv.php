@@ -111,10 +111,10 @@ if(count($_GET)) {
 
 			function termine(arg) {
 				if (arg == "temps") {
-					feedback = 'Temps écoulé, dommage! &#128533<br><a href="multidiv.php">Recommencer</a>';
+					feedback = 'Temps écoulé, dommage! &#128533<br>';
 				}
 				if (arg == "totalCalcul") {
-					feedback = 'Fin des calculs, bravo! &#128526;<br><a href="multidiv.php">Recommencer</a>';
+					feedback = 'Fin des calculs, bravo! &#128526;<br>';
 					duree = (departMinutes*60)-temps;
 					minutes = parseInt(duree / 60, 10);
 					secondes = parseInt(duree % 60, 10);
@@ -122,7 +122,8 @@ if(count($_GET)) {
 					secondes = secondes < 10 ? "0" + secondes : secondes;
 					document.getElementById("timer").innerHTML = '<i class="fa-solid fa-hourglass-end"></i> Temps écoulé: ' + minutes + ':' + secondes;
 				}
-				document.getElementById('pcalcul').innerHTML = feedback;	
+				document.getElementById('pcalcul').innerHTML = feedback;
+				document.body.innerHTML += '<div style="text-align: center"><i class="fa-solid fa-arrow-rotate-right"></i> <a href="multidiv.php">Recommencer</a></div>';
 			}
 
 			// VERIFIE LA REPONSE
