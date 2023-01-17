@@ -53,7 +53,7 @@ if(count($_GET)) {
 			<div class="content">
 				<h2>Exercices</h2>
 				<p id="pcalcul"><span id="calcul"></span> = <input type="text" size="4" name="reponse" placeholder="" id="reponse" required autofocus> <input type="submit" id="submit" value="Valider"> <span id="corrige"></span></p>
-				<p><i class="fa-solid fa-hourglass-end"></i> <span id="timer"></span><span id="stats"></span></p>
+				<p><span id="timer"></span><span id="stats"></span></p>
 			</div>
 		</form>
 		<script>
@@ -118,10 +118,16 @@ if(count($_GET)) {
 
 			function termine(arg) {
 				if (arg == "temps") {
-					feedback = 'Temps écoulé, dommage!<br><a href="multidiv.php">Recommencer</a>';
+					feedback = 'Temps écoulé, dommage! &#128533<br><a href="prio.php">Recommencer</a>';
 				}
 				if (arg == "totalCalcul") {
-					feedback = 'Fin des calculs, bravo!<br><a href="multidiv.php">Recommencer</a>';
+					feedback = 'Fin des calculs, bravo! &#128526;<br><a href="prio.php">Recommencer</a>';
+					duree = (departMinutes*60)-temps;
+					minutes = parseInt(duree / 60, 10);
+					secondes = parseInt(duree % 60, 10);
+					minutes = minutes < 10 ? "0" + minutes : minutes;
+					secondes = secondes < 10 ? "0" + secondes : secondes;
+					document.getElementById("timer").innerHTML = '<i class="fa-solid fa-hourglass-end"></i> Temps écoulé: ' + minutes + ':' + secondes;
 				}
 				document.getElementById('pcalcul').innerHTML = feedback;	
 			}
@@ -134,7 +140,7 @@ if(count($_GET)) {
 					if (essai == 1) nbcorrect += 1;
 					nbcalcul += 1;
 					document.getElementById('corrige').innerHTML = 'Juste! <i class="fa-solid fa-check"></i>';
-					document.getElementById('stats').innerHTML = ' | Réussi: ' + nbcorrect + ' sur ' + nbcalcul;
+					document.getElementById('stats').innerHTML = '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa-solid fa-circle-check"></i> Réussi: ' + nbcorrect + ' sur ' + nbcalcul;
 					if(nbcalcul < totalCalcul) {
 						setTimeout(nouveauCalcul, 300);
 					} else {
@@ -161,14 +167,17 @@ if(count($_GET)) {
 				minutes = minutes < 10 ? "0" + minutes : minutes;
 				secondes = secondes < 10 ? "0" + secondes : secondes;
 
-				timerElement.innerText = `${minutes}:${secondes}`;
-				temps = temps <= 0 ? 0 : temps - 1;
+			 	timerElement.innerHTML = '<i class="fa-solid fa-hourglass-half"></i> ';
+			 	timerElement.innerHTML += `${minutes}:${secondes}`;
 
 				if (temps <= 0) {
-					timerElement.innerText = "00:00";
+					timerElement.innerHTML = '<i class="fa-solid fa-hourglass-end"></i> 00:00';
 				  	clearInterval(intervalID);
 				  	termine("temps");
 				}
+
+				temps = temps <= 0 ? 0 : temps - 1;
+
 			}, 1000);
 
 			nouveauCalcul();
@@ -182,7 +191,7 @@ if(count($_GET)) {
 				<h2>Options de l'exercice</h2>
 				<p><i class="fa-solid fa-list"></i> Nombre de calculs:&nbsp;<input type="text" size="4" name="nbcalcul" value="20" id="nbcalcul" required autofocus><br /><br />
 				<i class="fa-solid fa-maximize"></i> Plus grand nombre:&nbsp;<input type="text" size="4" name="nbmax" value="12" id="nbmax" required><br /><br />
-				<i class="fa-solid fa-hourglass-end"></i> Durée: <input type="text" size="4" name="duree" value="5" id="duree" required> minutes<br /><br /><input type="submit" id="submit" value="Valider"></p>
+				<i class="fa-solid fa-hourglass-start"></i> Durée: <input type="text" size="4" name="duree" value="5" id="duree" required> minutes<br /><br /><input type="submit" id="submit" value="Valider"></p>
 			</div>
 		</form>
 <?php
