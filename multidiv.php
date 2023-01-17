@@ -103,7 +103,6 @@ if(count($_GET)) {
 						op = ' : ';
 						break;
 				}
-				nbcalcul += 1;
 				essai = 1;
 				document.getElementById('calcul').innerHTML = valeur1 + op + valeur2;
 				document.getElementById('corrige').innerHTML = '';
@@ -127,6 +126,7 @@ if(count($_GET)) {
 				var reponse = document.getElementById("reponse").value;
 				if (reponse == correct) {
 					if (essai == 1 ) nbcorrect += 1;
+					nbcalcul += 1;
 					document.getElementById('corrige').innerHTML = 'Juste! <i class="fa-solid fa-check"></i>';
 					document.getElementById('stats').innerHTML = ' | Réussi: ' + nbcorrect + ' sur ' + nbcalcul;
 					if(nbcalcul < totalCalcul) {

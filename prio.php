@@ -84,7 +84,7 @@ if(count($_GET)) {
 
 				if(op1 == "/" ) {
 			    	valeurs = newValuesDiv();
-				    while(valeurs[0]%valeurs[1] !== 0) {
+				    while(valeurs[0] % valeurs[1] !== 0) {
 				      valeurs = newValuesDiv();
 				    }
 				    valeur1 = valeurs[0];
@@ -92,7 +92,7 @@ if(count($_GET)) {
 				    valeur3 = Math.floor(Math.random()*(nbmax+1)); 
 			  	} else if (op2 == "/") {
 				    valeurs = newValuesDiv();
-				    while(valeurs[0]%valeurs[1] !== 0) {
+				    while(valeurs[0] % valeurs[1] !== 0) {
 				     	valeurs = newValuesDiv();
 				    }
 				    valeur1 = Math.floor(Math.random()*(nbmax+1));
@@ -108,9 +108,8 @@ if(count($_GET)) {
   				correct = eval(resultat);
   				calcul = resultat.replace("/", " : ").replace("*", " x ").replace("+", " + ").replace("-"," - ");
 
-			  	while (correct<0) nouveauCalcul();
+			  	while (correct < 0) nouveauCalcul();
 
-				nbcalcul += 1;
 				essai = 1;
 				document.getElementById('calcul').innerHTML = calcul;
 				document.getElementById('corrige').innerHTML = '';
@@ -133,6 +132,7 @@ if(count($_GET)) {
 				var reponse = document.getElementById("reponse").value;
 				if (reponse == correct) {
 					if (essai == 1) nbcorrect += 1;
+					nbcalcul += 1;
 					document.getElementById('corrige').innerHTML = 'Juste! <i class="fa-solid fa-check"></i>';
 					document.getElementById('stats').innerHTML = ' | Réussi: ' + nbcorrect + ' sur ' + nbcalcul;
 					if(nbcalcul < totalCalcul) {
