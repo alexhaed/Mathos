@@ -125,8 +125,8 @@ if(count($_GET)) {
 				var reponse = document.getElementById("reponse").value;
 				if (reponse == correct) {
 					if (essai == 1 ) nbcorrect += 1;
-					document.getElementById('corrige').innerHTML = 'Juste! <i class="fa-solid fa-check"></i>';
-					document.getElementById('stats').innerHTML = ' | Réussi: ' + nbcorrect + ' sur ' + nbcalcul;
+					document.getElementById('corrige').innerHTML = 'Juste! <i class="fa-solid fa-circle-check"></i>';
+					document.getElementById('stats').innerHTML = '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa-solid fa-fire"></i> Réussi: ' + nbcorrect + ' sur ' + nbcalcul;
 					if(nbcalcul < totalCalcul) {
 						setTimeout(nouveauCalcul, 300);
 					} else {
@@ -135,7 +135,7 @@ if(count($_GET)) {
 					}
 				}
 				else {
-					document.getElementById('corrige').innerHTML = 'Faux! <i class="fa-solid fa-xmark"></i>';
+					document.getElementById('corrige').innerHTML = 'Faux! <i class="fa-solid fa-circle-xmark"></i>';
 					document.getElementById('reponse').value = '';
 					essai += 1;
 				}
