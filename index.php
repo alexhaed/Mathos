@@ -28,6 +28,7 @@ if (!isset($_SESSION['loggedin'])) {
 				<i class="fa-solid fa-angle-right"></i> <a href="compl.php">Compléments</a><br>
 				<i class="fa-solid fa-angle-right"></i> <a href="multidiv.php">Multiplication et division</a><br>
 				<i class="fa-solid fa-angle-right"></i> <a href="prio.php">Priorité des opérations</a><br><br>
+			<i class="fa-solid fa-ranking-star"></i> Si tu veux voir tes scores, c'est <a href="stats.php">par ici</a>!<br><br>	
 			Amuse-toi bien! &#128515;
 			</p>
 		</div>
