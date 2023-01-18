@@ -150,6 +150,7 @@ if(count($_GET)) {
 			function termine(arg) {
 				if (arg == "temps") {
 					feedback = 'Temps écoulé, dommage! &#128533<br>';
+					duree = departMinutes*60;
 				}
 				if (arg == "totalCalcul") {
 					feedback = 'Fin des calculs, bravo! &#128526;<br>';
