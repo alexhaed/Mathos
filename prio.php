@@ -104,7 +104,26 @@ if(count($_GET)) {
 				    valeur3 = Math.floor(Math.random()*(nbmax+1)); 
 			  	}
 
-  				resultat = valeur1 + op1 + valeur2 + op2 + valeur3;
+			  	parenthese = Math.floor(Math.random()*(4));
+
+			  	parenthese1 = "";
+			  	parenthese2 = "";
+			  	parenthese3 = "";
+			  	parenthese4 = "";
+
+			  	switch (parenthese) {
+			  		case 0:
+			  			parenthese1 = "(";
+			  			parenthese3 = ")";
+			  			break;
+			  		case 1:
+			  			parenthese2 = "(";
+			  			parenthese4 = ")";
+			  			break;
+			  	}
+
+  				resultat = parenthese1 + valeur1 + op1 + parenthese2 +  valeur2 + parenthese3 + op2 + valeur3 + parenthese4;
+  				console.log(resultat);
   				correct = eval(resultat);
   				calcul = resultat.replace("/", " : ").replace("*", " x ").replace("+", " + ").replace("-"," - ");
 
