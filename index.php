@@ -25,6 +25,7 @@ if (!isset($_SESSION['loggedin'])) {
 			<p style="line-height: 25px;">Salut <?=$_SESSION['name']?>!<br><br>
 				Choisis ce que tu veux entraîner:<br>
 				<i class="fa-solid fa-angle-right"></i> <a href="addsous.php">Addition et soustraction</a><br>
+				<i class="fa-solid fa-angle-right"></i> <a href="compl.php">Compléments</a><br>
 				<i class="fa-solid fa-angle-right"></i> <a href="multidiv.php">Multiplication et division</a><br>
 				<i class="fa-solid fa-angle-right"></i> <a href="prio.php">Priorité des opérations</a><br><br>
 			Amuse-toi bien! &#128515;
