@@ -38,12 +38,12 @@ if (!isset($_SESSION['loggedin'])) {
 			mysqli_close($con);
 			exit();
 		}
-    	else echo "<i class='fa-solid fa-fire'></i> Total des calculs réussis: ".$row["C"]."<br><br>";
+    	else echo "<i class='fa-solid fa-fire'></i> Total des calculs réussis: <b>".$row["C"]."</b><br><br>";
 	} else {
 	    echo "ERROR: Could not able to execute $sql. " . mysqli_error($con);
 	}
 
-	if ($result = mysqli_query($con, "SELECT `exercice`, COUNT(*) AS C FROM scores WHERE userid = ".$id." GROUP BY `exercice` DESC;")) {
+	if ($result = mysqli_query($con, "SELECT `exercice`, COUNT(*) AS C FROM scores WHERE userid = ".$id." GROUP BY `exercice` ORDER BY C DESC;")) {
 	    if (mysqli_num_rows($result) > 0) {
 	        echo "Exercices préférés:<br>";
 	        while ($row = mysqli_fetch_array($result)) {
@@ -62,7 +62,7 @@ if (!isset($_SESSION['loggedin'])) {
                 		echo "Priorité des opérations";
                 		break;
                }
-               echo	": ".$row['C']."<br>";
+               echo	": ".$row['C']." fois<br>";
 	        }
 	        echo "<br>";
 	        mysqli_free_result($result);
