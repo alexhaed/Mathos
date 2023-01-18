@@ -104,7 +104,7 @@ if(count($_GET)) {
 				    valeur3 = Math.floor(Math.random()*(nbmax+1)); 
 			  	}
 
-			  	parenthese = Math.floor(Math.random()*(4));
+			  	parenthese = Math.floor(Math.random()*(3));
 
 			  	parenthese1 = "";
 			  	parenthese2 = "";
@@ -123,11 +123,10 @@ if(count($_GET)) {
 			  	}
 
   				resultat = parenthese1 + valeur1 + op1 + parenthese2 +  valeur2 + parenthese3 + op2 + valeur3 + parenthese4;
-  				console.log(resultat);
   				correct = eval(resultat);
   				calcul = resultat.replace("/", " : ").replace("*", " x ").replace("+", " + ").replace("-"," - ");
 
-			  	while (correct < 0) nouveauCalcul();
+			  	while (correct < 0 || !Number.isInteger(correct)) nouveauCalcul();
 
 				essai = 1;
 				document.getElementById('calcul').innerHTML = calcul;
