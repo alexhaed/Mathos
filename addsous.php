@@ -77,6 +77,19 @@ if(count($_GET)) {
     			return Math.floor(Math.random() * (max +1)) ;
 			}
 
+			async function saveResult() {
+				const data = { userid: <?php echo $_SESSION['id']; ?>, exercice: "addsous", nbcalculs: nbcalcul, reussis: nbcorrect, duree: duree };
+				const rep = await fetch('saveresult.php', {
+				  method: 'POST',
+				  headers: {
+				    'Content-Type': 'application/json'
+				  },
+				  body: JSON.stringify(data)
+				});
+				//const retour = await rep.text();
+      			//console.log(retour);
+			}
+
 			// NOUVEAU CALCUL
 			function nouveauCalcul() {
 				operation = operations[Math.floor(Math.random() * operations.length)];
@@ -106,6 +119,7 @@ if(count($_GET)) {
 			function termine(arg) {
 				if (arg == "temps") {
 					feedback = 'Temps écoulé, dommage! &#128533<br>';
+					duree = 0;
 				}
 				if (arg == "totalCalcul") {
 					feedback = 'Fin des calculs, bravo! &#128526;<br>';
@@ -118,6 +132,7 @@ if(count($_GET)) {
 				}
 				document.getElementById('pcalcul').innerHTML = feedback;
 				document.body.innerHTML += '<div style="text-align: center"><i class="fa-solid fa-arrow-rotate-right"></i> <a href="addsous.php">Recommencer</a></div>';
+				saveResult();
 			}
 
 			// VERIFIE LA REPONSE

@@ -76,6 +76,19 @@ if(count($_GET)) {
     			return Math.floor(Math.random() * (max+1));
 			}
 
+			async function saveResult() {
+				const data = { userid: <?php echo $_SESSION['id']; ?>, exercice: "multidiv", nbcalculs: nbcalcul, reussis: nbcorrect, duree: duree };
+				const rep = await fetch('saveresult.php', {
+				  method: 'POST',
+				  headers: {
+				    'Content-Type': 'application/json'
+				  },
+				  body: JSON.stringify(data)
+				});
+				//const retour = await rep.text();
+      			//console.log(retour);
+			}
+
 			function newValuesDiv() {
 				val1 = generateRandomInteger(nbmax);
 			  	val2 = generateRandomInteger(val1);
@@ -124,6 +137,7 @@ if(count($_GET)) {
 				}
 				document.getElementById('pcalcul').innerHTML = feedback;
 				document.body.innerHTML += '<div style="text-align: center"><i class="fa-solid fa-arrow-rotate-right"></i> <a href="multidiv.php">Recommencer</a></div>';
+				saveResult();
 			}
 
 			// VERIFIE LA REPONSE
