@@ -57,7 +57,7 @@ if (!isset($_SESSION['loggedin'])) {
     		if($minutes > 1) echo "s";
     		//echo " et ".$secondes." seconde";
     		//if($secondes > 1) echo "s";
-    		echo "<br><br>";
+    		echo ".<br><br>";
     	}
 	} else {
 	    echo "ERROR: Could not able to execute $sql. " . mysqli_error($con);
