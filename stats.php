@@ -81,6 +81,9 @@ if (!isset($_SESSION['loggedin'])) {
                 	case "prio":
                 		echo "Priorité des opérations";
                 		break;
+                	case "addrelatifs":
+                		echo "Nombres entiers relatifs";
+                		break;
                }
                echo	": ".$row['C']." fois<br>";
 	        }
