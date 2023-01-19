@@ -2,8 +2,8 @@
 // We need to use sessions, so you should always start sessions using the below code.
 session_start();
 // If the user is not logged in redirect to the login page...
-if (!isset($_SESSION['loggedin'])) {
-	header('Location: index.html');
+if (!isset($_SESSION['loggedin']) || $_SESSION['name'] != "Alex") {
+	header('Location: ../login.html');
 	exit;
 }
 ?>
@@ -13,18 +13,22 @@ if (!isset($_SESSION['loggedin'])) {
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<title>Administration des profils</title>
-		<link href="style.css" rel="stylesheet" type="text/css">
+		<link href="../style.css" rel="stylesheet" type="text/css">
 		<script src="https://kit.fontawesome.com/16b34d58e9.js" crossorigin="anonymous"></script>
 	</head>
 	<body class="loggedin">
-<?php
-		include 'navbar.php';
-?>
+			<nav class="navtop">
+			<div>
+				<h1><i class="fa-solid fa-calculator fa-1x"></i> Mathos</h1>
+				<a href="../logout.php"><i class="fas fa-sign-out-alt"></i>Quitter</a>
+				<a href="../index.php"><i class="fas fa-user-circle"></i>Accueil</a>
+			</div>
+		</nav>
 		<div class="content">
 			<h2>Administration des profils</h2>
 				<div>
 <?php
-	include 'mysql_login.php';
+	include '../mysql_login.php';
 	$con = mysqli_connect($DATABASE_HOST, $DATABASE_USER, $DATABASE_PASS, $DATABASE_NAME);
 	if (mysqli_connect_errno()) {
 		echo "Failed to connect to MySQL: ".mysqli_connect_error();
@@ -71,10 +75,10 @@ if (!isset($_SESSION['loggedin'])) {
 
 		if ($result = mysqli_query($con, "SELECT id, username FROM accounts")) {
 		    if (mysqli_num_rows($result) > 0) {
-		        echo "<table>";
+		        echo "<table style='padding: 5px;border:0.5px solid black;margin-left:auto;margin-right:auto;'>";
 		            echo "<tr>";
-		                echo "<th>Id</th>";
-		                echo "<th>Nom</th>";
+		                echo "<th style='text-align: left;''>Id</th>";
+		                echo "<th style='text-align: left;''>Nom</th>";
 		                echo "<th></th>";
 		            echo "</tr>";
 		        while ($row = mysqli_fetch_array($result)) {
@@ -84,7 +88,7 @@ if (!isset($_SESSION['loggedin'])) {
 		                echo "<td><a href='profils.php?edit=". $row['id'] ."'>Editer</a></td>";
 		            echo "</tr>";
 		        }
-		        echo "</table>";
+		        echo "</table><br>";
 		        // Free result set
 		        mysqli_free_result($result);
 		    } else {
@@ -95,7 +99,7 @@ if (!isset($_SESSION['loggedin'])) {
 		}
 		mysqli_close($con);
 ?>
-				<p><a href="profils.php?add=1">Ajouter</p>
+				<p style="text-align: center;"><a href="profils.php?add=1">Ajouter</p>
 <?php
 	}
 ?>

@@ -1,8 +1,9 @@
 <?php
+// We need to use sessions, so you should always start sessions using the below code.
 session_start();
 // If the user is not logged in redirect to the login page...
 if (!isset($_SESSION['loggedin'])) {
-	header('Location: login.html');
+	header('Location: ../login.html');
 	exit;
 }
 ?>
@@ -12,24 +13,49 @@ if (!isset($_SESSION['loggedin'])) {
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<title>Mathos - Statistiques</title>
-		<link href="style.css" rel="stylesheet" type="text/css">
+		<link href="../style.css" rel="stylesheet" type="text/css">
 		<script src="https://kit.fontawesome.com/16b34d58e9.js" crossorigin="anonymous"></script>
+		<script>
+			function change(value) {
+				window.location = "stats.php?userid=" + value;
+			}
+		</script>
 	</head>
 	<body class="loggedin">
+		<nav class="navtop">
+			<div>
+				<h1><i class="fa-solid fa-calculator fa-1x"></i> Mathos</h1>
+				<a href="../logout.php"><i class="fas fa-sign-out-alt"></i>Quitter</a>
+				<a href="../index.php"><i class="fas fa-user-circle"></i>Accueil</a>
+			</div>
+		</nav>
 <?php
-		include 'navbar.php';
+		include '../mysql_login.php';
+		$con = mysqli_connect($DATABASE_HOST, $DATABASE_USER, $DATABASE_PASS, $DATABASE_NAME);
+		if (mysqli_connect_errno()) {
+			echo "Failed to connect to MySQL: ".mysqli_connect_error();
+		}
 ?>
 		<div class="content">
-			<h2>Scores de <?=$_SESSION['name']?></h2>
+			<h2>Scores</h2>
 				<div><p style="line-height: 25px;">
+					<label for="user-select">Choisir un utilisateur:</label>
+					<select name="user" id="user-select" onChange="change(this.value);">
 <?php
-	include 'mysql_login.php';
-	$con = mysqli_connect($DATABASE_HOST, $DATABASE_USER, $DATABASE_PASS, $DATABASE_NAME);
-	if (mysqli_connect_errno()) {
-		echo "Failed to connect to MySQL: ".mysqli_connect_error();
-	}
+	
+	if (isset($_GET['userid'])) $id = $_GET['userid'];
+	else $id = $_SESSION['id'];
 
-	$id = $_SESSION['id'];
+	if ($users = mysqli_query($con, "SELECT id, username FROM accounts")) {
+	    while ($user = mysqli_fetch_array($users)) {  
+	    	echo '<option value="'.$user[0].'" ';
+	    	if ($user[0] == $id) echo 'selected';
+	    	echo '>'.$user[1].'</option>';
+	    }
+	} else {
+	    echo "ERROR: Could not able to execute $sql. " . mysqli_error($con);
+	}
+	echo "</select><br><br>";
 
 	if ($exercices = mysqli_query($con, "SELECT SUM(`reussis`) AS C FROM scores WHERE userid = ".$id)) {
 		$row = $exercices->fetch_assoc();
@@ -95,9 +121,6 @@ if (!isset($_SESSION['loggedin'])) {
 	} else {
 	    echo "ERROR: Could not able to execute $sql. " . mysqli_error($con);
 	}
-
-	echo "Bien joué! &#128515;<br><br>";
-	echo '<div style="text-align: center"><i class="fa-solid fa-arrow-rotate-right"></i> <a href="index.php">Continue à t\'entraîner</a></div>';
 
 	mysqli_close($con);
 ?>
