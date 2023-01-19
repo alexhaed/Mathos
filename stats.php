@@ -65,9 +65,9 @@ if (!isset($_SESSION['loggedin'])) {
 
 	if ($result = mysqli_query($con, "SELECT `exercice`, COUNT(*) AS C FROM scores WHERE userid = ".$id." GROUP BY `exercice` ORDER BY C DESC;")) {
 	    if (mysqli_num_rows($result) > 0) {
-	        echo "Exercices préférés:<br>";
+	        echo "<i class='fa-brands fa-gratipay'></i> Exercices préférés:<br>";
 	        while ($row = mysqli_fetch_array($result)) {
-            	echo "<i class='fa-solid fa-angle-right'></i> ";
+            	echo "&nbsp;&nbsp;&nbsp;&nbsp;<i class='fa-solid fa-angle-right'></i> ";
                 switch($row['exercice']) {
                 	case "addsous":
                 		echo "Addition et soustraction";
