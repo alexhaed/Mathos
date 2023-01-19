@@ -52,11 +52,11 @@ if (!isset($_SESSION['loggedin'])) {
 		}
     	else {
     		$minutes = floor($row["C"] / 60);
-    		$secondes = $row["C"] % 60;
+    		//$secondes = $row["C"] % 60;
     		echo "<i class='fa-solid fa-hourglass-end'></i> Tu as calculé pendant ".$minutes." minute";
     		if($minutes > 1) echo "s";
-    		echo " et ".$secondes." seconde";
-    		if($secondes > 1) echo "s";
+    		//echo " et ".$secondes." seconde";
+    		//if($secondes > 1) echo "s";
     		echo "<br><br>";
     	}
 	} else {
