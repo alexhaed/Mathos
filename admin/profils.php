@@ -2,7 +2,7 @@
 // We need to use sessions, so you should always start sessions using the below code.
 session_start();
 // If the user is not logged in redirect to the login page...
-if (!isset($_SESSION['loggedin']) || $_SESSION['name'] != "Alex") {
+if (!isset($_SESSION['loggedin']) || $_SESSION['admin'] != 1) {
 	header('Location: ../login.html');
 	exit;
 }
@@ -41,6 +41,7 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['name'] != "Alex") {
 		echo '<input type="password" name="password" placeholder="Mot de passe" id="password" required> ';
 		echo '<input type="submit" value="Créer">';
 		echo '</form>';
+		echo '<br><p style="text-align: center;"><a href="profils.php">Retour</a></p>';
 
 	// Si edit d'un user
 	} elseif (isset($_GET['edit']) && is_numeric($_GET['edit'])) {
@@ -59,6 +60,7 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['name'] != "Alex") {
 		echo '<input type="password" size="12" name="password" value="" id="password"> ';
 		echo '<input type="submit" value="Mettre à jour">';
 		echo '</form>';
+		echo '<br><p style="text-align: center;"><a href="profils.php">Retour</a></p>';
 
 	// Page par défaut
 	} else {
@@ -69,11 +71,19 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['name'] != "Alex") {
 			$stmt = "UPDATE accounts SET username='".$_POST['username']."', password='".$password."' WHERE id=".$_POST['id'];
 			mysqli_query($con, $stmt);
 		} elseif (isset($_POST['username']) && isset($_POST['password'])) {
-			$stmt = "INSERT INTO accounts (username, password, email) VALUES ('".$_POST['username']."', '".password_hash($_POST['password'], PASSWORD_DEFAULT)."', '')";
-			mysqli_query($con, $stmt);
+		  	$sql_u = "SELECT * FROM accounts WHERE username='".$_POST['username']."'";
+		  	$res_u = mysqli_query($con, $sql_u);
+		  	if (mysqli_num_rows($res_u) > 0) {
+		  	 	 echo "<b>Erreur</b><br>Nom d'utilisateur déjà pris";
+				echo '<br><br><p style="text-align: center;"><a href="profils.php">Retour</a></p>';
+		  	 	 exit();
+		  	} else {
+				$stmt = "INSERT INTO accounts (username, password) VALUES ('".$_POST['username']."', '".password_hash($_POST['password'], PASSWORD_DEFAULT)."')";
+				mysqli_query($con, $stmt);
+			}
 		}
 
-		if ($result = mysqli_query($con, "SELECT id, username FROM accounts")) {
+		if ($result = mysqli_query($con, "SELECT id, username FROM accounts ORDER BY id ASC")) {
 		    if (mysqli_num_rows($result) > 0) {
 		        echo "<table style='padding: 5px;border:0.5px solid black;margin-left:auto;margin-right:auto;'>";
 		            echo "<tr>";

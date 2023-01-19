@@ -2,7 +2,7 @@
 // We need to use sessions, so you should always start sessions using the below code.
 session_start();
 // If the user is not logged in redirect to the login page...
-if (!isset($_SESSION['loggedin'])) {
+if (!isset($_SESSION['loggedin']) || $_SESSION['admin'] != 1) {
 	header('Location: ../login.html');
 	exit;
 }
@@ -37,7 +37,7 @@ if (!isset($_SESSION['loggedin'])) {
 		}
 ?>
 		<div class="content">
-			<h2>Scores</h2>
+			<h2>Statistiques</h2>
 				<div><p style="line-height: 25px;">
 					<label for="user-select">Choisir un utilisateur:</label>
 					<select name="user" id="user-select" onChange="change(this.value);">
@@ -46,7 +46,7 @@ if (!isset($_SESSION['loggedin'])) {
 	if (isset($_GET['userid'])) $id = $_GET['userid'];
 	else $id = $_SESSION['id'];
 
-	if ($users = mysqli_query($con, "SELECT id, username FROM accounts")) {
+	if ($users = mysqli_query($con, "SELECT id, username FROM accounts ORDER BY id ASC")) {
 	    while ($user = mysqli_fetch_array($users)) {  
 	    	echo '<option value="'.$user[0].'" ';
 	    	if ($user[0] == $id) echo 'selected';
