@@ -43,6 +43,26 @@ if (!isset($_SESSION['loggedin'])) {
 	    echo "ERROR: Could not able to execute $sql. " . mysqli_error($con);
 	}
 
+	if ($duree = mysqli_query($con, "SELECT SUM(`temps`) AS C FROM scores WHERE userid = ".$id)) {
+		$row = $duree->fetch_assoc();
+		if ($row["C"] == 0) {
+			echo "Tu n'as fait aucun exercice pour l'instant. Reviens plus tard!";
+			mysqli_close($con);
+			exit();
+		}
+    	else {
+    		$minutes = floor($row["C"] / 60);
+    		$secondes = $row["C"] % 60;
+    		echo "<i class='fa-solid fa-hourglass-end'></i> Tu as calculé pendant ".$minutes." minute";
+    		if($minutes > 1) echo "s";
+    		echo " et ".$secondes." seconde";
+    		if($secondes > 1) echo "s";
+    		echo "<br><br>";
+    	}
+	} else {
+	    echo "ERROR: Could not able to execute $sql. " . mysqli_error($con);
+	}
+
 	if ($result = mysqli_query($con, "SELECT `exercice`, COUNT(*) AS C FROM scores WHERE userid = ".$id." GROUP BY `exercice` ORDER BY C DESC;")) {
 	    if (mysqli_num_rows($result) > 0) {
 	        echo "Exercices préférés:<br>";
