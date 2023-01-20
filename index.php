@@ -35,7 +35,7 @@ if (!isset($_SESSION['loggedin'])) {
 <?php
 	if($_SESSION['admin'] == 1) {
 		echo '</div><div class="content"><h2>Admin</h2>';
-		echo '<p style="text-align: center;"><i class="fa-solid fa-users-gear"></i> <a href="admin/profils.php">Gérer les utilisateurs</a> | <i class="fa-solid fa-ranking-star"></i> <a href="admin/stats.php">Voir les statistiques</a></p>';
+		echo '<p style="text-align: center;"><i class="fa-solid fa-users-gear"></i> <a href="admin/profils.php">Gérer les utilisateurs</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa-solid fa-ranking-star"></i> <a href="admin/stats.php">Voir les statistiques</a></p>';
 	}
 ?>
 		</div>
