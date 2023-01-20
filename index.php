@@ -29,13 +29,17 @@ if (!isset($_SESSION['loggedin'])) {
 				<i class="fa-solid fa-angle-right"></i> <a href="multidiv.php">Multiplication et division</a><br>
 				<i class="fa-solid fa-angle-right"></i> <a href="prio.php">Priorité des opérations</a><br>
 				<i class="fa-solid fa-angle-right"></i> <a href="addrelatifs.php">Nombres entiers relatifs</a><br><br>
-			<i class="fa-solid fa-ranking-star fa-lg"></i> Si tu veux voir tes scores, c'est <a href="score.php">par ici</a>!<br><br>	
 			Amuse-toi bien! &#128515;
 			</p>
+
 <?php
+	
+	include "levels.php";
+
 	if($_SESSION['admin'] == 1) {
 		echo '</div><div class="content"><h2>Admin</h2>';
-		echo '<p style="text-align: center;"><i class="fa-solid fa-users-gear"></i> <a href="admin/profils.php">Gérer les utilisateurs</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa-solid fa-ranking-star"></i> <a href="admin/stats.php">Voir les statistiques</a></p>';
+		echo '<p style="line-height: 25px;"><i class="fa-solid fa-users-gear"></i> <a href="admin/utilisateurs.php">Gérer les utilisateurs</a><br>';
+		echo '<i class="fa-solid fa-ranking-star"></i> <a href="admin/stats.php">Voir les statistiques</a></p>';
 	}
 ?>
 		</div>

@@ -12,7 +12,7 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['admin'] != 1) {
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<title>Administration des profils</title>
+		<title>Gestion des utilisateurs</title>
 		<link href="../style.css" rel="stylesheet" type="text/css">
 		<script src="https://kit.fontawesome.com/16b34d58e9.js" crossorigin="anonymous"></script>
 	</head>
@@ -25,7 +25,7 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['admin'] != 1) {
 			</div>
 		</nav>
 		<div class="content">
-			<h2>Administration des profils</h2>
+			<h2>Gestion des utilisateurs</h2>
 				<div>
 <?php
 	include '../mysql_login.php';
@@ -36,12 +36,12 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['admin'] != 1) {
 
 	// Si ajout d'un user
 	if(isset($_GET['add']) && $_GET['add'] == 1) {
-		echo '<form action="profils.php" method="POST">';
+		echo '<form action="utilisateurs.php" method="POST">';
 		echo '<i class="fa-solid fa-user-plus"></i> <input type="text" size="10" name="username" placeholder="Nom" id="username" required autofocus> ';
 		echo '<input type="password" name="password" placeholder="Mot de passe" id="password" required> ';
 		echo '<input type="submit" value="Créer">';
 		echo '</form>';
-		echo '<br><p style="text-align: center;"><i class="fa-solid fa-arrow-rotate-left"></i> <a href="profils.php">Retour</a></p>';
+		echo '<br><p style="text-align: center;"><i class="fa-solid fa-arrow-rotate-left"></i> <a href="utilisateurs.php">Retour</a></p>';
 
 	// Si edit d'un user
 	} elseif (isset($_GET['edit']) && is_numeric($_GET['edit'])) {
@@ -53,14 +53,14 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['admin'] != 1) {
 		$stmt->fetch();
 		$stmt->close();
 
-		echo '<form action="profils.php" method="POST">';
+		echo '<form action="utilisateurs.php" method="POST">';
 		echo '<i class="fa-solid fa-user-pen"></i> <input type="hidden" name="id" id="id" value="'.$_GET['edit'].'">';
 		echo '<input type="hidden" name="oldpassword" id="oldpassword" value="'.$password.'">';		
 		echo '<input type="text" size="10" name="username" value="'.$username.'" id="username" required autofocus> ';
 		echo '<input type="password" size="12" name="password" value="" id="password"> ';
 		echo '<input type="submit" value="Mettre à jour">';
 		echo '</form>';
-		echo '<br><p style="text-align: center;"><i class="fa-solid fa-arrow-rotate-left"></i> <a href="profils.php">Retour</a></p>';
+		echo '<br><p style="text-align: center;"><i class="fa-solid fa-arrow-rotate-left"></i> <a href="utilisateurs.php">Retour</a></p>';
 
 	// Page par défaut
 	} else {
@@ -75,7 +75,7 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['admin'] != 1) {
 		  	$res_u = mysqli_query($con, $sql_u);
 		  	if (mysqli_num_rows($res_u) > 0) {
 		  	 	 echo "<b>Erreur</b><br>Nom d'utilisateur déjà pris";
-				echo '<br><br><p style="text-align: center;"><a href="profils.php">Retour</a></p>';
+				echo '<br><br><p style="text-align: center;"><a href="utilisateurs.php">Retour</a></p>';
 		  	 	 exit();
 		  	} else {
 				$stmt = "INSERT INTO accounts (username, password) VALUES ('".$_POST['username']."', '".password_hash($_POST['password'], PASSWORD_DEFAULT)."')";
@@ -95,7 +95,7 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['admin'] != 1) {
 		            echo "<tr>";
 		                echo "<td>" . $row['id'] . "</td>";
 		                echo "<td>" . $row['username'] . "</td>";
-		                echo "<td>&nbsp;&nbsp;&nbsp;<a href='profils.php?edit=". $row['id'] ."'>Editer</a>&nbsp;&nbsp;<i class='fa-solid fa-user-pen'></i></td>";
+		                echo "<td>&nbsp;&nbsp;&nbsp;<a href='utilisateurs.php?edit=". $row['id'] ."'>Editer</a>&nbsp;&nbsp;<i class='fa-solid fa-user-pen'></i></td>";
 		            echo "</tr>";
 		        }
 		        echo "</table><br>";
@@ -109,7 +109,7 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['admin'] != 1) {
 		}
 		mysqli_close($con);
 ?>
-				<p style="text-align: center;"><i class="fa-solid fa-user-plus"></i> <a href="profils.php?add=1">Ajouter</p>
+				<p style="text-align: center;"><i class="fa-solid fa-user-plus"></i> <a href="utilisateurs.php?add=1">Ajouter</p>
 <?php
 	}
 ?>
