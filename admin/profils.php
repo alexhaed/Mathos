@@ -37,11 +37,11 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['admin'] != 1) {
 	// Si ajout d'un user
 	if(isset($_GET['add']) && $_GET['add'] == 1) {
 		echo '<form action="profils.php" method="POST">';
-		echo '<input type="text" size="10" name="username" placeholder="Nom" id="username" required autofocus> ';
+		echo '<i class="fa-solid fa-user-plus"></i> <input type="text" size="10" name="username" placeholder="Nom" id="username" required autofocus> ';
 		echo '<input type="password" name="password" placeholder="Mot de passe" id="password" required> ';
 		echo '<input type="submit" value="Créer">';
 		echo '</form>';
-		echo '<br><p style="text-align: center;"><a href="profils.php">Retour</a></p>';
+		echo '<br><p style="text-align: center;"><i class="fa-solid fa-arrow-rotate-left"></i> <a href="profils.php">Retour</a></p>';
 
 	// Si edit d'un user
 	} elseif (isset($_GET['edit']) && is_numeric($_GET['edit'])) {
@@ -54,13 +54,13 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['admin'] != 1) {
 		$stmt->close();
 
 		echo '<form action="profils.php" method="POST">';
-		echo '<input type="hidden" name="id" id="id" value="'.$_GET['edit'].'">';
+		echo '<i class="fa-solid fa-user-pen"></i> <input type="hidden" name="id" id="id" value="'.$_GET['edit'].'">';
 		echo '<input type="hidden" name="oldpassword" id="oldpassword" value="'.$password.'">';		
 		echo '<input type="text" size="10" name="username" value="'.$username.'" id="username" required autofocus> ';
 		echo '<input type="password" size="12" name="password" value="" id="password"> ';
 		echo '<input type="submit" value="Mettre à jour">';
 		echo '</form>';
-		echo '<br><p style="text-align: center;"><a href="profils.php">Retour</a></p>';
+		echo '<br><p style="text-align: center;"><i class="fa-solid fa-arrow-rotate-left"></i> <a href="profils.php">Retour</a></p>';
 
 	// Page par défaut
 	} else {
@@ -95,7 +95,7 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['admin'] != 1) {
 		            echo "<tr>";
 		                echo "<td>" . $row['id'] . "</td>";
 		                echo "<td>" . $row['username'] . "</td>";
-		                echo "<td><a href='profils.php?edit=". $row['id'] ."'>Editer</a></td>";
+		                echo "<td>&nbsp;&nbsp;&nbsp;<a href='profils.php?edit=". $row['id'] ."'>Editer</a>&nbsp;&nbsp;<i class='fa-solid fa-user-pen'></i></td>";
 		            echo "</tr>";
 		        }
 		        echo "</table><br>";
@@ -109,7 +109,7 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['admin'] != 1) {
 		}
 		mysqli_close($con);
 ?>
-				<p style="text-align: center;"><a href="profils.php?add=1">Ajouter</p>
+				<p style="text-align: center;"><i class="fa-solid fa-user-plus"></i> <a href="profils.php?add=1">Ajouter</p>
 <?php
 	}
 ?>

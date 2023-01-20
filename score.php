@@ -21,7 +21,7 @@ if (!isset($_SESSION['loggedin'])) {
 ?>
 		<div class="content">
 			<h2>Scores de <?=$_SESSION['name']?></h2>
-				<div><p style="line-height: 25px;">
+				<div><br><br><br><p style="line-height: 25px;">
 <?php
 	include 'mysql_login.php';
 	$con = mysqli_connect($DATABASE_HOST, $DATABASE_USER, $DATABASE_PASS, $DATABASE_NAME);
@@ -48,7 +48,6 @@ if (!isset($_SESSION['loggedin'])) {
 		if ($row["C"] == 0) {
 			echo "Tu n'as fait aucun exercice pour l'instant. Reviens plus tard!";
 			mysqli_close($con);
-			exit();
 		}
     	else {
     		$minutes = floor($row["C"] / 60);

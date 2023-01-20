@@ -39,7 +39,7 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['admin'] != 1) {
 		<div class="content">
 			<h2>Statistiques</h2>
 				<div><p style="line-height: 25px;">
-					<label for="user-select">Choisir un utilisateur:</label>
+					<label for="user-select"><i class="fa-solid fa-user"></i> Choisir un utilisateur:</label>
 					<select name="user" id="user-select" onChange="change(this.value);">
 <?php
 	

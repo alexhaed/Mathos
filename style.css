@@ -66,11 +66,11 @@ body {
 }
 .navtop {
 	background-color: #2f3947;
-	height: 50px;
+	height: 60px;
 	width: 100%;
 	border: 10px;
 	float: left;
-	padding: 10px;
+	padding: 15px;
 }
 .navtop div {
 	float: left;
@@ -111,8 +111,11 @@ body.loggedin {
 	margin: 0 auto;
 	float: left;
 }
+.content a {
+	color: #2f3947;
+}
 .content h2 {
-	margin: 25px 0;
+	margin: 15px 0;
 	width: 100%;
 	padding: 15px;
 	font-size: 22px;
@@ -122,7 +125,7 @@ body.loggedin {
 }
 .content > p, .content > div {
 	box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.1);
-	margin: 25px 0;
+	margin: 15px 0;
 	padding: 25px;
 	background-color: #fff;
 }
@@ -130,8 +133,6 @@ body.loggedin {
 	padding: 5px;
 }
 .content > p table td:first-child, .content > div table td:first-child {
-	font-weight: bold;
-	color: #4a536e;
 	padding-right: 15px;
 }
 .content > div p {
