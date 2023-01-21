@@ -17,8 +17,6 @@ if ($level_scr = mysqli_query($con, "SELECT `level` AS B FROM accounts WHERE id 
 } else {
     echo "ERROR: Could not able to execute $sql. " . mysqli_error($con);
 }	
-//echo "Level_old: ".$level_old."<br>";
-//echo "Target_old: ".$levels[$level_old+1]."<br>";
 
 $level = $level_old;
 
@@ -35,11 +33,8 @@ if ($level != $level_old) {
 	$stmt = "UPDATE accounts SET level=".$level." WHERE id = ".$id;
 	mysqli_query($con, $stmt);
 }
-//echo "Nouveau level: ".$level."<br>";
-//echo "Nb réussis: ".$row["C"]."<br>";
 
 $target = $levels[$level+1];
-//echo "Next target: ".$target."<br>";
 
 $nbtotarget = $target-$row["C"];
 $progress = $row["C"]*100/$target;
@@ -77,7 +72,12 @@ mysqli_close($con);
     	#1163cf 20px,
     	#1163cf 40px
   	);
-  	animation: fill-bar 3s ; /*infinite*/
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .progress__bar-animation {
+    animation: fill-bar 3s;
+  }
 }
 
 @keyframes fill-bar {
@@ -107,3 +107,20 @@ if ($level != $level_old) {
 ?>
 	<br><br><i class="fa-solid fa-ranking-star fa-lg"></i> Si tu veux voir tes scores, c'est <a href="score.php">par ici</a>!</p>
 	</div>
+<script type="text/javascript">
+
+	const observer = new IntersectionObserver(entries => {
+	  entries.forEach(entry => {
+	    const bar = entry.target.querySelector('.progress__bar');
+
+	    if (entry.isIntersecting) {
+	      bar.classList.add('progress__bar-animation');
+		  return;
+	    }
+	    bar.classList.remove('progress__bar-animation');
+	  });
+	});
+
+	observer.observe(document.querySelector('.progress'));
+
+</script>

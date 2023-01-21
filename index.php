@@ -37,7 +37,7 @@ if (!isset($_SESSION['loggedin'])) {
 	include "levels.php";
 
 	if($_SESSION['admin'] == 1) {
-		echo '</div><div class="content"><h2>Admin</h2>';
+		echo '<h2 style="margin-top: 0px">Admin</h2>';
 		echo '<p style="line-height: 25px;"><i class="fa-solid fa-users-gear"></i> <a href="admin/utilisateurs.php">Gérer les utilisateurs</a><br>';
 		echo '<i class="fa-solid fa-ranking-star"></i> <a href="admin/stats.php">Voir les statistiques</a></p>';
 	}
