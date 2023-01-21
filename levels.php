@@ -86,8 +86,8 @@ mysqli_close($con);
 }
 
 </style>
-	<h2 style="margin-top: 0px">Niveau</h2>
-	<div class="progresscontent">
+<h2 style="margin-top: 0px">Niveau</h2>
+<div class="progresscontent">
 <?php
 if ($level != $level_old) {
 	echo '<p style="margin-bottom: 0px; text-align: center;"><i class="fa-solid fa-trophy"></i> ';
@@ -95,18 +95,18 @@ if ($level != $level_old) {
 	echo ' <i class="fa-solid fa-trophy"></i></p>';
 }
 ?>
-	<p style="margin-bottom: 0px; text-align: center;"><img src="img/niveau_<?php echo $level; ?>.png" height="200"></p>
-	<div class="progress"> 
-		  <div class="progress__bar"></div>
-	</div>
-	<p style="margin-bottom: 0px; text-align: center;">
+<p style="margin-bottom: 0px; text-align: center;"><img src="img/niveau_<?php echo $level; ?>.png" height="200"></p>
+<div class="progress"> 
+	<div class="progress__bar"></div>
+</div>
+<p style="margin-bottom: 0px; text-align: center;">
 <?php
 	echo "Plus que ".$nbtotarget;
 	echo ($nbtotarget > 1) ? ' calculs' : ' calcul';
 	echo " pour passer au&nbsp;prochain&nbsp;niveau!";
 ?>
-	<br><br><i class="fa-solid fa-ranking-star fa-lg"></i> <a href="score.php">Voir tes scores</a></p>
-	</div>
+<br><br><i class="fa-solid fa-ranking-star fa-lg"></i> <a href="score.php">Voir tes scores</a></p>
+</div>
 <script type="text/javascript">
 
 	const observer = new IntersectionObserver(entries => {
