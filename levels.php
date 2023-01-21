@@ -8,7 +8,7 @@ if (mysqli_connect_errno()) {
 	echo "Failed to connect to MySQL: ".mysqli_connect_error();
 }
 
-$levels = array(1=>0, 2=>10, 3=>20, 4=>50, 5=>100, 6=>150);
+$levels = array(1=>0, 2=>10, 3=>20, 4=>50, 5=>100, 6=>150, 7=>200, 8=>250, 9=>300, 10=>350, 11=>400, 12=>450, 13=>500, 14=>1000);
 $id = $_SESSION['id'];
 
 if ($level_scr = mysqli_query($con, "SELECT `level` AS B FROM accounts WHERE id = ".$id)) {
