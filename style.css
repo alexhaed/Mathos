@@ -139,3 +139,17 @@ body.loggedin {
 	padding: 5px;
 	margin: 0 0 10px 0;
 }
+form input[type="submit"] {
+	-webkit-appearance: none;
+  	padding: 5px 15px 5px 15px;
+ 	margin-top: 0px;
+ 	margin-bottom: 0px;
+  	background-color: #2f3947;
+  	border: 0;
+  	cursor: pointer;
+  	font-weight: bold;
+  	color: #ffffff;
+  	transition: background-color 0.2s;
+  	border-radius: 0;
+  	-webkit-border-radius: 0;
+}

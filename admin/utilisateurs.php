@@ -95,7 +95,7 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['admin'] != 1) {
 		            echo "<tr>";
 		                echo "<td>" . $row['id'] . "</td>";
 		                echo "<td>" . $row['username'] . "</td>";
-		                echo "<td>&nbsp;&nbsp;&nbsp;<a href='utilisateurs.php?edit=". $row['id'] ."'>Editer</a>&nbsp;&nbsp;<i class='fa-solid fa-user-pen'></i></td>";
+		                echo "<td>&nbsp;&nbsp;<i class='fa-solid fa-user-pen'></i>&nbsp;<a href='utilisateurs.php?edit=". $row['id'] ."'>Editer</a></td>";
 		            echo "</tr>";
 		        }
 		        echo "</table><br>";
