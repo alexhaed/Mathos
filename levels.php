@@ -105,7 +105,7 @@ if ($level != $level_old) {
 	echo ($nbtotarget > 1) ? ' calculs' : ' calcul';
 	echo " pour passer au&nbsp;prochain&nbsp;niveau!";
 ?>
-	<br><br><i class="fa-solid fa-ranking-star fa-lg"></i> Si tu veux voir tes scores, c'est <a href="score.php">par ici</a>!</p>
+	<br><br><i class="fa-solid fa-ranking-star fa-lg"></i> <a href="score.php">Voir tes scores</a></p>
 	</div>
 <script type="text/javascript">
 
