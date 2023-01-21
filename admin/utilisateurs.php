@@ -14,6 +14,10 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['admin'] != 1) {
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<title>Gestion des utilisateurs</title>
 		<link href="../style.css" rel="stylesheet" type="text/css">
+		<link rel="apple-touch-icon" sizes="180x180" href="favicon/apple-touch-icon.png">
+		<link rel="icon" type="image/png" sizes="32x32" href="favicon/favicon-32x32.png">
+		<link rel="icon" type="image/png" sizes="16x16" href="favicon/favicon-16x16.png">
+		<link rel="manifest" href="favicon/site.webmanifest">
 		<script src="https://kit.fontawesome.com/16b34d58e9.js" crossorigin="anonymous"></script>
 	</head>
 	<body class="loggedin">
@@ -37,8 +41,8 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['admin'] != 1) {
 	// Si ajout d'un user
 	if(isset($_GET['add']) && $_GET['add'] == 1) {
 		echo '<form action="utilisateurs.php" method="POST">';
-		echo '<i class="fa-solid fa-user-plus"></i> <input type="text" size="10" name="username" placeholder="Nom" id="username" required autofocus> ';
-		echo '<input type="password" name="password" placeholder="Mot de passe" id="password" required> ';
+		echo '<i class="fa-solid fa-user-plus"></i>&nbsp;&nbsp;<input type="text" size="15" name="username" placeholder="Nom" id="username" required autofocus><br><br>';
+		echo '<i class="fa-solid fa-user-lock"></i>&nbsp;&nbsp;<input type="password" size="15" name="password" placeholder="Mot de passe" id="password" required><br><br>';
 		echo '<input type="submit" value="Créer">';
 		echo '</form>';
 		echo '<br><p style="text-align: center;"><i class="fa-solid fa-arrow-rotate-left"></i> <a href="utilisateurs.php">Retour</a></p>';
@@ -54,10 +58,10 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['admin'] != 1) {
 		$stmt->close();
 
 		echo '<form action="utilisateurs.php" method="POST">';
-		echo '<i class="fa-solid fa-user-pen"></i> <input type="hidden" name="id" id="id" value="'.$_GET['edit'].'">';
+		echo '<input type="hidden" name="id" id="id" value="'.$_GET['edit'].'">';
 		echo '<input type="hidden" name="oldpassword" id="oldpassword" value="'.$password.'">';		
-		echo '<input type="text" size="10" name="username" value="'.$username.'" id="username" required autofocus> ';
-		echo '<input type="password" size="12" name="password" value="" id="password"> ';
+		echo '<i class="fa-solid fa-user-pen"></i>&nbsp;&nbsp;<input type="text" size="15" name="username" value="'.$username.'" id="username" required autofocus><br><br>';
+		echo '<i class="fa-solid fa-user-lock"></i>&nbsp;&nbsp;<input type="password" size="15" name="password" value="" id="password"><br><br>';
 		echo '<input type="submit" value="Mettre à jour">';
 		echo '</form>';
 		echo '<br><p style="text-align: center;"><i class="fa-solid fa-arrow-rotate-left"></i> <a href="utilisateurs.php">Retour</a></p>';
@@ -87,8 +91,8 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['admin'] != 1) {
 		    if (mysqli_num_rows($result) > 0) {
 		        echo "<table style='padding: 5px;border:0.5px solid black;margin-left:auto;margin-right:auto;'>";
 		            echo "<tr>";
-		                echo "<th style='text-align: left;''>Id</th>";
-		                echo "<th style='text-align: left;''>Nom</th>";
+		                echo "<th style='text-align: left;'>Id</th>";
+		                echo "<th style='text-align: left;padding-left: 5px;'>Nom</th>";
 		                echo "<th></th>";
 		            echo "</tr>";
 		        while ($row = mysqli_fetch_array($result)) {
