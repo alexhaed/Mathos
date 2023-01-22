@@ -80,8 +80,8 @@ echo "\n";
 			// NOUVEAU CALCUL
 			function nouveauCalcul() {
 				operation = operations[Math.floor(Math.random() * operations.length)];
-				valeur1 = generateRandomNumber(nbmax);
-				valeur2 = generateRandomNumber(nbmax);
+				valeur1 = generateRandomNumber(nbmax,0,1);
+				valeur2 = generateRandomNumber(nbmax,0,1);
 				//if (operation == 'soustraction') {
 				//	valeur2 = generateRandomNumber(valeur1);
 				//} else {

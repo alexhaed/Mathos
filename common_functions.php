@@ -1,11 +1,14 @@
 		<script type="text/javascript">
 			// GENERE UN NOMBRE
-			function generateRandomNumber(max, nbdecimal) {
+			function generateRandomNumber(max, nbdecimal, relatif) {
 				if (nbdecimal > 0) {
 					numb = Math.random() * max;
 	      			return numb.toFixed(nbdecimal);
+				} else if (relatif == 1) {
+					return Math.floor((Math.random() - 0.5) * (max + max));
+				} else {
+					return Math.floor(Math.random() * (max + 1));
 				}
-				else return Math.floor(Math.random() * (max + 1));
 			}
 
 			// COMPTE A REBOURS
@@ -72,7 +75,7 @@
 				var reponse = document.getElementById("reponse").value;
 				if (reponse == correct) {
 					if (essai == 1 ) nbcorrect += 1;
-					document.getElementById('corrige').innerHTML = 'Juste! <i class="fa-solid fa-circle-check"></i>';
+					document.getElementById('corrige').innerHTML = '&nbsp;Juste! <i class="fa-solid fa-circle-check"></i>';
 					document.getElementById('stats').innerHTML = '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa-solid fa-fire"></i> Réussi: ' + nbcorrect + ' sur ' + nbcalcul;
 					if(nbcalcul < totalCalcul) {
 						setTimeout(nouveauCalcul, 300);
@@ -82,11 +85,10 @@
 					}
 				}
 				else {
-					document.getElementById('corrige').innerHTML = 'Faux! <i class="fa-solid fa-circle-xmark"></i>';
+					document.getElementById('corrige').innerHTML = '&nbsp;Faux! <i class="fa-solid fa-circle-xmark"></i>';
 					document.getElementById('reponse').value = '';
 					essai += 1;
 				}
-			return false;
+				return false;
 			}
-
 		</script>
