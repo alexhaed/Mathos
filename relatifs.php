@@ -51,12 +51,13 @@ if (count($_GET)) {
 		erreurSelection("durée");
 	}
 
-	//$operations = "";
-	//if(isset($_GET['addition']) && $_GET['addition'] == 1) $operations .= "'addition', ";
-	//if(isset($_GET['soustraction']) && $_GET['soustraction'] == 1) $operations .= "'soustraction', ";
-	//if ($operations == "") erreurSelection("opérations");
- 	//echo "			operations = [".$operations."]\n";
- 	echo "			operations = ['addition', 'soustraction']\n";
+	$operations = "";
+	if (isset($_GET['addition']) && $_GET['addition'] == 1) $operations .= "'addition', ";
+	if (isset($_GET['soustraction']) && $_GET['soustraction'] == 1) $operations .= "'soustraction', ";
+	if (isset($_GET['multiplication']) && $_GET['multiplication'] == 1) $operations .= "'multiplication', ";
+	if (isset($_GET['division']) && $_GET['division'] == 1) $operations .= "'division', ";
+	if ($operations == "") erreurSelection("opérations");
+ 	echo "			operations = [".$operations."]\n";
 
 	echo "		</script>\n";
 ?>
@@ -77,16 +78,17 @@ echo "\n";
 			essai = 0;
 			op = "";
 
+			function newValuesDiv() {
+				val1 = generateRandomNumber(nbmax,0,1);
+			  	val2 = generateRandomNumber(val1,0,1);
+				return [val1,val2];
+			 }
+
 			// NOUVEAU CALCUL
 			function nouveauCalcul() {
 				operation = operations[Math.floor(Math.random() * operations.length)];
 				valeur1 = generateRandomNumber(nbmax,0,1);
 				valeur2 = generateRandomNumber(nbmax,0,1);
-				//if (operation == 'soustraction') {
-				//	valeur2 = generateRandomNumber(valeur1);
-				//} else {
-				//	valeur2 = generateRandomNumber(nbmax);
-				//}
 				switch (operation) {
 					case 'addition':
 						correct = valeur1 + valeur2;
@@ -95,6 +97,20 @@ echo "\n";
 					case 'soustraction':
 						correct = valeur1 - valeur2;
 						op = ' - ';
+						break;
+					case 'multiplication':
+						correct = valeur1 * valeur2;
+						op = ' x ';
+						break;
+					case 'division':
+						valeurs = newValuesDiv();
+						while (valeurs[0] % valeurs[1] !== 0) {
+							valeurs = newValuesDiv();
+						}
+						valeur1 = valeurs[0];
+						valeur2 = valeurs[1];
+						correct = valeur1 / valeur2;
+						op = ' : ';
 						break;
 				}
 				nbcalcul += 1;
@@ -115,12 +131,10 @@ echo "\n";
 		<form id="formCalcul" method="GET" action="<?php echo basename($_SERVER['PHP_SELF']); ?>">
 			<div class="content">
 				<h2>Options de l'exercice</h2>
-				<p><i class="fa-solid fa-list"></i> Nombre de calculs:&nbsp;<input type="text" size="4" name="nbcalcul" value="20" id="nbcalcul" required autofocus><br /><br />
-				<i class="fa-solid fa-maximize"></i> Plus grand nombre:&nbsp;<input type="text" size="4" name="nbmax" value="100" id="nbmax" required><br /><br />
-				<!--
-				<i class="fa-solid fa-calculator"></i> Opérations: <label><input type="checkbox" name="addition" value="1" checked>Addition</label> <label><input type="checkbox" name="soustraction" value="1" checked>Soustraction</label><br><br>
-				-->
-				<i class="fa-solid fa-hourglass-start"></i> Durée: <input type="text" size="4" name="duree" value="5" id="duree" required> minutes<br /><br /><input type="submit" id="submit" value="C'est parti!"></p>
+				<p><i class="fa-solid fa-list"></i> Nombre de calculs:&nbsp;<input type="text" size="4" name="nbcalcul" value="20" id="nbcalcul" required autofocus><br><br>
+				<i class="fa-solid fa-maximize"></i> Plus grand nombre:&nbsp;<input type="text" size="4" name="nbmax" value="100" id="nbmax" required><br><br>
+				<i class="fa-solid fa-calculator"></i> Opérations:<br>&nbsp;&nbsp;&nbsp;&nbsp;<label><input type="checkbox" name="addition" value="1" checked>Addition</label><br>&nbsp;&nbsp;&nbsp;&nbsp;<label><input type="checkbox" name="soustraction" value="1" checked>Soustraction</label><br>&nbsp;&nbsp;&nbsp;&nbsp;<label><input type="checkbox" name="multiplication" value="1">Multiplication</label><br>&nbsp;&nbsp;&nbsp;&nbsp;<label><input type="checkbox" name="division" value="1">Division</label><br><br>
+				<i class="fa-solid fa-hourglass-start"></i> Durée: <input type="text" size="4" name="duree" value="2" id="duree" required> minutes<br><br><input type="submit" id="submit" value="C'est parti!"></p>
 			</div>
 		</form>
 <?php

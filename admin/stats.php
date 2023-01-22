@@ -108,8 +108,8 @@ if ($result = mysqli_query($con, "SELECT `exercice`, COUNT(*) AS C FROM scores W
             	case "prio":
             		echo "Priorité des opérations";
             		break;
-            	case "addrelatifs":
-            		echo "Addition nombres relatifs";
+            	case "relatifs":
+            		echo "Nombres relatifs";
             		break;
             	case "trous":
             		echo "Calculs à trous";
@@ -122,6 +122,22 @@ if ($result = mysqli_query($con, "SELECT `exercice`, COUNT(*) AS C FROM scores W
     } else {
         echo "No records matching your query were found.";
     }
+} else {
+    echo "ERROR: Could not able to execute $sql. " . mysqli_error($con);
+}
+
+if ($last = mysqli_query($con, "SELECT MAX(`timestamp`) AS D FROM scores WHERE userid = ".$id)) {
+	$row = $last->fetch_assoc();
+	if ($row["D"] == NULL) {
+		echo "Tu n'as fait aucun exercice pour l'instant. Reviens plus tard!";
+		mysqli_close($con);
+		exit();
+	}
+	else {
+		$timestamp = strtotime($row["D"]);
+		$jour = date('d.m.Y', $timestamp);
+		echo "<i class='fa-regular fa-calendar'></i> Dernier exercice le  ".$jour.".";
+	}
 } else {
     echo "ERROR: Could not able to execute $sql. " . mysqli_error($con);
 }

@@ -92,9 +92,9 @@ echo "\n";
 		<form id="formCalcul" method="GET" action="<?php echo basename($_SERVER['PHP_SELF']); ?>">
 			<div class="content">
 				<h2>Options de l'exercice</h2>
-				<p><i class="fa-solid fa-list"></i> Nombre de calculs:&nbsp;<input type="text" size="4" name="nbcalcul" value="20" id="nbcalcul" required autofocus><br /><br />
+				<p><i class="fa-solid fa-list"></i> Nombre de calculs:&nbsp;<input type="text" size="4" name="nbcalcul" value="20" id="nbcalcul" required autofocus><br><br>
 				<i class="fa-solid fa-calculator"></i> Complément à:&nbsp;<label><input type="checkbox" name="10" value="1" checked>10</label>&nbsp;&nbsp;<label><input type="checkbox" name="100" value="1" checked>100</label>&nbsp;&nbsp;<label><input type="checkbox" name="1000" value="1" checked>1000</label><br><br>
-				<i class="fa-solid fa-hourglass-start"></i> Durée: <input type="text" size="4" name="duree" value="5" id="duree" required> minutes<br /><br /><input type="submit" id="submit" value="C'est parti!"></p>
+				<i class="fa-solid fa-hourglass-start"></i> Durée: <input type="text" size="4" name="duree" value="2" id="duree" required> minutes<br><br><input type="submit" id="submit" value="C'est parti!"></p>
 			</div>
 		</form>
 <?php
