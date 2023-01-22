@@ -1,12 +1,15 @@
 		<script type="text/javascript">
 			// GENERE UN NOMBRE
 			function generateRandomNumber(max, nbdecimal, relatif) {
-				if (nbdecimal > 0) {
-					numb = Math.random() * max;
+				if (nbdecimal > 0 && relatif == 1) { // nombre décimal et relatif
+					numb = (Math.random() - 0.5) * (max + max);
 	      			return numb.toFixed(nbdecimal);
-				} else if (relatif == 1) {
+	      		} else if (nbdecimal > 0) { // nombre décimal positif
+	      			numb = Math.random() * max;
+	      			return numb.toFixed(nbdecimal);
+				} else if (relatif == 1) { // nombre relatif entier
 					return Math.floor((Math.random() - 0.5) * (max + max));
-				} else {
+				} else { // nombre entier positif
 					return Math.floor(Math.random() * (max + 1));
 				}
 			}

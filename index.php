@@ -1,7 +1,5 @@
 <?php
-// We need to use sessions, so you should always start sessions using the below code.
 session_start();
-// If the user is not logged in redirect to the login page...
 if (!isset($_SESSION['loggedin'])) {
 	header('Location: login.html');
 	exit;
@@ -27,14 +25,14 @@ echo "\n";
 ?>
 		<div class="content">
 			<h2>Accueil</h2>
-			<p style="line-height: 25px;">Salut <?=$_SESSION['name']?>!<br><br>
+			<p style="line-height: 25px;">Salut <?=$_SESSION['name']?>!<br>
 				Choisis ce que tu veux entraîner:<br>
 				<i class="fa-solid fa-angle-right"></i> <a href="addsous.php">Addition et soustraction</a><br>
 				<i class="fa-solid fa-angle-right"></i> <a href="compl.php">Compléments</a><br>
 				<i class="fa-solid fa-angle-right"></i> <a href="trous.php">Calculs à trous</a><br>
 				<i class="fa-solid fa-angle-right"></i> <a href="multidiv.php">Multiplication et division</a><br>
 				<i class="fa-solid fa-angle-right"></i> <a href="prio.php">Priorité des opérations</a><br>
-				<i class="fa-solid fa-angle-right"></i> <a href="addrelatifs.php">Nombres entiers relatifs</a><br><br>
+				<i class="fa-solid fa-angle-right"></i> <a href="addrelatifs.php">Addition nombres relatifs</a><br><br>
 				Amuse-toi bien! &#128515;
 			</p>
 <?php

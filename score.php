@@ -82,7 +82,7 @@ if ($result = mysqli_query($con, "SELECT `exercice`, COUNT(*) AS C FROM scores W
             		echo "Priorité des opérations";
             		break;
             	case "addrelatifs":
-            		echo "Nombres entiers relatifs";
+            		echo "Addition nombres relatifs";
             		break;
             	case "trous":
             		echo "Calculs à trous";
