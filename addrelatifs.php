@@ -1,4 +1,4 @@
-<?php
+V<?php
 // We need to use sessions, so you should always start sessions using the below code.
 session_start();
 // If the user is not logged in redirect to the login page...
@@ -65,7 +65,7 @@ if(count($_GET)) {
 		<form id="formCalcul" onsubmit="checkReponse()">
 			<div class="content">
 				<h2>Exercices</h2>
-				<p id="pcalcul"><span id="calcul"></span> = <input type="text" size="4" name="reponse" placeholder="" id="reponse" required autofocus> <input type="submit" id="submit" value="Valider"> <span id="corrige"></span></p>
+				<p id="pcalcul"><span id="calcul"></span> = <input type="text" size="4" name="reponse" placeholder="" id="reponse" required autofocus> <input type="submit" id="submit" value="Vérifier"> <span id="corrige"></span></p>
 				<p><span id="timer"><i class="fa-solid fa-hourglass-half"></i></span><span id="stats"></span></p>
 			</div>
 		</form>

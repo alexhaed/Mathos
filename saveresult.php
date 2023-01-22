@@ -1,5 +1,4 @@
 <?php
-
 	include 'mysql_login.php';
 
 	$con = mysqli_connect($DATABASE_HOST, $DATABASE_USER, $DATABASE_PASS, $DATABASE_NAME);
@@ -16,5 +15,4 @@
 	mysqli_close($con);
 
 	echo "ok!";
-
 ?>

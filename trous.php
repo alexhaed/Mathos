@@ -30,7 +30,7 @@ if(count($_GET)) {
 	echo "		<script>\n";
 
 	function erreurSelection() {
-		echo '</script><br><br>Erreur dans la séléction<br><a href="addsous.php">Retour</a>';
+		echo '</script><br><br>Erreur dans la séléction<br><a href="trous.php">Retour</a>';
 		exit();
 	}
 
@@ -67,7 +67,7 @@ if(count($_GET)) {
 		<form id="formCalcul" onsubmit="checkReponse()">
 			<div class="content">
 				<h2>Exercices</h2>
-				<p id="pcalcul"><span id="calcul"></span> = <input type="text" size="4" name="reponse" placeholder="" id="reponse" required autofocus> <input type="submit" id="submit" value="Vérifier"> <span id="corrige"></span></p>
+				<p id="pcalcul"><span id="calcul"></span>&nbsp;&nbsp;&nbsp;<input type="submit" id="submit" value="Vérifier"> <span id="corrige"></span></p>
 				<p><span id="timer"><i class="fa-solid fa-hourglass-half"></i></span><span id="stats"></span></p>
 			</div>
 		</form>
@@ -75,14 +75,13 @@ if(count($_GET)) {
 			nbcorrect = 0;
 			nbcalcul = 0;
 			essai = 0;
-			op = "";
 
 			function generateRandomInteger(max) {
-    			return Math.floor(Math.random() * (max +1)) ;
+    			return Math.floor(Math.random() * (max + 1));
 			}
 
 			async function saveResult() {
-				const data = { userid: <?php echo $_SESSION['id']; ?>, exercice: "addsous", nbcalculs: nbcalcul, reussis: nbcorrect, duree: duree };
+				const data = { userid: <?php echo $_SESSION['id']; ?>, exercice: "trous", nbcalculs: nbcalcul, reussis: nbcorrect, duree: duree };
 				const rep = await fetch('saveresult.php', {
 				  method: 'POST',
 				  headers: {
@@ -97,25 +96,31 @@ if(count($_GET)) {
 			// NOUVEAU CALCUL
 			function nouveauCalcul() {
 				operation = operations[Math.floor(Math.random() * operations.length)];
-				valeur1 = generateRandomInteger(nbmax);
-				if (operation == 'soustraction') {
-					valeur2 = generateRandomInteger(valeur1);
-				} else {
-					valeur2 = generateRandomInteger(nbmax);
-				}
+				trou = Math.floor(Math.random() * 2); // retourne 0 ou 1
+				valeur2 = generateRandomInteger(nbmax);
 				switch (operation) {
 					case 'addition':
-						correct = valeur1 + valeur2;
-						op = ' + ';
+						valeur1 = generateRandomInteger(valeur2);
+						correct = valeur2 - valeur1;
+						if (!trou) calcul = '<input type="text" size="4" name="reponse" placeholder="" id="reponse" required> + ' + valeur1 + ' = ' + valeur2;
+						else calcul = valeur1 + ' + <input type="text" size="4" name="reponse" placeholder="" id="reponse" required> = ' + valeur2;
 						break;
 					case 'soustraction':
-						correct = valeur1 - valeur2;
-						op = ' - ';
+						valeur1 = generateRandomInteger(valeur2);
+						if (!trou) {
+							correct = valeur2;
+							calcul = '<input type="text" size="4" name="reponse" placeholder="" id="reponse" required> - ' + valeur1 + ' = ' + (valeur2-valeur1);
+						} else {
+							correct = valeur1;
+							calcul = valeur2 + ' - <input type="text" size="4" name="reponse" placeholder="" id="reponse" required> = ' + (valeur2-valeur1);
+						}
 						break;
 				}
+
 				nbcalcul += 1;
 				essai = 1;
-				document.getElementById('calcul').innerHTML = valeur1 + op + valeur2;
+				document.getElementById('calcul').innerHTML = calcul;
+				document.getElementById("reponse").focus();
 				document.getElementById('corrige').innerHTML = '';
 				document.getElementById('reponse').value = '';
 			}
@@ -135,7 +140,7 @@ if(count($_GET)) {
 				secondes = secondes < 10 ? "0" + secondes : secondes;
 				document.getElementById("timer").innerHTML = '<i class="fa-solid fa-hourglass-end"></i> Temps écoulé: ' + minutes + ':' + secondes;
 				document.getElementById('pcalcul').innerHTML = feedback;
-				document.body.innerHTML += '<div style="text-align: center"><i class="fa-solid fa-arrow-rotate-right"></i> <a href="addsous.php">Recommencer</a></div>';
+				document.body.innerHTML += '<div style="text-align: center"><i class="fa-solid fa-arrow-rotate-right"></i> <a href="trous.php">Recommencer</a></div>';
 				saveResult();
 			}
 
@@ -192,7 +197,7 @@ if(count($_GET)) {
 // si pas de séléection
 } else {
 ?>
-		<form id="formCalcul" method="GET" action="addsous.php">
+		<form id="formCalcul" method="GET" action="trous.php">
 			<div class="content">
 				<h2>Options de l'exercice</h2>
 				<p><i class="fa-solid fa-list"></i> Nombre de calculs:&nbsp;<input type="text" size="4" name="nbcalcul" value="20" id="nbcalcul" required autofocus><br /><br />

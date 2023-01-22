@@ -30,6 +30,7 @@ if (!isset($_SESSION['loggedin'])) {
 				Choisis ce que tu veux entraîner:<br>
 				<i class="fa-solid fa-angle-right"></i> <a href="addsous.php">Addition et soustraction</a><br>
 				<i class="fa-solid fa-angle-right"></i> <a href="compl.php">Compléments</a><br>
+				<i class="fa-solid fa-angle-right"></i> <a href="trous.php">Calculs à trous</a><br>
 				<i class="fa-solid fa-angle-right"></i> <a href="multidiv.php">Multiplication et division</a><br>
 				<i class="fa-solid fa-angle-right"></i> <a href="prio.php">Priorité des opérations</a><br>
 				<i class="fa-solid fa-angle-right"></i> <a href="addrelatifs.php">Nombres entiers relatifs</a><br><br>
