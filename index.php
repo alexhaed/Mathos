@@ -22,7 +22,8 @@ if (!isset($_SESSION['loggedin'])) {
 	</head>
 	<body class="loggedin">
 <?php
-	include 'navbar.php';
+include 'navbar.php';
+echo "\n";
 ?>
 		<div class="content">
 			<h2>Accueil</h2>
@@ -34,18 +35,17 @@ if (!isset($_SESSION['loggedin'])) {
 				<i class="fa-solid fa-angle-right"></i> <a href="multidiv.php">Multiplication et division</a><br>
 				<i class="fa-solid fa-angle-right"></i> <a href="prio.php">Priorité des opérations</a><br>
 				<i class="fa-solid fa-angle-right"></i> <a href="addrelatifs.php">Nombres entiers relatifs</a><br><br>
-			Amuse-toi bien! &#128515;
+				Amuse-toi bien! &#128515;
 			</p>
-
 <?php
-	
-	include "levels.php";
+include "levels.php";
+echo "\n";
 
-	if($_SESSION['admin'] == 1) {
-		echo '<h2 style="margin-top: 0px">Admin</h2>';
-		echo '<p style="line-height: 25px;"><i class="fa-solid fa-users-gear"></i> <a href="admin/utilisateurs.php">Gérer les utilisateurs</a><br>';
-		echo '<i class="fa-solid fa-ranking-star"></i> <a href="admin/stats.php">Voir les statistiques</a></p>';
-	}
+if ($_SESSION['admin'] == 1) {
+	echo '<h2 style="margin-top: 0px">Admin</h2>';
+	echo '<p style="line-height: 25px;"><i class="fa-solid fa-users-gear"></i> <a href="admin/utilisateurs.php">Gérer les utilisateurs</a><br>';
+	echo '<i class="fa-solid fa-ranking-star"></i> <a href="admin/stats.php">Voir les statistiques</a></p>';
+}
 ?>
 		</div>
 	</body>
