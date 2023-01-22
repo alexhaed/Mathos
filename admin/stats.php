@@ -129,7 +129,7 @@ if ($result = mysqli_query($con, "SELECT `exercice`, COUNT(*) AS C FROM scores W
 if ($last = mysqli_query($con, "SELECT MAX(`timestamp`) AS D FROM scores WHERE userid = ".$id)) {
 	$row = $last->fetch_assoc();
 	if ($row["D"] == NULL) {
-		echo "Tu n'as fait aucun exercice pour l'instant. Reviens plus tard!";
+		echo "Tu n'as fait aucun exercice pour l'instant. Reviens&nbsp;plus&nbsp;tard!";
 		mysqli_close($con);
 		exit();
 	}
