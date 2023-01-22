@@ -24,9 +24,8 @@ include 'navbar.php';
 echo "\n";
 ?>
 		<div class="content">
-			<h2>Accueil</h2>
-			<p style="line-height: 25px;">Salut <?=$_SESSION['name']?>!<br>
-				Choisis ce que tu veux entraîner:<br>
+			<h2>Salut <?=$_SESSION['name']?>!</h2>
+			<p style="line-height: 25px;">Choisis ce que tu veux entraîner:<br>
 				<i class="fa-solid fa-angle-right"></i> <a href="addsous.php">Addition et soustraction</a><br>
 				<i class="fa-solid fa-angle-right"></i> <a href="compl.php">Compléments</a><br>
 				<i class="fa-solid fa-angle-right"></i> <a href="trous.php">Calculs à trous</a><br>
