@@ -41,7 +41,7 @@ if(isset($_GET['add']) && $_GET['add'] == 1) {
 	echo '<form action="utilisateurs.php" method="POST">';
 	echo '<i class="fa-solid fa-user-plus"></i>&nbsp;&nbsp;<input type="text" size="15" name="username" placeholder="Nom" id="username" required autofocus><br><br>';
 	echo '<i class="fa-solid fa-user-lock"></i>&nbsp;&nbsp;<input type="password" size="15" name="password" placeholder="Mot de passe" id="password" required><br><br>';
-	echo '<input type="submit" value="Créer">';
+	echo '<input type="submit" name="action" value="Créer">';
 	echo '</form>';
 	echo '<br><p style="text-align: center;"><i class="fa-solid fa-arrow-rotate-left"></i> <a href="utilisateurs.php">Retour</a></p>';
 
@@ -60,19 +60,31 @@ if(isset($_GET['add']) && $_GET['add'] == 1) {
 	echo '<input type="hidden" name="oldpassword" id="oldpassword" value="'.$password.'">';		
 	echo '<i class="fa-solid fa-user-pen"></i>&nbsp;&nbsp;<input type="text" size="15" name="username" value="'.$username.'" id="username" required autofocus><br><br>';
 	echo '<i class="fa-solid fa-user-lock"></i>&nbsp;&nbsp;<input type="password" size="15" name="password" placeholder="*********" id="password"><br><br>';
-	echo '<input type="submit" value="Mettre à jour">';
+	echo '<input type="submit" name="action" value="Mettre à jour"> &nbsp;&nbsp;';
+	echo '<input type="submit" name="action" value="Supprimer" style="background-color: red;" onclick="return confirm(\'Êtes-vous certain?\')">';
 	echo '</form>';
 	echo '<br><p style="text-align: center;"><i class="fa-solid fa-arrow-rotate-left"></i> <a href="utilisateurs.php">Retour</a></p>';
 
 // LISTE DES USERS
 } else {
 
-	if (isset($_POST['username']) && isset($_POST['password']) && isset($_POST['id'])) {
+	// SI MODIFICATION D'UN USER
+	if ($_POST['action'] == 'Mettre à jour') {
 		if ($_POST['password'] !== "") $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
 		else $password = $_POST['oldpassword'];
-		$stmt = "UPDATE accounts SET username='".$_POST['username']."', password='".$password."' WHERE id=".$_POST['id'];
-		mysqli_query($con, $stmt);
-	} elseif (isset($_POST['username']) && isset($_POST['password'])) {
+	  	$sql_u = "SELECT * FROM accounts WHERE username='".$_POST['username']."'";
+	  	$res_u = mysqli_query($con, $sql_u);
+	  	if (mysqli_num_rows($res_u) > 0) {
+	  	 	echo "<b>Erreur</b><br>Nom d'utilisateur déjà pris";
+			echo '<br><br><p style="text-align: center;"><a href="utilisateurs.php">Retour</a></p>';
+	  	 	exit();
+	  	} else {
+			$stmt = "UPDATE accounts SET username='".$_POST['username']."', password='".$password."' WHERE id=".$_POST['id'];
+			mysqli_query($con, $stmt);
+			echo "<p style='text-align: center;'>Utilisateur mis à jour!</p>";
+		}
+	// SI AJOUT D'UN USER
+	} elseif ($_POST['action'] == 'Créer') {
 	  	$sql_u = "SELECT * FROM accounts WHERE username='".$_POST['username']."'";
 	  	$res_u = mysqli_query($con, $sql_u);
 	  	if (mysqli_num_rows($res_u) > 0) {
@@ -82,7 +94,15 @@ if(isset($_GET['add']) && $_GET['add'] == 1) {
 	  	} else {
 			$stmt = "INSERT INTO accounts (username, password) VALUES ('".$_POST['username']."', '".password_hash($_POST['password'], PASSWORD_DEFAULT)."')";
 			mysqli_query($con, $stmt);
+			echo "<p style='text-align: center;'>Utilisateur ajouté!<p>";
 		}
+	// SI SUPPRESSION D'UN USER
+	} elseif ($_POST['action'] == 'Supprimer') {
+			$stmt = "DELETE FROM accounts WHERE id=".$_POST['id'];
+			mysqli_query($con, $stmt);
+			$stmt = "DELETE FROM scores WHERE userid=".$_POST['id'];
+			mysqli_query($con, $stmt);
+			echo "<p style='text-align: center;'>Utilisateur supprimé</p>";
 	}
 
 	if ($result = mysqli_query($con, "SELECT id, username FROM accounts ORDER BY id ASC")) {
