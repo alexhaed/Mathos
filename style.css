@@ -25,8 +25,9 @@ body {
   	border-bottom: 1px solid #dee0e4;
 }
 .login p {
+	margin: 0 10% 15px 10%;
 	text-align: center;
-	line-height: 23px;
+	line-height: 21px;
 }
 .login form {
   	text-align: center;
@@ -43,7 +44,7 @@ body {
   	padding-left: 5px;
 }
 .login form input[type="password"], .login form input[type="text"] {
-  	width: 310px;
+  	width: 60%;
   	height: 30px;
   	border: 1px solid #dee0e4;
   	margin-bottom: 20px;
