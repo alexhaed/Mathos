@@ -10,13 +10,15 @@ body {
   	max-width: 500px;
   	margin: auto;
 }
+
+/* LOGIN FORM */
 .login {
   	width: 90%;
   	background-color: #ffffff;
   	box-shadow: 0 0 9px 0 rgba(0, 0, 0, 0.3);
   	margin: auto;
   	margin-top: 80px;
-  	border-radius: 5px;
+  	border-radius: 7px;
 }
 .login h1 {
   	text-align: center;
@@ -29,23 +31,6 @@ body {
 	margin: 0 5% 15px 5%;
 	text-align: center;
 	line-height: 21px;
-}
-.inscription {
-  	width: 90%;
-  	background-color: #a7bbd6;
-  	box-shadow: 0 0 9px 0 rgba(0, 0, 0, 0.3);
-  	margin: 45px auto;
-  	border-radius: 5px;
-}
-.inscription p {
-	text-align: center;
-	margin: 0;
-	padding: 5px;
-	font-size: 14px;
-}
-.inscription a {
-	color: #2f3947;
-	font-size: 14px;
 }
 .login form {
   	text-align: center;
@@ -82,11 +67,32 @@ body {
   	transition: background-color 0.2s;
   	border-radius: 0;
   	-webkit-border-radius: 0;
+	border-bottom-left-radius: 7px;
+	border-bottom-right-radius: 7px;
 }
 .login form input[type="submit"]:hover {
 	background-color: #2868c7;
   	transition: background-color 0.2s;
 }
+.inscription {
+  	width: 90%;
+  	background-color: #a7bbd6;
+  	box-shadow: 0 0 9px 0 rgba(0, 0, 0, 0.3);
+  	margin: 45px auto;
+  	border-radius: 5px;
+}
+.inscription p {
+	text-align: center;
+	margin: 0;
+	padding: 5px;
+	font-size: 14px;
+}
+.inscription a {
+	color: #2f3947;
+	font-size: 14px;
+}
+
+/* NAVIGATION BAR */
 .navtop {
 	background-color: #2f3947;
 	height: 60px;
