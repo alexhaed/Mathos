@@ -28,7 +28,7 @@ if(count($_GET)) {
 	echo "		<script type='text/javascript'>\n";
 
 	function erreurSelection($texte) {
-		echo '</script><div class="content"><h2>Erreur</h2><p style="line-height: 35px; text-align: center;">Erreur dans la séléction ('.$texte.')<br>';
+		echo '</script><div class="content"><h2>Erreur</h2><p style="line-height: 35px; text-align: center;">Erreur dans la séléction ('.$texte.') &#128579;<br>';
 		echo ' <i class="fa-solid fa-arrow-rotate-left"></i> <a href="javascript:history.back();">Retour</a></p></div></body></html>';
 		exit();
 	}
