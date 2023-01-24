@@ -41,7 +41,9 @@ if (count($_POST)) {
 		echo "<p><b>Bravo, c'est fait!</b><br>Tu peux maintenant te connecter<br>avec ces informations &#129395;<br><br><a href='index.php'>Se connecter</a><br><br></p>";
 
      	$message = "L'utilisateur ".$_POST['username']." a été créé.";
-     	mail("alexandre@haederli.me", "Nouvel utilisateur créé sur Mathos", $message, "From: Mathos <mathos@haederli.me>");
+     	$header = 'From: Mathos <mathos@haederli.me>'."\r\n";
+     	$header .= 'Content-Type: text/plain; charset=utf-8'."\r\n";
+     	mail("alexandre@haederli.me", "Nouvel utilisateur créé sur Mathos", $message, $header);
 	}
 } else {
 ?>
