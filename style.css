@@ -14,7 +14,8 @@ body {
   	width: 90%;
   	background-color: #ffffff;
   	box-shadow: 0 0 9px 0 rgba(0, 0, 0, 0.3);
-  	margin: 80px auto;
+  	margin: auto;
+  	margin-top: 80px;
   	border-radius: 5px;
 }
 .login h1 {
@@ -28,6 +29,23 @@ body {
 	margin: 0 10% 15px 10%;
 	text-align: center;
 	line-height: 21px;
+}
+.inscription {
+  	width: 90%;
+  	background-color: #ffffff;
+  	box-shadow: 0 0 9px 0 rgba(0, 0, 0, 0.3);
+  	margin: 35px auto;
+  	border-radius: 5px;
+}
+.inscription p {
+	text-align: center;
+	margin: 0;
+	padding: 5px;
+	font-size: 14px;
+}
+.inscription a {
+	color: #2f3947;
+	font-size: 14px;
 }
 .login form {
   	text-align: center;

@@ -43,7 +43,7 @@ if (count($_POST)) {
      	$message = "L'utilisateur ".$_POST['username']." a été créé.";
      	$header = 'From: Mathos <mathos@haederli.me>'."\r\n";
      	$header .= 'Content-Type: text/plain; charset=utf-8'."\r\n";
-     	mail("alexandre@haederli.me", "Nouvel utilisateur créé sur Mathos", $message, $header);
+     	mail("mathos@haederli.me", "Nouvel utilisateur créé sur Mathos", $message, $header);
 	}
 } else {
 ?>
