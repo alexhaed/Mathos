@@ -81,11 +81,10 @@ if(isset($_GET['add']) && $_GET['add'] == 1) {
 				echo '<br><br><p style="text-align: center;"><a href="utilisateurs.php">Retour</a></p>';
 		  	 	exit();
 		  	}
-		else {
-			$stmt = "UPDATE accounts SET username='".$_POST['username']."', password='".$password."' WHERE id=".$_POST['id'];
-			mysqli_query($con, $stmt);
-			echo "<p style='text-align: center;'>Utilisateur mis à jour!</p>";
 		}
+		$stmt = "UPDATE accounts SET username='".$_POST['username']."', password='".$password."' WHERE id=".$_POST['id'];
+		mysqli_query($con, $stmt);
+		echo "<p style='text-align: center;'>Utilisateur mis à jour!</p>";
 	// SI AJOUT D'UN USER
 	} elseif ($_POST['action'] == 'Créer') {
 	  	$sql_u = "SELECT * FROM accounts WHERE username='".$_POST['username']."'";
