@@ -57,7 +57,8 @@ if(isset($_GET['add']) && $_GET['add'] == 1) {
 
 	echo '<form action="utilisateurs.php" method="POST">';
 	echo '<input type="hidden" name="id" id="id" value="'.$_GET['edit'].'">';
-	echo '<input type="hidden" name="oldpassword" id="oldpassword" value="'.$password.'">';		
+	echo '<input type="hidden" name="oldpassword" id="oldpassword" value="'.$password.'">';
+	echo '<input type="hidden" name="oldusername" id="oldusername" value="'.$username.'">';		
 	echo '<i class="fa-solid fa-user-pen"></i>&nbsp;&nbsp;<input type="text" size="15" name="username" value="'.$username.'" id="username" required autofocus><br><br>';
 	echo '<i class="fa-solid fa-user-lock"></i>&nbsp;&nbsp;<input type="password" size="15" name="password" placeholder="*********" id="password"><br><br>';
 	echo '<input type="submit" name="action" value="Mettre à jour"> &nbsp;&nbsp;';
@@ -72,13 +73,15 @@ if(isset($_GET['add']) && $_GET['add'] == 1) {
 	if ($_POST['action'] == 'Mettre à jour') {
 		if ($_POST['password'] !== "") $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
 		else $password = $_POST['oldpassword'];
-	  	$sql_u = "SELECT * FROM accounts WHERE username='".$_POST['username']."'";
-	  	$res_u = mysqli_query($con, $sql_u);
-	  	if (mysqli_num_rows($res_u) > 0) {
-	  	 	echo "<b>Erreur</b><br>Nom d'utilisateur déjà pris";
-			echo '<br><br><p style="text-align: center;"><a href="utilisateurs.php">Retour</a></p>';
-	  	 	exit();
-	  	} else {
+		if ($_POST['username'] !== $_POST['oldusername']) {
+		  	$sql_u = "SELECT * FROM accounts WHERE username='".$_POST['username']."'";
+		  	$res_u = mysqli_query($con, $sql_u);
+		  	if (mysqli_num_rows($res_u) > 0) {
+		  	 	echo "<b>Erreur</b><br>Nom d'utilisateur déjà pris";
+				echo '<br><br><p style="text-align: center;"><a href="utilisateurs.php">Retour</a></p>';
+		  	 	exit();
+		  	}
+		else {
 			$stmt = "UPDATE accounts SET username='".$_POST['username']."', password='".$password."' WHERE id=".$_POST['id'];
 			mysqli_query($con, $stmt);
 			echo "<p style='text-align: center;'>Utilisateur mis à jour!</p>";
