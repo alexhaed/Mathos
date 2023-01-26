@@ -25,7 +25,8 @@ if ($stmt = $con->prepare('SELECT id, password, admin FROM accounts WHERE userna
 			$_SESSION['name'] = $_POST['username'];
 			$_SESSION['id'] = $id;
 			$_SESSION['admin'] = $admin;
-			header('Location: index.php');
+			if (isset($_POST['redirect'])) header('Location: '.urldecode($_POST['redirect']));
+			else header('Location: index.php');
 		} else {
 			echo '<html><head><title>Mathos - Se connecter</title><link href="style.css" rel="stylesheet" type="text/css"><meta name="viewport" content="width=device-width, initial-scale=1.0"></head><body><div class="login"><h1>Mathos</h1><p style="padding: 20px;text-align: center;">Nom ou mot de passe incorrect! &#128579;<br><br><a href="javascript:history.back();">Réessayer</a></p></div></body></html>';
 		}

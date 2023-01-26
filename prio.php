@@ -1,7 +1,7 @@
 <?php
 session_start();
 if (!isset($_SESSION['loggedin'])) {
-	header('Location: login.html');
+	header('Location: login.php?redirect='.urlencode(basename($_SERVER['REQUEST_URI'])));
 	exit;
 }
 ?>
