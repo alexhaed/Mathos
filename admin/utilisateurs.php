@@ -1,7 +1,7 @@
 <?php
 session_start();
 if (!isset($_SESSION['loggedin']) || $_SESSION['admin'] != 1) {
-	header('Location: ../login.php');
+	header('Location: ../404.html');
 	exit;
 }
 ?>
