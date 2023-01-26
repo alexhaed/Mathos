@@ -2,3 +2,5 @@ mysql_login.php
 admin/mysql_tables_with_data.sql
 img/badge_niveau.xcf
 favicon/favicon_calculator-solid.xcf
+.htaccess
+404.html
