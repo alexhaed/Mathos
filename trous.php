@@ -54,6 +54,8 @@ if(count($_GET)) {
 	$operations = "";
 	if(isset($_GET['addition']) && $_GET['addition'] == 1) $operations .= "'addition', ";
 	if(isset($_GET['soustraction']) && $_GET['soustraction'] == 1) $operations .= "'soustraction', ";
+	if (isset($_GET['multiplication']) && $_GET['multiplication'] == 1) $operations .= "'multiplication', ";
+	if (isset($_GET['division']) && $_GET['division'] == 1) $operations .= "'division', ";
 	if ($operations == "") erreurSelection("opérations");
  	echo "			operations = [".$operations."]\n";
 
@@ -74,6 +76,12 @@ echo "\n";
 			nbcorrect = 0;
 			nbcalcul = 0;
 			essai = 0;
+
+			function newValuesDiv() {
+				val1 = generateRandomNumber(nbmax,0,0);
+			  	val2 = generateRandomNumber(val1,0,0);
+				return [val1,val2];
+			 }
 
 			// NOUVEAU CALCUL
 			function nouveauCalcul() {
@@ -97,6 +105,31 @@ echo "\n";
 							calcul = valeur2 + ' - <input type="text" size="4" name="reponse" placeholder="" id="reponse" required> = ' + (valeur2-valeur1);
 						}
 						break;
+					case 'multiplication':
+						valeurs = newValuesDiv();
+						while (valeurs[0] % valeurs[1] !== 0) {
+							valeurs = newValuesDiv();
+						}
+						correct = valeurs[0]/valeurs[1];
+						if (!trou) {
+							calcul = '<input type="text" size="4" name="reponse" placeholder="" id="reponse" required> x ' + valeurs[1] + ' = ' + valeurs[0];
+						} else {
+							calcul = valeurs[1] + ' x <input type="text" size="4" name="reponse" placeholder="" id="reponse" required> = ' + valeurs[0];
+						}
+						break;
+					case 'division':
+						valeurs = newValuesDiv();
+						while (valeurs[0] % valeurs[1] !== 0) {
+							valeurs = newValuesDiv();
+						}
+						if (!trou) {
+							correct = valeurs[0];
+							calcul = '<input type="text" size="4" name="reponse" placeholder="" id="reponse" required> : ' + valeurs[1] + ' = ' + valeurs[0]/valeurs[1];
+						} else {
+							correct = valeurs[1];
+							calcul = valeurs[0] + ' : <input type="text" size="4" name="reponse" placeholder="" id="reponse" required> = ' + valeurs[0]/valeurs[1];
+						}
+						break;
 				}
 				nbcalcul += 1;
 				essai = 1;
@@ -117,7 +150,7 @@ echo "\n";
 				<h2>Options de l'exercice</h2>
 				<p><i class="fa-solid fa-list"></i> Nombre de calculs:&nbsp;<input type="text" size="4" name="nbcalcul" value="20" id="nbcalcul" required autofocus><br><br>
 				<i class="fa-solid fa-maximize"></i> Plus grand nombre:&nbsp;<input type="text" size="4" name="nbmax" value="100" id="nbmax" required><br><br>
-				<i class="fa-solid fa-calculator"></i> Opérations: <label><input type="checkbox" name="addition" value="1" checked>Addition</label> <label><input type="checkbox" name="soustraction" value="1" checked>Soustraction</label><br><br>
+				<i class="fa-solid fa-calculator"></i> Opérations:<br>&nbsp;&nbsp;&nbsp;&nbsp;<label><input type="checkbox" name="addition" value="1" checked>Addition</label><br>&nbsp;&nbsp;&nbsp;&nbsp;<label><input type="checkbox" name="soustraction" value="1" checked>Soustraction</label><br>&nbsp;&nbsp;&nbsp;&nbsp;<label><input type="checkbox" name="multiplication" value="1">Multiplication</label><br>&nbsp;&nbsp;&nbsp;&nbsp;<label><input type="checkbox" name="division" value="1">Division</label><br><br>
 				<i class="fa-solid fa-hourglass-start"></i> Durée: <input type="text" size="4" name="duree" value="2" id="duree" required> minutes<br><br><input type="submit" id="submit" value="C'est parti!"></p>
 			</div>
 		</form>
