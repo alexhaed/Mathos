@@ -87,6 +87,9 @@ if ($result = mysqli_query($con, "SELECT `exercice`, COUNT(*) AS C FROM scores W
             	case "trous":
             		echo "Calculs à trous";
             		break;
+            	case "decimaux":
+            		echo "Nombres décimaux";
+            		break;
            }
            echo	": ".$row['C']." fois<br>\n";
         }

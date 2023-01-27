@@ -3,10 +3,10 @@
 			function generateRandomNumber(max, nbdecimal, relatif) {
 				if (nbdecimal > 0 && relatif == 1) { // nombre décimal et relatif
 					numb = (Math.random() - 0.5) * (max + max);
-	      			return numb.toFixed(nbdecimal);
+	      			return parseFloat(numb.toFixed(nbdecimal));
 	      		} else if (nbdecimal > 0) { // nombre décimal positif
 	      			numb = Math.random() * max;
-	      			return numb.toFixed(nbdecimal);
+	      			return parseFloat(numb.toFixed(nbdecimal));
 				} else if (relatif == 1) { // nombre relatif entier
 					return Math.floor((Math.random() - 0.5) * (max + max));
 				} else { // nombre entier positif

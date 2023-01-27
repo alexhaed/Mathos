@@ -31,7 +31,8 @@ echo "\n";
 				<i class="fa-solid fa-angle-right"></i> <a href="trous.php">Calculs à trous</a><br>
 				<i class="fa-solid fa-angle-right"></i> <a href="multidiv.php">Multiplication et division</a><br>
 				<i class="fa-solid fa-angle-right"></i> <a href="prio.php">Priorité des opérations</a><br>
-				<i class="fa-solid fa-angle-right"></i> <a href="relatifs.php">Nombres relatifs</a><br><br>
+				<i class="fa-solid fa-angle-right"></i> <a href="relatifs.php">Nombres relatifs</a><br>
+				<i class="fa-solid fa-angle-right"></i> <a href="decimaux.php">Nombres décimaux</a><br><br>
 				Amuse-toi bien! &#128515;
 			</p>
 <?php
