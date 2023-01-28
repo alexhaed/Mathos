@@ -59,7 +59,7 @@
 					feedback = 'Temps écoulé, dommage! &#128533<br>';
 					if (nbcalcul > 1) {
 						tempsmoyen = (duree/(nbcalcul-1)).toFixed(1).replace('.0', '');
-						feedback += '<br><i class="fa-solid fa-gauge-high"></i> Temps moyen par calcul: ' + tempsmoyen + ' seconde';
+						feedback += '<br><i class="fa-solid fa-gauge-high"></i> Temps moyen par calcul: ' + tempsmoyen + '&nbsp;seconde';
 						feedback += tempsmoyen >= 2 ? 's' : '';
 						feedback += '<br>';
 					}
@@ -68,7 +68,7 @@
 					duree = (departMinutes*60)-temps;
 					tempsmoyen = (duree/nbcalcul).toFixed(1).replace('.0', '');
 					feedback = 'Fin des calculs, bravo! &#128526;<br><br>';
-					feedback += '<i class="fa-solid fa-gauge-high"></i> Temps moyen par calcul: ' + tempsmoyen + ' seconde';
+					feedback += '<i class="fa-solid fa-gauge-high"></i> Temps moyen par calcul: ' + tempsmoyen + '&nbsp;seconde';
 					feedback += tempsmoyen >= 2 ? 's' : '';
 					feedback += '<br>';
 				}
