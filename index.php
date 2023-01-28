@@ -33,7 +33,7 @@ echo "\n";
 				<i class="fa-solid fa-angle-right"></i> <a href="division.php">Division avec reste</a><br>
 				<i class="fa-solid fa-angle-right"></i> <a href="prio.php">Priorité des opérations</a><br>
 				<i class="fa-solid fa-angle-right"></i> <a href="relatifs.php">Nombres relatifs</a><br>
-				<i class="fa-solid fa-angle-right"></i> <a href="decimaux.php">Nombres décimaux</a><br><br>
+				<i class="fa-solid fa-angle-right"></i> <a href="decimaux.php">Nombres décimaux</a> <span class="new">&#128072;</span><br><br>
 				Amuse-toi bien! &#128515;
 			</p>
 <?php

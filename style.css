@@ -182,3 +182,17 @@ form input[type="submit"] {
   	border-radius: 0;
   	-webkit-border-radius: 0;
 }
+.new {
+	height: 12px;
+  	animation: MoveLeftRight 1s linear infinite;
+}
+@keyframes MoveLeftRight {
+  0%, 100% {
+    padding-left: 0;
+  }
+  50% {
+    padding-left: 10px;
+  }
+}
+
+
