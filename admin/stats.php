@@ -4,6 +4,9 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['admin'] != 1) {
 	header('Location: ../404.html');
 	exit;
 }
+
+setlocale(LC_TIME, 'fr_FR', 'French');
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -142,7 +145,7 @@ if ($last = mysqli_query($con, "SELECT MAX(`timestamp`) AS D FROM scores WHERE u
 	else {
 		$timestamp = strtotime($row["D"]);
 		$jour = date('d.m.Y', $timestamp);
-		echo "<i class='fa-regular fa-calendar'></i> Dernier exercice le  ".$jour.".";
+		echo "<i class='fa-regular fa-calendar'></i> Dernier exercice le  ".$jour;
 	}
 } else {
     echo "ERROR: Could not able to execute $sql. " . mysqli_error($con);
