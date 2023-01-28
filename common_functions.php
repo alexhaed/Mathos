@@ -55,12 +55,22 @@
 			// FIN DE L'EXERCICE
 			function termine(arg) {
 				if (arg == "temps") {
-					feedback = 'Temps écoulé, dommage! &#128533<br>';
 					duree = departMinutes*60;
+					feedback = 'Temps écoulé, dommage! &#128533<br>';
+					if (nbcalcul > 1) {
+						tempsmoyen = (duree/(nbcalcul-1)).toFixed(1).replace('.0', '');
+						feedback += '<br><i class="fa-solid fa-gauge-high"></i> Temps moyen par calcul: ' + tempsmoyen + ' seconde';
+						feedback += tempsmoyen >= 2 ? 's' : '';
+						feedback += '<br>';
+					}
 				}
 				if (arg == "totalCalcul") {
-					feedback = 'Fin des calculs, bravo! &#128526;<br>';
 					duree = (departMinutes*60)-temps;
+					tempsmoyen = (duree/nbcalcul).toFixed(1).replace('.0', '');
+					feedback = 'Fin des calculs, bravo! &#128526;<br><br>';
+					feedback += '<i class="fa-solid fa-gauge-high"></i> Temps moyen par calcul: ' + tempsmoyen + ' seconde';
+					feedback += tempsmoyen >= 2 ? 's' : '';
+					feedback += '<br>';
 				}
 				minutes = parseInt(duree / 60, 10);
 				secondes = parseInt(duree % 60, 10);
@@ -68,7 +78,7 @@
 				secondes = secondes < 10 ? "0" + secondes : secondes;
 				document.getElementById("timer").innerHTML = '<i class="fa-solid fa-hourglass-end"></i> Temps écoulé: ' + minutes + ':' + secondes;
 				document.getElementById('pcalcul').innerHTML = feedback;
-				document.body.innerHTML += '<div style="text-align: center"><i class="fa-solid fa-arrow-rotate-right"></i> <a href="<?php echo basename($_SERVER['PHP_SELF']); ?>">Recommencer</a></div>';
+				document.body.innerHTML += '<div style="text-align: center"><i class="fa-solid fa-arrow-rotate-right"></i> <a href="#" onclick="document.location.reload();">Recommencer</a></div>';
 				saveResult();
 			}
 

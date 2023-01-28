@@ -78,7 +78,7 @@ echo "\n";
 			essai = 0;
 
 			// NOUVEAU CALCUL
-			function nouveauCalcul() {
+			function nouveauCalcul(arg) {
 				operation = operations[Math.floor(Math.random() * operations.length)];
 				trou = Math.floor(Math.random() * 2); // retourne 0 ou 1
 				switch (operation) {
@@ -108,6 +108,10 @@ echo "\n";
 					case 'multiplication':
 						valeur1 = generateRandomNumber(nbmax);
 						valeur2 = generateRandomNumber(nbmax);
+
+						// si valeur1 ou valeur2 égale 0 et le résultat est 0, la réponse peut être n'importe quel chiffre -> génère un autre calcul sans incrémenter le nombre de calculs (arg = 1)
+						if ((valeur1 * valeur2) === 0 && (valeur1 === 0 || valeur2 === 0)) nouveauCalcul(1);
+
 						if (!trou) {
 							correct = valeur1;
 							calcul = '<input type="text" size="4" name="reponse" placeholder="" id="reponse" required> x ' + valeur2 + ' = ' + (valeur1 * valeur2);
@@ -129,7 +133,7 @@ echo "\n";
 						}
 						break;
 				}
-				nbcalcul += 1;
+				if (arg != 1) nbcalcul += 1;
 				essai = 1;
 				document.getElementById('calcul').innerHTML = calcul;
 				document.getElementById("reponse").focus();
