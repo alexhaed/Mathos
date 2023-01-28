@@ -84,12 +84,6 @@ echo "\n";
 			essai = 0;
 			op = "";
 
-			function newValuesDiv() {
-				val1 = generateRandomNumber(nbmax,decimal,0);
-			  	val2 = generateRandomNumber(val1,decimal,0);
-				return [val1,val2];
-			 }
-
 			// NOUVEAU CALCUL
 			function nouveauCalcul() {
 				operation = operations[Math.floor(Math.random() * operations.length)];
@@ -114,13 +108,8 @@ echo "\n";
 						op = ' x ';
 						break;
 					case 'division':
-						valeurs = newValuesDiv();
-						while (valeurs[0] % valeurs[1] !== 0) {
-							valeurs = newValuesDiv();
-						}
-						valeur1 = valeurs[0];
-						valeur2 = valeurs[1];
-						correct = valeur1 / valeur2;
+						correct = generateRandomNumber(nbmax,decimal,0);			
+						valeur1 = correct * valeur2;
 						op = ' : ';
 						break;
 */

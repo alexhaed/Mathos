@@ -77,57 +77,55 @@ echo "\n";
 			nbcalcul = 0;
 			essai = 0;
 
-			function newValuesDiv() {
-				val1 = generateRandomNumber(nbmax,0,0);
-			  	val2 = generateRandomNumber(val1,0,0);
-				return [val1,val2];
-			 }
-
 			// NOUVEAU CALCUL
 			function nouveauCalcul() {
 				operation = operations[Math.floor(Math.random() * operations.length)];
 				trou = Math.floor(Math.random() * 2); // retourne 0 ou 1
-				valeur2 = generateRandomNumber(nbmax);
 				switch (operation) {
 					case 'addition':
-						valeur1 = generateRandomNumber(valeur2);
-						correct = valeur2 - valeur1;
-						if (!trou) calcul = '<input type="text" size="4" name="reponse" placeholder="" id="reponse" required> + ' + valeur1 + ' = ' + valeur2;
-						else calcul = valeur1 + ' + <input type="text" size="4" name="reponse" placeholder="" id="reponse" required> = ' + valeur2;
+						valeur1 = generateRandomNumber(nbmax);
+						valeur2 = generateRandomNumber(nbmax);
+						if (!trou) {
+							correct = valeur1;
+							calcul = '<input type="text" size="4" name="reponse" placeholder="" id="reponse" required> + ' + valeur2 + ' = ' + (valeur1 + valeur2);
+						}
+						else {
+							correct = valeur2;
+							calcul = valeur1 + ' + <input type="text" size="4" name="reponse" placeholder="" id="reponse" required> = ' + (valeur1 + valeur2);
+						}
 						break;
 					case 'soustraction':
-						valeur1 = generateRandomNumber(valeur2);
+						valeur1 = generateRandomNumber(nbmax);
+						valeur2 = generateRandomNumber(valeur1);
 						if (!trou) {
-							correct = valeur2;
-							calcul = '<input type="text" size="4" name="reponse" placeholder="" id="reponse" required> - ' + valeur1 + ' = ' + (valeur2-valeur1);
-						} else {
 							correct = valeur1;
-							calcul = valeur2 + ' - <input type="text" size="4" name="reponse" placeholder="" id="reponse" required> = ' + (valeur2-valeur1);
+							calcul = '<input type="text" size="4" name="reponse" placeholder="" id="reponse" required> - ' + valeur2 + ' = ' + (valeur1-valeur2);
+						} else {
+							correct = valeur2;
+							calcul = valeur1 + ' - <input type="text" size="4" name="reponse" placeholder="" id="reponse" required> = ' + (valeur1-valeur2);
 						}
 						break;
 					case 'multiplication':
-						valeurs = newValuesDiv();
-						while (valeurs[0] % valeurs[1] !== 0) {
-							valeurs = newValuesDiv();
-						}
-						correct = valeurs[0]/valeurs[1];
+						valeur1 = generateRandomNumber(nbmax);
+						valeur2 = generateRandomNumber(nbmax);
 						if (!trou) {
-							calcul = '<input type="text" size="4" name="reponse" placeholder="" id="reponse" required> x ' + valeurs[1] + ' = ' + valeurs[0];
+							correct = valeur1;
+							calcul = '<input type="text" size="4" name="reponse" placeholder="" id="reponse" required> x ' + valeur2 + ' = ' + (valeur1 * valeur2);
 						} else {
-							calcul = valeurs[1] + ' x <input type="text" size="4" name="reponse" placeholder="" id="reponse" required> = ' + valeurs[0];
+							correct = valeur2;
+							calcul = valeur1 + ' x <input type="text" size="4" name="reponse" placeholder="" id="reponse" required> = ' + (valeur1 * valeur2);
 						}
 						break;
 					case 'division':
-						valeurs = newValuesDiv();
-						while (valeurs[0] % valeurs[1] !== 0) {
-							valeurs = newValuesDiv();
-						}
+						valeur2 = generateRandomNumber(nbmax);
+						rep = generateRandomNumber(nbmax);
+						valeur1 = rep * valeur2;
 						if (!trou) {
-							correct = valeurs[0];
-							calcul = '<input type="text" size="4" name="reponse" placeholder="" id="reponse" required> : ' + valeurs[1] + ' = ' + valeurs[0]/valeurs[1];
+							correct = valeur1;
+							calcul = '<input type="text" size="4" name="reponse" placeholder="" id="reponse" required> : ' + valeur2 + ' = ' + rep;
 						} else {
-							correct = valeurs[1];
-							calcul = valeurs[0] + ' : <input type="text" size="4" name="reponse" placeholder="" id="reponse" required> = ' + valeurs[0]/valeurs[1];
+							correct = valeur2;
+							calcul = valeur1 + ' : <input type="text" size="4" name="reponse" placeholder="" id="reponse" required> = ' + rep;
 						}
 						break;
 				}

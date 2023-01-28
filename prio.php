@@ -84,9 +84,9 @@ echo "\n";
 			function nouveauCalcul() {
 				op1 = randomOp();
 				op2 = randomOp();
-				while (op1 == op2) op2 = randomOp();
+				//while (op1 == op2) op2 = randomOp();
 
-				if(op1 == "/" ) {
+				if(op1 == "/") {
 			    	valeurs = newValuesDiv();
 				    while(valeurs[0] % valeurs[1] !== 0) {
 				      valeurs = newValuesDiv();
@@ -128,7 +128,7 @@ echo "\n";
 
   				resultat = parenthese1 + valeur1 + op1 + parenthese2 +  valeur2 + parenthese3 + op2 + valeur3 + parenthese4;
   				correct = eval(resultat);
-  				calcul = resultat.replace("/", " : ").replace("*", " x ").replace("+", " + ").replace("-"," - ");
+  				calcul = resultat.replaceAll("/", " : ").replaceAll("*", " x ").replaceAll("+", " + ").replaceAll("-"," - ");
 
 			  	while (correct < 0 || !Number.isInteger(correct)) nouveauCalcul();
 
