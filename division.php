@@ -69,6 +69,7 @@ echo "\n";
 			nbcalcul = 0;
 			essai = 0;
 
+			// VERIFICATION DE LA REPONSE
 			function checkReponseDiv() {
 				event.preventDefault();
 				var reponseQuot = document.getElementById("reponseQuot").value;
@@ -99,7 +100,10 @@ echo "\n";
 			function nouveauCalcul(arg) {
 				dividende = generateRandomNumber(nbmax);
 				diviseur = generateRandomNumber(dividende);
-				if (diviseur === 0) nouveauCalcul(1);
+				if (diviseur === 0) {
+					nouveauCalcul(1);
+					return;
+			  	}
 				quotient = Math.floor(dividende / diviseur);
 				reste = dividende % diviseur;				
 				essai = 1;

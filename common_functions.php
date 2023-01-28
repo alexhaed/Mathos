@@ -25,11 +25,11 @@
 			 	minutes = minutes < 10 ? "0" + minutes : minutes;
 			 	secondes = secondes < 10 ? "0" + secondes : secondes;
 
-			 	timerElement.innerHTML = '<i class="fa-solid fa-hourglass-half"></i> ';
+			 	timerElement.innerHTML = '<i class="fa-solid fa-hourglass-half"></i>&nbsp;';
 			 	timerElement.innerHTML += `${minutes}:${secondes}`;
 
 				if (temps == 0) {
-					timerElement.innerHTML = '<i class="fa-solid fa-hourglass-end"></i> 00:00';
+					timerElement.innerHTML = '<i class="fa-solid fa-hourglass-end"></i>&nbsp;00:00';
 				  	clearInterval(intervalID);
 				  	termine("temps");
 				}
@@ -88,7 +88,7 @@
 				var reponse = document.getElementById("reponse").value;
 				if (reponse == correct) {
 					if (essai == 1 ) nbcorrect += 1;
-					document.getElementById('corrige').innerHTML = '&nbsp;Juste! <i class="fa-solid fa-circle-check"></i>';
+					document.getElementById('corrige').innerHTML = ' Juste!&nbsp;<i class="fa-solid fa-circle-check"></i>';
 					document.getElementById('stats').innerHTML = '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa-solid fa-fire"></i>&nbsp;Réussi:&nbsp;' + nbcorrect + '&nbsp;sur&nbsp;' + nbcalcul;
 					if(nbcalcul < totalCalcul) {
 						setTimeout(nouveauCalcul, 300);
@@ -98,7 +98,7 @@
 					}
 				}
 				else {
-					document.getElementById('corrige').innerHTML = '&nbsp;Faux! <i class="fa-solid fa-circle-xmark"></i>';
+					document.getElementById('corrige').innerHTML = ' Faux!&nbsp;<i class="fa-solid fa-circle-xmark"></i>';
 					document.getElementById('reponse').value = '';
 					essai += 1;
 				}

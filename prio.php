@@ -81,7 +81,7 @@ echo "\n";
 			}
 
 			// NOUVEAU CALCUL
-			function nouveauCalcul() {
+			function nouveauCalcul(arg) {
 				op1 = randomOp();
 				op2 = randomOp();
 				//while (op1 == op2) op2 = randomOp();
@@ -130,7 +130,10 @@ echo "\n";
   				correct = eval(resultat);
   				calcul = resultat.replaceAll("/", " : ").replaceAll("*", " x ").replaceAll("+", " + ").replaceAll("-"," - ");
 
-			  	while (correct < 0 || !Number.isInteger(correct)) nouveauCalcul();
+			  	if (correct < 0 || !Number.isInteger(correct)) {
+			  		nouveauCalcul();
+			  		return;
+			  	}
 
 				essai = 1;
 				nbcalcul += 1;
