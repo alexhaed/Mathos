@@ -105,6 +105,9 @@ if ($result = mysqli_query($con, "SELECT `exercice`, COUNT(*) AS C FROM scores W
             	case "multidiv":
             		echo "Multiplication et division";
             		break;
+            	case "division":
+            		echo "Division avec reste";
+            		break;
             	case "prio":
             		echo "Priorité des opérations";
             		break;

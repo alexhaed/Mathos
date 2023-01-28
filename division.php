@@ -56,7 +56,7 @@ if (count($_GET)) {
 		<form id="formCalcul" onsubmit="checkReponseDiv();">
 			<div class="content">
 				<h2>Exercices</h2>
-				<p id="pcalcul"><span id="calcul"></span> &nbsp;&nbsp;Quotient:&nbsp;<input type="text" size="3" name="reponseQuot" placeholder="" id="reponseQuot" required autofocus> &nbsp;Reste:&nbsp;<input type="text" size="3" name="reponseReste" placeholder="" id="reponseReste" required> &nbsp;&nbsp;<input type="submit" id="submit" value="Vérifier"> <span id="corrige"></span></p>
+				<p id="pcalcul"><span id="calcul"></span><br><br>Quotient:&nbsp;<input type="text" size="4" name="reponseQuot" placeholder="" id="reponseQuot" required autofocus> &nbsp;Reste:&nbsp;<input type="text" size="4" name="reponseReste" placeholder="" id="reponseReste" required><br><br><input type="submit" id="submit" value="Vérifier"> <span id="corrige"></span></p>
 				<p><span id="timer"></span><span id="stats"></span></p>
 			</div>
 		</form>
