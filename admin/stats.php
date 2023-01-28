@@ -4,9 +4,6 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['admin'] != 1) {
 	header('Location: ../404.html');
 	exit;
 }
-
-setlocale(LC_TIME, 'fr_FR', 'French');
-
 ?>
 <!DOCTYPE html>
 <html>
