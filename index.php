@@ -53,14 +53,14 @@ if ($result = mysqli_query($con, "SELECT DISTINCT DATE_FORMAT(`timestamp`, '%Y-%
 					$last = $row_date;
 				}
 			}
+		    echo "Série en cours: <span style='white-space:nowrap;'>\n";
 			for ($i = 1; $i <= $affilee; $i++) { 
-				echo "<i class='fa-solid fa-fire'></i> ";
+				echo "<i class='fa-solid fa-fire'></i>&nbsp;";
 			}
-		    echo "Série en cours: ".$affilee." jour".($affilee > 1 ? "s" : "")." d'affilée!\n";
+		    echo $affilee."&nbsp;jour".($affilee > 1 ? "s" : "")."&nbsp;d'affilée!</span>";
 		} else {
 			$last_jour = $today - $last;
-			$last_text = "il y a ".$last_jour." jour".($last_jour > 1 ? "s" : "");
-			echo "<i class='fa-solid fa-fire-flame-simple'></i> Dernier entraînement ".$last_text;
+			echo "<i class='fa-solid fa-fire-flame-simple'></i> Dernier entraînement il y a ".$last_jour." jour".($last_jour > 1 ? "s" : "").".";
 		}
 	}
     mysqli_free_result($result);
