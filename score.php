@@ -35,6 +35,7 @@ if (mysqli_connect_errno()) {
 
 $id = $_SESSION['id'];
 
+// NOMBRE DE CALCULS REUSSIS
 if ($exercices = mysqli_query($con, "SELECT SUM(`reussis`) AS C FROM scores WHERE userid = ".$id)) {
 	$row = $exercices->fetch_assoc();
 	if ($row["C"] == 0) {
@@ -42,11 +43,12 @@ if ($exercices = mysqli_query($con, "SELECT SUM(`reussis`) AS C FROM scores WHER
 		mysqli_close($con);
 		exit();
 	}
-	else echo "				<i class='fa-solid fa-fire'></i> Total des calculs réussis: <b>".$row["C"]."</b><br><br>\n";
+	else echo "				<i class='fa-solid fa-trophy'></i> Total des calculs réussis: <b>".$row["C"]."</b><br><br>\n";
 } else {
     echo "ERROR: Could not able to execute $sql. " . mysqli_error($con);
 }
 
+// DUREE TOTALE DE CACUL
 if ($duree = mysqli_query($con, "SELECT SUM(`temps`) AS C FROM scores WHERE userid = ".$id)) {
 	$row = $duree->fetch_assoc();
 	if ($row["C"] == 0) {
@@ -55,7 +57,7 @@ if ($duree = mysqli_query($con, "SELECT SUM(`temps`) AS C FROM scores WHERE user
 	}
 	else {
 		$minutes = floor($row["C"] / 60);
-		echo "				<i class='fa-solid fa-hourglass-end'></i> Tu as calculé pendant ".$minutes." minute";
+		echo "				<i class='fa-solid fa-hourglass-end'></i> Tu as calculé pendant ".$minutes."&nbsp;minute";
 		if($minutes > 1) echo "s";
 		echo ".<br><br>\n";
 	}
@@ -63,6 +65,33 @@ if ($duree = mysqli_query($con, "SELECT SUM(`temps`) AS C FROM scores WHERE user
     echo "ERROR: Could not able to execute $sql. " . mysqli_error($con);
 }
 
+// JOURS D'AFFILEE
+if ($result = mysqli_query($con, "SELECT DISTINCT DATE_FORMAT(`timestamp`, '%Y-%m-%d') AS D FROM scores WHERE userid = ".$id." ORDER BY D DESC;")) {
+    $today = DateTime::createFromFormat('Y-m-d', date("Y-m-d"))->format('d.m.Y');
+    $affilee = 0;
+    $last = mysqli_fetch_array($result);
+	$last = DateTime::createFromFormat('Y-m-d', $last['D'])->format('d.m.Y');
+    if ($last == $today) {
+    	$last_text = "aujourd'hui";
+		$affilee += 1;
+    	while ($row = mysqli_fetch_array($result)) {
+    		$row_date = DateTime::createFromFormat('Y-m-d', $row['D'])->format('d.m.Y');
+			if (($last - $row_date) <= 1) {
+				$affilee += 1;
+				$last = $row_date;
+			}
+		}
+	} else {
+		$last_jour = $today - $last;
+		$last_text = "il y a ".$last_jour." jour".($last_jour > 1 ? "s" : "");
+	}
+    echo "<i class='fa-solid fa-fire'></i> Tu as joué ".$affilee." jour".($affilee > 1 ? "s" : "")." d'affilée. Dernier&nbsp;exercice:&nbsp;".$last_text.".<br><br>\n";
+    mysqli_free_result($result);
+} else {
+    echo "ERROR: Could not able to execute $sql. " . mysqli_error($con);
+}
+
+// EXERCICES FAVORIS
 if ($result = mysqli_query($con, "SELECT `exercice`, COUNT(*) AS C FROM scores WHERE userid = ".$id." GROUP BY `exercice` ORDER BY C DESC;")) {
     if (mysqli_num_rows($result) > 0) {
         echo "				<i class='fa-brands fa-gratipay'></i> Exercices préférés:<br>\n";
@@ -104,6 +133,7 @@ if ($result = mysqli_query($con, "SELECT `exercice`, COUNT(*) AS C FROM scores W
     echo "ERROR: Could not able to execute $sql. " . mysqli_error($con);
 }
 
+// FOOTER
 echo "				<br>Bien joué! &#128515;\n			</p>\n";
 echo "			<p style='text-align: center'>\n				<i class='fa-solid fa-arrow-rotate-right'></i> <a href='index.php'>Continue à t'entraîner</a>\n			</p>\n";
 

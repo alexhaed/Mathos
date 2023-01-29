@@ -25,7 +25,51 @@ echo "\n";
 ?>
 		<div class="content">
 			<h2>Salut <?=$_SESSION['name']?>!</h2>
-			<p style="line-height: 25px;">Choisis ce que tu veux entraîner:<br>
+			<p style="line-height: 25px;">
+<?php
+
+include 'mysql_login.php';
+$con = mysqli_connect($DATABASE_HOST, $DATABASE_USER, $DATABASE_PASS, $DATABASE_NAME);
+if (mysqli_connect_errno()) {
+	echo "Failed to connect to MySQL: ".mysqli_connect_error();
+}
+
+$id = $_SESSION['id'];
+
+// JOURS D'AFFILEE
+if ($result = mysqli_query($con, "SELECT DISTINCT DATE_FORMAT(`timestamp`, '%Y-%m-%d') AS D FROM scores WHERE userid = ".$id." ORDER BY D DESC;")) {
+    $today = DateTime::createFromFormat('Y-m-d', date("Y-m-d"))->format('d.m.Y');
+    $affilee = 0;
+    $last = mysqli_fetch_array($result);
+	$last = DateTime::createFromFormat('Y-m-d', $last['D'])->format('d.m.Y');
+    if ($last == $today) {
+    	$last_text = "aujourd'hui";
+		$affilee += 1;
+    	while ($row = mysqli_fetch_array($result)) {
+    		$row_date = DateTime::createFromFormat('Y-m-d', $row['D'])->format('d.m.Y');
+			if (($last - $row_date) <= 1) {
+				$affilee += 1;
+				$last = $row_date;
+			}
+		}
+		for ($i = 1; $i <= $affilee; $i++) { 
+			echo "<i class='fa-solid fa-fire'></i> ";
+		}
+	    echo "Série en cours: ".$affilee." jour".($affilee > 1 ? "s" : "")." d'affilée!\n";
+	} else {
+		$last_jour = $today - $last;
+		$last_text = "il y a ".$last_jour." jour".($last_jour > 1 ? "s" : "");
+		echo "<i class='fa-solid fa-fire-flame-simple'></i> Dernier entraînement ".$last_text;
+	}
+
+
+    mysqli_free_result($result);
+} else {
+    echo "ERROR: Could not able to execute $sql. " . mysqli_error($con);
+}
+
+?>
+			<br><br>Choisis ce que tu veux entraîner:<br>
 				<i class="fa-solid fa-angle-right"></i> <a href="addsous.php">Addition et soustraction</a><br>
 				<i class="fa-solid fa-angle-right"></i> <a href="compl.php">Compléments</a><br>
 				<i class="fa-solid fa-angle-right"></i> <a href="trous.php">Calculs à trous</a><br>

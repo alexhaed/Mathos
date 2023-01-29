@@ -5,7 +5,7 @@ if (mysqli_connect_errno()) {
 	echo "Failed to connect to MySQL: ".mysqli_connect_error();
 }
 
-$levels = array(1=>0,2=>10, 3=>20, 4=>50, 5=>100, 6=>150, 7=>200, 8=>250, 9=>300, 10=>350, 11=>400, 12=>450, 13=>500, 14=>1000);
+$levels = array(1=>0, 2=>10, 3=>20, 4=>50, 5=>100, 6=>150, 7=>200, 8=>250, 9=>300, 10=>350, 11=>400, 12=>450, 13=>500, 14=>1000);
 $id = $_SESSION['id'];
 
 if ($level_scr = mysqli_query($con, "SELECT `level` AS B FROM accounts WHERE id = ".$id)) {
@@ -85,13 +85,13 @@ mysqli_close($con);
 			</style>
 			<h2 style="margin-top: 0px">Niveau</h2>
 			<div class="progresscontent">
-			<?php
+<?php
 			if ($level != $level_old) {
 				echo '<p style="margin-bottom: 0px; text-align: center;"><i class="fa-solid fa-trophy"></i> ';
 				echo "<b>Bravo, tu as passé un niveau !</b>";
 				echo ' <i class="fa-solid fa-trophy"></i></p>';
 			}
-			?>
+?>
 			<p style="margin-bottom: 0px; text-align: center;"><img src="img/niveau_<?php echo $level; ?>.png" height="200"></p>
 			<div class="progress"> 
 				<div class="progress__bar"></div>

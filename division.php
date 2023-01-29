@@ -77,7 +77,7 @@ echo "\n";
 				if (reponseQuot == quotient && reponseReste == reste) {
 					if (essai == 1 ) nbcorrect += 1;
 					document.getElementById('corrige').innerHTML = '&nbsp;Juste! <i class="fa-solid fa-circle-check"></i>';
-					document.getElementById('stats').innerHTML = '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa-solid fa-fire"></i> Réussi: ' + nbcorrect + ' sur ' + nbcalcul;
+					document.getElementById('stats').innerHTML = '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa-solid fa-trophy"></i> Réussi: ' + nbcorrect + ' sur ' + nbcalcul;
 					if(nbcalcul < totalCalcul) {
 						setTimeout(nouveauCalcul, 300);
 					} else {
@@ -105,9 +105,11 @@ echo "\n";
 					return;
 			  	}
 				quotient = Math.floor(dividende / diviseur);
-				reste = dividende % diviseur;				
-				essai = 1;
-				if (arg != 1) nbcalcul += 1;
+				reste = dividende % diviseur;
+				if (arg != 1) {
+					nbcalcul += 1;
+					essai = 1;
+				}
 				document.getElementById('calcul').innerHTML = dividende + ' : ' + diviseur;
 				document.getElementById('corrige').innerHTML = '';
 				document.getElementById('reponseQuot').value = '';

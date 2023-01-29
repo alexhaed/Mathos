@@ -133,8 +133,10 @@ echo "\n";
 						}
 						break;
 				}
-				if (arg != 1) nbcalcul += 1;
-				essai = 1;
+				if (arg != 1) {
+					nbcalcul += 1;
+					essai = 1;
+				}
 				document.getElementById('calcul').innerHTML = calcul;
 				document.getElementById("reponse").focus();
 				document.getElementById('corrige').innerHTML = '';
