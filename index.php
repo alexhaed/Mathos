@@ -57,7 +57,7 @@ if ($result = mysqli_query($con, "SELECT DISTINCT DATE_FORMAT(`timestamp`, '%Y-%
 			for ($i = 1; $i <= $affilee; $i++) { 
 				echo "<i class='fa-solid fa-fire'></i>&nbsp;";
 			}
-		    echo $affilee."&nbsp;jour".($affilee > 1 ? "s" : "")."&nbsp;d'affilée!</span>";
+		    echo $affilee."&nbsp;jour".($affilee > 1 ? "s &nbsp;d'affilée!" : ". Reviens demain!")."</span>";
 		} else {
 			$last_jour = $today - $last;
 			echo "<i class='fa-solid fa-fire-flame-simple'></i> Dernier entraînement il y a ".$last_jour." jour".($last_jour > 1 ? "s" : "").".";
