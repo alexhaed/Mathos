@@ -85,7 +85,7 @@ if ($result = mysqli_query($con, "SELECT DISTINCT DATE_FORMAT(`timestamp`, '%Y-%
 		$last_jour = $today - $last;
 		$last_text = "il y a ".$last_jour." jour".($last_jour > 1 ? "s" : "");
 	}
-    echo "<i class='fa-solid fa-fire'></i> Tu as joué ".$affilee." jour".($affilee > 1 ? "s" : "")." d'affilée. Dernier&nbsp;exercice:&nbsp;".$last_text.".<br><br>\n";
+    echo "<i class='fa-solid fa-fire'></i> Tu as joué ".$affilee." jour".($affilee > 1 ? "s" : "")." d'affilée.<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Dernier&nbsp;exercice:&nbsp;".$last_text.".<br><br>\n";
     mysqli_free_result($result);
 } else {
     echo "ERROR: Could not able to execute $sql. " . mysqli_error($con);
