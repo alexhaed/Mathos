@@ -53,13 +53,13 @@ if ($result = mysqli_query($con, "SELECT DISTINCT DATE_FORMAT(`timestamp`, '%Y-%
 					$last = $row_date;
 				}
 			}
-		    echo "<span style='white-space:nowrap;'>Série en cours: ".$affilee."&nbsp;jour".($affilee > 1 ? "s d'affilée!</span>" : ".</span> Reviens demain pour continuer!")."<br>";
+		    echo "				Série en cours: ".$affilee."&nbsp;jour".($affilee > 1 ? "s d'affilée!" : ". Reviens demain pour continuer!")."<br>\n				";
 		    for ($i = 1; $i <= $affilee; $i++) { 
 				echo "<i class='fa-solid fa-fire'></i>&nbsp;";
 			}
 		} else {
 			$last_jour = $today - $last;
-			echo "<i class='fa-solid fa-fire'></i> Dernier entraînement ".($last_jour == 1 ? "hier. Fais un exercice aujourd'hui pour continuer ta&nbsp;série!" : "il y a ".$last_jour." jours.");
+			echo "				<i class='fa-solid fa-fire'></i> Dernier entraînement ".($last_jour == 1 ? "hier. Fais un exercice aujourd'hui pour continuer ta&nbsp;série!" : "il y a ".$last_jour." jours.")."\n";
 		}
 	}
     mysqli_free_result($result);
@@ -68,7 +68,9 @@ if ($result = mysqli_query($con, "SELECT DISTINCT DATE_FORMAT(`timestamp`, '%Y-%
 }
 
 ?>
-			<br><br>Choisis ce que tu veux entraîner:<br>
+
+				<br><br>
+				Choisis ce que tu veux entraîner:<br>
 				<i class="fa-solid fa-angle-right"></i> <a href="addsous.php">Addition et soustraction</a><br>
 				<i class="fa-solid fa-angle-right"></i> <a href="compl.php">Compléments</a><br>
 				<i class="fa-solid fa-angle-right"></i> <a href="trous.php">Calculs à trous</a><br>
@@ -84,9 +86,9 @@ include "levels.php";
 echo "\n";
 
 if ($_SESSION['admin'] == 1) {
-	echo '<h2 style="margin-top: 0px">Admin</h2>';
-	echo '<p style="line-height: 25px;"><i class="fa-solid fa-users-gear"></i> <a href="admin/utilisateurs.php">Gérer les utilisateurs</a><br>';
-	echo '<i class="fa-solid fa-ranking-star"></i> <a href="admin/stats.php">Voir les statistiques</a></p>';
+	echo "			<h2 style='margin-top: 0px'>Admin</h2>\n";
+	echo "			<p style='line-height: 25px;'><i class='fa-solid fa-users-gear'></i> <a href='admin/utilisateurs.php'>Gérer les utilisateurs</a><br>\n";
+	echo "			<i class='fa-solid fa-ranking-star'></i> <a href='admin/stats.php'>Voir les statistiques</a></p>\n";
 }
 ?>
 		</div>
