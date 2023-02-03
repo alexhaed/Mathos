@@ -67,22 +67,22 @@ if ($duree = mysqli_query($con, "SELECT SUM(`temps`) AS C FROM scores WHERE user
 
 // JOURS D'AFFILEE
 if ($result = mysqli_query($con, "SELECT DISTINCT DATE_FORMAT(`timestamp`, '%Y-%m-%d') AS D FROM scores WHERE userid = ".$id." ORDER BY D DESC;")) {
-    $today = DateTime::createFromFormat('Y-m-d', date("Y-m-d"))->format('d.m.Y');
+    $today = DateTime::createFromFormat('Y-m-d', date("Y-m-d"))->format('Y-m-d');
     $affilee = 0;
-    $last = mysqli_fetch_array($result);
-	$last = DateTime::createFromFormat('Y-m-d', $last['D'])->format('d.m.Y');
+    $last_res = mysqli_fetch_array($result);
+	$last = DateTime::createFromFormat('Y-m-d', $last_res['D'])->format('Y-m-d');
     if ($last == $today) {
     	$last_text = "aujourd'hui";
 		$affilee += 1;
     	while ($row = mysqli_fetch_array($result)) {
-    		$row_date = DateTime::createFromFormat('Y-m-d', $row['D'])->format('d.m.Y');
-			if (($last - $row_date) <= 1) {
+    		$row_date = DateTime::createFromFormat('Y-m-d', $row['D'])->format('Y-m-d');
+			if (((strtotime($last) - strtotime($row_date)) / (3600 * 24)) <= 1) {
 				$affilee += 1;
 				$last = $row_date;
 			}
 		}
 	} else {
-		$last_jour = $today - $last;
+		$last_jour = (strtotime($today) - strtotime($last)) / (3600 * 24);
 		$last_text = "il y a ".$last_jour." jour".($last_jour > 1 ? "s" : "");
 	}
     echo "<i class='fa-solid fa-fire'></i> Tu as joué ".$affilee." jour".($affilee > 1 ? "s" : "")." d'affilée.<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Dernier&nbsp;exercice:&nbsp;".$last_text.".<br><br>\n";
