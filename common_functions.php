@@ -76,7 +76,7 @@
 				secondes = parseInt(duree % 60, 10);
 				minutes = minutes < 10 ? "0" + minutes : minutes;
 				secondes = secondes < 10 ? "0" + secondes : secondes;
-				document.getElementById("timer").innerHTML = '<i class="fa-solid fa-hourglass-end"></i> Temps écoulé: ' + minutes + ':' + secondes;
+				document.getElementById("timer").innerHTML = '<i class="fa-solid fa-hourglass-end"></i> Écoulé: ' + minutes + ':' + secondes;
 				document.getElementById('pcalcul').innerHTML = feedback;
 				document.body.innerHTML += '<div style="text-align: center"><i class="fa-solid fa-arrow-rotate-right"></i> <a href="#" onclick="document.location.reload();">Recommencer</a></div>';
 				saveResult();
