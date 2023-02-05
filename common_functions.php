@@ -89,7 +89,7 @@
 				if (reponse == correct) {
 					if (essai == 1 ) nbcorrect += 1;
 					document.getElementById('corrige').innerHTML = ' Juste!&nbsp;<i class="fa-solid fa-circle-check"></i>';
-					document.getElementById('stats').innerHTML = '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa-solid fa-trophy"></i>&nbsp;Réussi:&nbsp;' + nbcorrect + '&nbsp;sur&nbsp;' + nbcalcul;
+					document.getElementById('stats').innerHTML = ' &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa-solid fa-trophy"></i>&nbsp;Réussi:&nbsp;' + nbcorrect + '&nbsp;sur&nbsp;' + nbcalcul;
 					if(nbcalcul < totalCalcul) {
 						setTimeout(nouveauCalcul, 300);
 					} else {
