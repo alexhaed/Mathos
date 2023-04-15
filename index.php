@@ -77,7 +77,8 @@ if ($result = mysqli_query($con, "SELECT DISTINCT DATE_FORMAT(`timestamp`, '%Y-%
 				<i class="fa-solid fa-angle-right"></i> <a href="division.php">Division avec reste</a><br>
 				<i class="fa-solid fa-angle-right"></i> <a href="prio.php">Priorité des opérations</a><br>
 				<i class="fa-solid fa-angle-right"></i> <a href="relatifs.php">Nombres relatifs</a><br>
-				<i class="fa-solid fa-angle-right"></i> <a href="decimaux.php">Nombres décimaux</a> <span class="new">&#128072;</span><br><br>
+				<i class="fa-solid fa-angle-right"></i> <a href="decimaux.php">Nombres décimaux</a><br>
+				<i class="fa-solid fa-angle-right"></i> <a href="doublemoitie.php">Double et moitié</a> <span class="new">&#128072;</span><br><br>
 				Amuse-toi bien! &#128515;
 			</p>
 <?php

@@ -122,6 +122,9 @@ if ($result = mysqli_query($con, "SELECT `exercice`, COUNT(*) AS C FROM scores W
             	case "decimaux":
             		echo "Nombres décimaux";
             		break;
+            	case "doublemoitie":
+            		echo "Double et moitié";
+            		break;
            }
            echo	": ".$row['C']." fois<br>\n";
         }
