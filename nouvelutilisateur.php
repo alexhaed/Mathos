@@ -23,27 +23,41 @@ if (count($_POST)) {
 		echo "Failed to connect to MySQL: ".mysqli_connect_error();
 	}
 
-	$sql_u = "SELECT * FROM accounts WHERE username='".$_POST['username']."'";
-	$res_u = mysqli_query($con, $sql_u);
-	if (mysqli_num_rows($res_u) > 0) {	// VERIFICATION DU NOM D'UTILISATEUR
-	  	echo "<p><b>Oups!</b><br>Ce nom d'utilisateur est déjà pris &#128579;<br><br>";
-		echo '<a href="javascript:history.back();">Trouves-en un autre!</a><br><br></p>';
-	} else if ($_POST['password'] != $_POST['passwordcheck']) {	// VERIFICATION DU MOT DE PASSE
-	  	echo "<p><b>Oups!</b><br>Les deux mots de passe<br>ne sont pas identitiques &#129327<br><br>";
-		echo '<a href="javascript:history.back();">Réessaie!</a><br><br></p>';
-	} else if ($_POST['password'] == "" || $_POST['password'] == "") {
-	  	echo "<p><b>Oups!</b><br>Tu dois remplir tous les champs &#129327<br><br>";
-		echo '<a href="javascript:history.back();">Réessaie!</a><br><br></p>';
-	} else {	
-		$stmt = "INSERT INTO accounts (username, password) VALUES ('".$_POST['username']."', '".password_hash($_POST['password'], PASSWORD_DEFAULT)."')";
-		mysqli_query($con, $stmt);
-		mysqli_close($con);
-		echo "<p><b>Bravo, c'est fait!</b><br>Tu peux maintenant te connecter<br>avec ces informations &#129395;<br><br><a href='index.php'>Se connecter</a><br><br></p>";
+	$username = $_POST['username'] ?? '';
+	$password = $_POST['password'] ?? '';
+	$passwordcheck = $_POST['passwordcheck'] ?? '';
 
-     	$message = "L'utilisateur ".$_POST['username']." a été créé.";
-     	$header = 'From: Mathos <mathos@haederli.me>'."\r\n";
-     	$header .= 'Content-Type: text/plain; charset=utf-8'."\r\n";
-     	mail("mathos@haederli.me", "Nouvel utilisateur créé sur Mathos", $message, $header);
+	if ($password != $passwordcheck) {
+		echo "<p><b>Oups!</b><br>Les deux mots de passe<br>ne sont pas identitiques &#129327<br><br>";
+		echo '<a href="javascript:history.back();">Réessaie!</a><br><br></p>';
+	} else if ($password == "" || $username == "") {
+		echo "<p><b>Oups!</b><br>Tu dois remplir tous les champs &#129327<br><br>";
+		echo '<a href="javascript:history.back();">Réessaie!</a><br><br></p>';
+	} else {
+		$stmt = $con->prepare('SELECT id FROM accounts WHERE username = ?');
+		$stmt->bind_param('s', $username);
+		$stmt->execute();
+		$stmt->store_result();
+
+		if ($stmt->num_rows > 0) {
+			echo "<p><b>Oups!</b><br>Ce nom d'utilisateur est déjà pris &#128579;<br><br>";
+			echo '<a href="javascript:history.back();">Trouves-en un autre!</a><br><br></p>';
+		} else {
+			$stmt->close();
+			$hashed = password_hash($password, PASSWORD_DEFAULT);
+			$stmt = $con->prepare('INSERT INTO accounts (username, password) VALUES (?, ?)');
+			$stmt->bind_param('ss', $username, $hashed);
+			$stmt->execute();
+			$stmt->close();
+			mysqli_close($con);
+			echo "<p><b>Bravo, c'est fait!</b><br>Tu peux maintenant te connecter<br>avec ces informations &#129395;<br><br><a href='index.php'>Se connecter</a><br><br></p>";
+
+			$message = "L'utilisateur ".$username." a été créé.";
+			$header = 'From: Mathos <mathos@haederli.me>'."\r\n";
+			$header .= 'Content-Type: text/plain; charset=utf-8'."\r\n";
+			mail("mathos@haederli.me", "Nouvel utilisateur créé sur Mathos", $message, $header);
+		}
+		if (isset($stmt)) $stmt->close();
 	}
 } else {
 ?>
