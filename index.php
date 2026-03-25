@@ -34,10 +34,16 @@ if (mysqli_connect_errno()) {
 	echo "Failed to connect to MySQL: ".mysqli_connect_error();
 }
 
-$id = $_SESSION['id'];
+$id = (int)$_SESSION['id'];
 
 // JOURS D'AFFILEE
-if ($result = mysqli_query($con, "SELECT DISTINCT DATE_FORMAT(`timestamp`, '%Y-%m-%d') AS D FROM scores WHERE userid = ".$id." ORDER BY D DESC;")) {
+$stmt = $con->prepare("SELECT DISTINCT DATE_FORMAT(`timestamp`, '%Y-%m-%d') AS D FROM scores WHERE userid = ? ORDER BY D DESC");
+$stmt->bind_param('i', $id);
+$stmt->execute();
+$result = $stmt->get_result();
+$stmt->close();
+
+if ($result) {
 	if (mysqli_num_rows($result) > 0) {
 	    $today = DateTime::createFromFormat('Y-m-d', date("Y-m-d"))->format('Y-m-d');
 	    $affilee = 0;
@@ -62,8 +68,6 @@ if ($result = mysqli_query($con, "SELECT DISTINCT DATE_FORMAT(`timestamp`, '%Y-%
 		}
 	}
     mysqli_free_result($result);
-} else {
-    echo "ERROR: Could not able to execute $sql. " . mysqli_error($con);
 }
 
 ?>
