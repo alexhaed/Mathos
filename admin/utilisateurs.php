@@ -69,42 +69,68 @@ if(isset($_GET['add']) && $_GET['add'] == 1) {
 // LISTE DES USERS
 } else {
 
+	$action = $_POST['action'] ?? '';
+	$post_id = isset($_POST['id']) ? (int)$_POST['id'] : 0;
+	$post_username = $_POST['username'] ?? '';
+	$post_password = $_POST['password'] ?? '';
+	$post_oldpassword = $_POST['oldpassword'] ?? '';
+	$post_oldusername = $_POST['oldusername'] ?? '';
+
 	// SI MODIFICATION D'UN USER
-	if ($_POST['action'] == 'Mettre à jour') {
-		if ($_POST['password'] !== "") $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
-		else $password = $_POST['oldpassword'];
-		if ($_POST['username'] !== $_POST['oldusername']) {
-		  	$sql_u = "SELECT * FROM accounts WHERE username='".$_POST['username']."'";
-		  	$res_u = mysqli_query($con, $sql_u);
-		  	if (mysqli_num_rows($res_u) > 0) {
-		  	 	echo "<b>Erreur</b><br>Nom d'utilisateur déjà pris";
+	if ($action == 'Mettre à jour') {
+		$password = ($post_password !== "") ? password_hash($post_password, PASSWORD_DEFAULT) : $post_oldpassword;
+
+		if ($post_username !== $post_oldusername) {
+			$chk = $con->prepare('SELECT id FROM accounts WHERE username = ?');
+			$chk->bind_param('s', $post_username);
+			$chk->execute();
+			$chk->store_result();
+			if ($chk->num_rows > 0) {
+				echo "<b>Erreur</b><br>Nom d'utilisateur déjà pris";
 				echo '<br><br><p style="text-align: center;"><a href="utilisateurs.php">Retour</a></p>';
-		  	 	exit();
-		  	}
+				$chk->close();
+				exit();
+			}
+			$chk->close();
 		}
-		$stmt = "UPDATE accounts SET username='".$_POST['username']."', password='".$password."' WHERE id=".$_POST['id'];
-		mysqli_query($con, $stmt);
+
+		$stmt = $con->prepare('UPDATE accounts SET username = ?, password = ? WHERE id = ?');
+		$stmt->bind_param('ssi', $post_username, $password, $post_id);
+		$stmt->execute();
+		$stmt->close();
 		echo "<p style='text-align: center;'>Utilisateur mis à jour!</p>";
+
 	// SI AJOUT D'UN USER
-	} elseif ($_POST['action'] == 'Créer') {
-	  	$sql_u = "SELECT * FROM accounts WHERE username='".$_POST['username']."'";
-	  	$res_u = mysqli_query($con, $sql_u);
-	  	if (mysqli_num_rows($res_u) > 0) {
-	  	 	 echo "<b>Erreur</b><br>Nom d'utilisateur déjà pris";
+	} elseif ($action == 'Créer') {
+		$chk = $con->prepare('SELECT id FROM accounts WHERE username = ?');
+		$chk->bind_param('s', $post_username);
+		$chk->execute();
+		$chk->store_result();
+		if ($chk->num_rows > 0) {
+			echo "<b>Erreur</b><br>Nom d'utilisateur déjà pris";
 			echo '<br><br><p style="text-align: center;"><a href="utilisateurs.php">Retour</a></p>';
-	  	 	 exit();
-	  	} else {
-			$stmt = "INSERT INTO accounts (username, password) VALUES ('".$_POST['username']."', '".password_hash($_POST['password'], PASSWORD_DEFAULT)."')";
-			mysqli_query($con, $stmt);
-			echo "<p style='text-align: center;'>Utilisateur ajouté!<p>";
+			$chk->close();
+			exit();
 		}
+		$chk->close();
+		$hashed = password_hash($post_password, PASSWORD_DEFAULT);
+		$stmt = $con->prepare('INSERT INTO accounts (username, password) VALUES (?, ?)');
+		$stmt->bind_param('ss', $post_username, $hashed);
+		$stmt->execute();
+		$stmt->close();
+		echo "<p style='text-align: center;'>Utilisateur ajouté!<p>";
+
 	// SI SUPPRESSION D'UN USER
-	} elseif ($_POST['action'] == 'Supprimer') {
-			$stmt = "DELETE FROM accounts WHERE id=".$_POST['id'];
-			mysqli_query($con, $stmt);
-			$stmt = "DELETE FROM scores WHERE userid=".$_POST['id'];
-			mysqli_query($con, $stmt);
-			echo "<p style='text-align: center;'>Utilisateur supprimé</p>";
+	} elseif ($action == 'Supprimer') {
+		$stmt = $con->prepare('DELETE FROM accounts WHERE id = ?');
+		$stmt->bind_param('i', $post_id);
+		$stmt->execute();
+		$stmt->close();
+		$stmt = $con->prepare('DELETE FROM scores WHERE userid = ?');
+		$stmt->bind_param('i', $post_id);
+		$stmt->execute();
+		$stmt->close();
+		echo "<p style='text-align: center;'>Utilisateur supprimé</p>";
 	}
 
 	if ($result = mysqli_query($con, "SELECT id, username FROM accounts ORDER BY id ASC")) {
@@ -118,8 +144,8 @@ if(isset($_GET['add']) && $_GET['add'] == 1) {
 	        while ($row = mysqli_fetch_array($result)) {
 	            echo "<tr>";
 	                echo "<td>" . $row['id'] . "</td>";
-	                echo "<td>" . $row['username'] . "</td>";
-	                echo "<td>&nbsp;&nbsp;<i class='fa-solid fa-user-pen'></i>&nbsp;<a href='utilisateurs.php?edit=". $row['id'] ."'>Editer</a></td>";
+	                echo "<td>" . htmlspecialchars($row['username']) . "</td>";
+	                echo "<td>&nbsp;&nbsp;<i class='fa-solid fa-user-pen'></i>&nbsp;<a href='utilisateurs.php?edit=". (int)$row['id'] ."'>Editer</a></td>";
 	            echo "</tr>";
 	        }
 	        echo "</table><br>";
@@ -128,7 +154,7 @@ if(isset($_GET['add']) && $_GET['add'] == 1) {
 	        echo "No records matching your query were found.";
 	    }
 	} else {
-	    echo "ERROR: Could not able to execute $sql. " . mysqli_error($con);
+	    echo "ERROR: Could not execute query. " . mysqli_error($con);
 	}
 	mysqli_close($con);
 ?>
