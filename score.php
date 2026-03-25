@@ -33,10 +33,15 @@ if (mysqli_connect_errno()) {
 	echo "Failed to connect to MySQL: ".mysqli_connect_error();
 }
 
-$id = $_SESSION['id'];
+$id = (int)$_SESSION['id'];
 
 // NOMBRE DE CALCULS REUSSIS
-if ($exercices = mysqli_query($con, "SELECT SUM(`reussis`) AS C FROM scores WHERE userid = ".$id)) {
+$stmt = $con->prepare("SELECT SUM(`reussis`) AS C FROM scores WHERE userid = ?");
+$stmt->bind_param('i', $id);
+$stmt->execute();
+$exercices = $stmt->get_result();
+$stmt->close();
+if ($exercices) {
 	$row = $exercices->fetch_assoc();
 	if ($row["C"] == 0) {
 		echo "Tu n'as fait aucun exercice pour l'instant. Reviens plus tard!";
@@ -44,12 +49,15 @@ if ($exercices = mysqli_query($con, "SELECT SUM(`reussis`) AS C FROM scores WHER
 		exit();
 	}
 	else echo "				<i class='fa-solid fa-trophy'></i> Total des calculs réussis: <b>".$row["C"]."</b><br><br>\n";
-} else {
-    echo "ERROR: Could not able to execute $sql. " . mysqli_error($con);
 }
 
-// DUREE TOTALE DE CACUL
-if ($duree = mysqli_query($con, "SELECT SUM(`temps`) AS C FROM scores WHERE userid = ".$id)) {
+// DUREE TOTALE DE CALCUL
+$stmt = $con->prepare("SELECT SUM(`temps`) AS C FROM scores WHERE userid = ?");
+$stmt->bind_param('i', $id);
+$stmt->execute();
+$duree = $stmt->get_result();
+$stmt->close();
+if ($duree) {
 	$row = $duree->fetch_assoc();
 	if ($row["C"] == 0) {
 		echo "Tu n'as fait aucun exercice pour l'instant. Reviens plus tard!";
@@ -61,12 +69,15 @@ if ($duree = mysqli_query($con, "SELECT SUM(`temps`) AS C FROM scores WHERE user
 		if($minutes > 1) echo "s";
 		echo ".<br><br>\n";
 	}
-} else {
-    echo "ERROR: Could not able to execute $sql. " . mysqli_error($con);
 }
 
 // JOURS D'AFFILEE
-if ($result = mysqli_query($con, "SELECT DISTINCT DATE_FORMAT(`timestamp`, '%Y-%m-%d') AS D FROM scores WHERE userid = ".$id." ORDER BY D DESC;")) {
+$stmt = $con->prepare("SELECT DISTINCT DATE_FORMAT(`timestamp`, '%Y-%m-%d') AS D FROM scores WHERE userid = ? ORDER BY D DESC");
+$stmt->bind_param('i', $id);
+$stmt->execute();
+$result = $stmt->get_result();
+$stmt->close();
+if ($result) {
     $today = DateTime::createFromFormat('Y-m-d', date("Y-m-d"))->format('Y-m-d');
     $affilee = 0;
     $last_res = mysqli_fetch_array($result);
@@ -87,53 +98,32 @@ if ($result = mysqli_query($con, "SELECT DISTINCT DATE_FORMAT(`timestamp`, '%Y-%
 	}
     echo "<i class='fa-solid fa-fire'></i> Tu as joué ".$affilee." jour".($affilee > 1 ? "s" : "")." d'affilée.<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Dernier&nbsp;exercice:&nbsp;".$last_text.".<br><br>\n";
     mysqli_free_result($result);
-} else {
-    echo "ERROR: Could not able to execute $sql. " . mysqli_error($con);
 }
 
 // EXERCICES FAVORIS
-if ($result = mysqli_query($con, "SELECT `exercice`, COUNT(*) AS C FROM scores WHERE userid = ".$id." GROUP BY `exercice` ORDER BY C DESC;")) {
-    if (mysqli_num_rows($result) > 0) {
-        echo "				<i class='fa-brands fa-gratipay'></i> Exercices préférés:<br>\n";
-        while ($row = mysqli_fetch_array($result)) {
-        	echo "				&nbsp;&nbsp;&nbsp;&nbsp;<i class='fa-solid fa-angle-right'></i> ";
-            switch($row['exercice']) {
-            	case "addsous":
-            		echo "Addition et soustraction";
-            		break;
-            	case "compl":
-            		echo "Compléments";
-            		break;
-            	case "multidiv":
-            		echo "Multiplication et division";
-            		break;
-            	case "division":
-            		echo "Division avec reste";
-            		break;
-            	case "prio":
-            		echo "Priorité des opérations";
-            		break;
-            	case "relatifs":
-            		echo "Nombres relatifs";
-            		break;
-            	case "trous":
-            		echo "Calculs à trous";
-            		break;
-            	case "decimaux":
-            		echo "Nombres décimaux";
-            		break;
-            	case "doublemoitie":
-            		echo "Double et moitié";
-            		break;
-           }
-           echo	": ".$row['C']." fois<br>\n";
-        }
-        mysqli_free_result($result);
-    } else {
-        echo "No records matching your query were found.";
+$stmt = $con->prepare("SELECT `exercice`, COUNT(*) AS C FROM scores WHERE userid = ? GROUP BY `exercice` ORDER BY C DESC");
+$stmt->bind_param('i', $id);
+$stmt->execute();
+$result = $stmt->get_result();
+$stmt->close();
+if ($result && mysqli_num_rows($result) > 0) {
+    echo "				<i class='fa-brands fa-gratipay'></i> Exercices préférés:<br>\n";
+    while ($row = mysqli_fetch_array($result)) {
+    	echo "				&nbsp;&nbsp;&nbsp;&nbsp;<i class='fa-solid fa-angle-right'></i> ";
+        switch($row['exercice']) {
+        	case "addsous": echo "Addition et soustraction"; break;
+        	case "compl": echo "Compléments"; break;
+        	case "multidiv": echo "Multiplication et division"; break;
+        	case "division": echo "Division avec reste"; break;
+        	case "prio": echo "Priorité des opérations"; break;
+        	case "relatifs": echo "Nombres relatifs"; break;
+        	case "trous": echo "Calculs à trous"; break;
+        	case "decimaux": echo "Nombres décimaux"; break;
+        	case "doublemoitie": echo "Double et moitié"; break;
+       }
+       echo ": ".$row['C']." fois<br>\n";
     }
-} else {
-    echo "ERROR: Could not able to execute $sql. " . mysqli_error($con);
+    mysqli_free_result($result);
 }
 
 // FOOTER
