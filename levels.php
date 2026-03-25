@@ -6,33 +6,40 @@ if (mysqli_connect_errno()) {
 }
 
 $levels = array(1=>0, 2=>10, 3=>20, 4=>50, 5=>100, 6=>150, 7=>200, 8=>250, 9=>300, 10=>350, 11=>400, 12=>450, 13=>500, 14=>1000);
-$id = $_SESSION['id'];
+$id = (int)$_SESSION['id'];
 
-if ($level_scr = mysqli_query($con, "SELECT `level` AS B FROM accounts WHERE id = ".$id)) {
+$stmt = $con->prepare("SELECT `level` AS B FROM accounts WHERE id = ?");
+$stmt->bind_param('i', $id);
+$stmt->execute();
+$level_scr = $stmt->get_result();
+$stmt->close();
+if ($level_scr) {
 	$row = $level_scr->fetch_assoc();
 	$level_old = $row["B"];
-} else {
-    echo "ERROR: Could not able to execute $sql. " . mysqli_error($con);
-}	
+}
 
 $level = $level_old;
 
-if ($reussis = mysqli_query($con, "SELECT SUM(`reussis`) AS C FROM scores WHERE userid = ".$id)) {
+$stmt = $con->prepare("SELECT SUM(`reussis`) AS C FROM scores WHERE userid = ?");
+$stmt->bind_param('i', $id);
+$stmt->execute();
+$reussis = $stmt->get_result();
+$stmt->close();
+if ($reussis) {
 	$row = $reussis->fetch_assoc();
-	if ($row["C"] >= $levels[($level_old+1)])  {
+	if ($row["C"] >= $levels[($level_old+1)]) {
 		$level = $level_old + 1;
 	}
-} else {
-    echo "ERROR: Could not able to execute $sql. " . mysqli_error($con);
 }
 
 if ($level != $level_old) {
-	$stmt = "UPDATE accounts SET level=".$level." WHERE id = ".$id;
-	mysqli_query($con, $stmt);
+	$stmt = $con->prepare("UPDATE accounts SET level = ? WHERE id = ?");
+	$stmt->bind_param('ii', $level, $id);
+	$stmt->execute();
+	$stmt->close();
 }
 
 $target = $levels[$level + 1];
-
 $nbtotarget = $target - $row["C"];
 $progress = $row["C"] * 100 / $target;
 
