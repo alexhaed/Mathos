@@ -1,17 +1,7 @@
-<!DOCTYPE html>
-<html>
-	<head>
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<title>Mathos - Inscription</title>
-		<script src="https://kit.fontawesome.com/16b34d58e9.js" crossorigin="anonymous"></script>
-		<link href="style.css" rel="stylesheet" type="text/css">
-		<link rel="apple-touch-icon" sizes="180x180" href="favicon/apple-touch-icon.png">
-		<link rel="icon" type="image/png" sizes="32x32" href="favicon/favicon-32x32.png">
-		<link rel="icon" type="image/png" sizes="16x16" href="favicon/favicon-16x16.png">
-		<link rel="manifest" href="favicon/site.webmanifest">
-	</head>
-	<body>
+<?php
+$title = 'Mathos - Inscription';
+include 'header.php';
+?>
 		<div class="login">
 			<h1><i class="fa-solid fa-calculator fa-1x"></i> Mathos</h1>
 <?php
@@ -32,6 +22,9 @@ if (count($_POST)) {
 		echo '<a href="javascript:history.back();">Réessaie!</a><br><br></p>';
 	} else if ($password == "" || $username == "") {
 		echo "<p><b>Oups!</b><br>Tu dois remplir tous les champs &#129327<br><br>";
+		echo '<a href="javascript:history.back();">Réessaie!</a><br><br></p>';
+	} else if (strlen($password) < 6) {
+		echo "<p><b>Oups!</b><br>Le mot de passe doit faire<br>au moins 6 caractères &#129327<br><br>";
 		echo '<a href="javascript:history.back();">Réessaie!</a><br><br></p>';
 	} else {
 		$stmt = $con->prepare('SELECT id FROM accounts WHERE username = ?');
@@ -57,7 +50,6 @@ if (count($_POST)) {
 			$header .= 'Content-Type: text/plain; charset=utf-8'."\r\n";
 			mail("mathos@haederli.me", "Nouvel utilisateur créé sur Mathos", $message, $header);
 		}
-		if (isset($stmt)) $stmt->close();
 	}
 } else {
 ?>
@@ -75,5 +67,4 @@ if (count($_POST)) {
 }
 ?>
 		</div>
-	</body>
-</html>
+<?php include 'footer.php'; ?>

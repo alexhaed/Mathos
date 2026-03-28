@@ -4,22 +4,11 @@ if (!isset($_SESSION['loggedin'])) {
 	header('Location: login.php');
 	exit;
 }
-?>
-<!DOCTYPE html>
-<html>
-	<head>
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<title>Mathos - Accueil</title>
-		<link href="style.css" rel="stylesheet" type="text/css">
-		<script src="https://kit.fontawesome.com/16b34d58e9.js" crossorigin="anonymous"></script>
-		<link rel="apple-touch-icon" sizes="180x180" href="favicon/apple-touch-icon.png">
-		<link rel="icon" type="image/png" sizes="32x32" href="favicon/favicon-32x32.png">
-		<link rel="icon" type="image/png" sizes="16x16" href="favicon/favicon-16x16.png">
-		<link rel="manifest" href="favicon/site.webmanifest">
-	</head>
-	<body class="loggedin">
-<?php
+
+$title = 'Mathos - Accueil';
+$body_class = 'loggedin';
+include 'header.php';
+echo "\n";
 include 'navbar.php';
 echo "\n";
 ?>
@@ -59,7 +48,7 @@ if ($result) {
 				}
 			}
 		    echo "				Série en cours: ".$affilee."&nbsp;jour".($affilee > 1 ? "s d'affilée!<br>\n" : ". Reviens demain pour continuer! ")."				";
-		    for ($i = 1; $i <= $affilee; $i++) { 
+		    for ($i = 1; $i <= $affilee; $i++) {
 				echo "<i class='fa-solid fa-fire'></i>&nbsp;";
 			}
 		} else {
@@ -72,19 +61,48 @@ if ($result) {
 
 ?>
 
-				<br><br>
-				Choisis ce que tu veux entraîner:<br>
-				<i class="fa-solid fa-angle-right"></i> <a href="addsous.php">Addition et soustraction</a><br>
-				<i class="fa-solid fa-angle-right"></i> <a href="compl.php">Compléments</a><br>
-				<i class="fa-solid fa-angle-right"></i> <a href="trous.php">Calculs à trous</a><br>
-				<i class="fa-solid fa-angle-right"></i> <a href="multidiv.php">Multiplication et division</a><br>
-				<i class="fa-solid fa-angle-right"></i> <a href="division.php">Division avec reste</a><br>
-				<i class="fa-solid fa-angle-right"></i> <a href="prio.php">Priorité des opérations</a><br>
-				<i class="fa-solid fa-angle-right"></i> <a href="relatifs.php">Nombres relatifs</a><br>
-				<i class="fa-solid fa-angle-right"></i> <a href="decimaux.php">Nombres décimaux</a><br>
-				<i class="fa-solid fa-angle-right"></i> <a href="doublemoitie.php">Double et moitié</a> <span class="new">&#128072;</span><br><br>
+				<br>
 				Amuse-toi bien! &#128515;
 			</p>
+			<div class="exercise-grid">
+				<a href="exercise.php?type=addsous" class="exercise-card">
+					<i class="fa-solid fa-plus"></i>
+					<span>Addition et soustraction</span>
+				</a>
+				<a href="exercise.php?type=compl" class="exercise-card">
+					<i class="fa-solid fa-puzzle-piece"></i>
+					<span>Compléments</span>
+				</a>
+				<a href="exercise.php?type=trous" class="exercise-card">
+					<i class="fa-solid fa-circle-question"></i>
+					<span>Calculs à trous</span>
+				</a>
+				<a href="exercise.php?type=multidiv" class="exercise-card">
+					<i class="fa-solid fa-xmark"></i>
+					<span>Multiplication et division</span>
+				</a>
+				<a href="exercise.php?type=division" class="exercise-card">
+					<i class="fa-solid fa-divide"></i>
+					<span>Division avec reste</span>
+				</a>
+				<a href="exercise.php?type=prio" class="exercise-card">
+					<i class="fa-solid fa-layer-group"></i>
+					<span>Priorité des opérations</span>
+				</a>
+				<a href="exercise.php?type=relatifs" class="exercise-card">
+					<i class="fa-solid fa-arrows-left-right"></i>
+					<span>Nombres relatifs</span>
+				</a>
+				<a href="exercise.php?type=decimaux" class="exercise-card">
+					<i class="fa-solid fa-circle-dot"></i>
+					<span>Nombres décimaux</span>
+				</a>
+				<a href="exercise.php?type=doublemoitie" class="exercise-card">
+					<i class="fa-solid fa-scale-balanced"></i>
+					<span>Double et moitié</span>
+					<span class="badge-new">Nouveau</span>
+				</a>
+			</div>
 <?php
 include "levels.php";
 echo "\n";
@@ -96,5 +114,4 @@ if ($_SESSION['admin'] == 1) {
 }
 ?>
 		</div>
-	</body>
-</html>
+<?php include 'footer.php'; ?>

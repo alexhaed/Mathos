@@ -19,7 +19,7 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['admin'] != 1) {
 		<script src="https://kit.fontawesome.com/16b34d58e9.js" crossorigin="anonymous"></script>
 	</head>
 	<body class="loggedin">
-			<nav class="navtop">
+		<nav class="navtop">
 			<div>
 				<h1><i class="fa-solid fa-calculator fa-1x"></i> Mathos</h1>
 				<a href="../logout.php"><i class="fas fa-sign-out-alt"></i>Quitter</a>
@@ -27,8 +27,7 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['admin'] != 1) {
 			</div>
 		</nav>
 		<div class="content">
-			<h2>Gestion des utilisateurs</h2>
-				<div>
+			<h2><i class="fa-solid fa-users-gear"></i> Gestion des utilisateurs</h2>
 <?php
 include '../mysql_login.php';
 $con = mysqli_connect($DATABASE_HOST, $DATABASE_USER, $DATABASE_PASS, $DATABASE_NAME);
@@ -37,13 +36,17 @@ if (mysqli_connect_errno()) {
 }
 
 // SI AJOUT D'UN USER
-if(isset($_GET['add']) && $_GET['add'] == 1) {
-	echo '<form action="utilisateurs.php" method="POST">';
-	echo '<i class="fa-solid fa-user-plus"></i>&nbsp;&nbsp;<input type="text" size="15" name="username" placeholder="Nom" id="username" required autofocus><br><br>';
-	echo '<i class="fa-solid fa-user-lock"></i>&nbsp;&nbsp;<input type="password" size="15" name="password" placeholder="Mot de passe" id="password" required><br><br>';
-	echo '<input type="submit" name="action" value="Créer">';
-	echo '</form>';
-	echo '<br><p style="text-align: center;"><i class="fa-solid fa-arrow-rotate-left"></i> <a href="utilisateurs.php">Retour</a></p>';
+if (isset($_GET['add']) && $_GET['add'] == 1) {
+?>
+			<div>
+				<form action="utilisateurs.php" method="POST" style="line-height:2.2">
+					<i class="fa-solid fa-user-plus"></i>&nbsp; <input type="text" size="20" name="username" placeholder="Nom d'utilisateur" id="username" required autofocus><br>
+					<i class="fa-solid fa-user-lock"></i>&nbsp; <input type="password" size="20" name="password" placeholder="Mot de passe" id="password" required><br><br>
+					<input type="submit" name="action" value="Créer">
+					&nbsp;&nbsp;<a href="utilisateurs.php"><i class="fa-solid fa-arrow-rotate-left"></i> Annuler</a>
+				</form>
+			</div>
+<?php
 
 // SI MODIFICATION D'UN USER
 } elseif (isset($_GET['edit']) && is_numeric($_GET['edit'])) {
@@ -54,17 +57,20 @@ if(isset($_GET['add']) && $_GET['add'] == 1) {
 	$stmt->bind_result($username, $password);
 	$stmt->fetch();
 	$stmt->close();
-
-	echo '<form action="utilisateurs.php" method="POST">';
-	echo '<input type="hidden" name="id" id="id" value="'.$_GET['edit'].'">';
-	echo '<input type="hidden" name="oldpassword" id="oldpassword" value="'.$password.'">';
-	echo '<input type="hidden" name="oldusername" id="oldusername" value="'.$username.'">';		
-	echo '<i class="fa-solid fa-user-pen"></i>&nbsp;&nbsp;<input type="text" size="15" name="username" value="'.$username.'" id="username" required autofocus><br><br>';
-	echo '<i class="fa-solid fa-user-lock"></i>&nbsp;&nbsp;<input type="password" size="15" name="password" placeholder="*********" id="password"><br><br>';
-	echo '<input type="submit" name="action" value="Mettre à jour"> &nbsp;&nbsp;';
-	echo '<input type="submit" name="action" value="Supprimer" style="background-color: red;" onclick="return confirm(\'Êtes-vous certain?\')">';
-	echo '</form>';
-	echo '<br><p style="text-align: center;"><i class="fa-solid fa-arrow-rotate-left"></i> <a href="utilisateurs.php">Retour</a></p>';
+?>
+			<div>
+				<form action="utilisateurs.php" method="POST" style="line-height:2.2">
+					<input type="hidden" name="id" value="<?= (int)$_GET['edit'] ?>">
+					<input type="hidden" name="oldpassword" value="<?= htmlspecialchars($password) ?>">
+					<input type="hidden" name="oldusername" value="<?= htmlspecialchars($username) ?>">
+					<i class="fa-solid fa-user-pen"></i>&nbsp; <input type="text" size="20" name="username" value="<?= htmlspecialchars($username) ?>" id="username" required autofocus><br>
+					<i class="fa-solid fa-user-lock"></i>&nbsp; <input type="password" size="20" name="password" placeholder="Laisser vide pour ne pas changer" id="password"><br><br>
+					<input type="submit" name="action" value="Mettre à jour">
+					&nbsp;&nbsp;<input type="submit" name="action" value="Supprimer" style="background-color:#ef4444;border-radius:6px;" onclick="return confirm('Supprimer cet utilisateur et tous ses scores?')">
+					&nbsp;&nbsp;<a href="utilisateurs.php"><i class="fa-solid fa-arrow-rotate-left"></i> Annuler</a>
+				</form>
+			</div>
+<?php
 
 // LISTE DES USERS
 } else {
@@ -86,8 +92,7 @@ if(isset($_GET['add']) && $_GET['add'] == 1) {
 			$chk->execute();
 			$chk->store_result();
 			if ($chk->num_rows > 0) {
-				echo "<b>Erreur</b><br>Nom d'utilisateur déjà pris";
-				echo '<br><br><p style="text-align: center;"><a href="utilisateurs.php">Retour</a></p>';
+				echo "<div><p><i class='fa-solid fa-circle-xmark' style='color:#ef4444'></i> Nom d'utilisateur déjà pris. <a href='utilisateurs.php'>Retour</a></p></div>";
 				$chk->close();
 				exit();
 			}
@@ -98,7 +103,7 @@ if(isset($_GET['add']) && $_GET['add'] == 1) {
 		$stmt->bind_param('ssi', $post_username, $password, $post_id);
 		$stmt->execute();
 		$stmt->close();
-		echo "<p style='text-align: center;'>Utilisateur mis à jour!</p>";
+		echo "<div><p><i class='fa-solid fa-circle-check' style='color:#22c55e'></i> Utilisateur mis à jour.</p></div>";
 
 	// SI AJOUT D'UN USER
 	} elseif ($action == 'Créer') {
@@ -107,8 +112,7 @@ if(isset($_GET['add']) && $_GET['add'] == 1) {
 		$chk->execute();
 		$chk->store_result();
 		if ($chk->num_rows > 0) {
-			echo "<b>Erreur</b><br>Nom d'utilisateur déjà pris";
-			echo '<br><br><p style="text-align: center;"><a href="utilisateurs.php">Retour</a></p>';
+			echo "<div><p><i class='fa-solid fa-circle-xmark' style='color:#ef4444'></i> Nom d'utilisateur déjà pris. <a href='utilisateurs.php'>Retour</a></p></div>";
 			$chk->close();
 			exit();
 		}
@@ -118,7 +122,7 @@ if(isset($_GET['add']) && $_GET['add'] == 1) {
 		$stmt->bind_param('ss', $post_username, $hashed);
 		$stmt->execute();
 		$stmt->close();
-		echo "<p style='text-align: center;'>Utilisateur ajouté!<p>";
+		echo "<div><p><i class='fa-solid fa-circle-check' style='color:#22c55e'></i> Utilisateur ajouté.</p></div>";
 
 	// SI SUPPRESSION D'UN USER
 	} elseif ($action == 'Supprimer') {
@@ -130,39 +134,50 @@ if(isset($_GET['add']) && $_GET['add'] == 1) {
 		$stmt->bind_param('i', $post_id);
 		$stmt->execute();
 		$stmt->close();
-		echo "<p style='text-align: center;'>Utilisateur supprimé</p>";
+		echo "<div><p><i class='fa-solid fa-circle-check' style='color:#22c55e'></i> Utilisateur supprimé.</p></div>";
 	}
 
+	// DEMANDES DE REINITIALISATION EN ATTENTE
+	$pending = mysqli_query($con, "SELECT pr.id, a.username, pr.token, pr.expires_at FROM password_resets pr JOIN accounts a ON a.id = pr.userid WHERE pr.expires_at > NOW() ORDER BY pr.expires_at ASC");
+	if ($pending && mysqli_num_rows($pending) > 0) {
+		echo "<div style='background:#fffbeb;border-left:4px solid #fbbf24;padding:16px 20px'>";
+		echo "<p style='margin:0 0 10px 0;font-weight:700;color:#92400e'><i class='fa-solid fa-key'></i>&nbsp; Demandes de réinitialisation en attente</p>";
+		while ($pr = mysqli_fetch_assoc($pending)) {
+			$link = '../resetmdp_confirm.php?token='.htmlspecialchars($pr['token']);
+			echo "<p style='margin:4px 0'><i class='fa-solid fa-user' style='color:#888'></i> <b>".htmlspecialchars($pr['username'])."</b>";
+			echo " <span style='color:#aaa;font-size:13px'>— expire le ".date('d.m.Y H:i', strtotime($pr['expires_at']))."</span>";
+			echo " &nbsp;<a href='".$link."' target='_blank'><i class='fa-solid fa-link'></i> Lien de réinitialisation</a></p>";
+		}
+		echo "</div>";
+		mysqli_free_result($pending);
+	}
+
+	// LISTE DES USERS
 	if ($result = mysqli_query($con, "SELECT id, username FROM accounts ORDER BY id ASC")) {
-	    if (mysqli_num_rows($result) > 0) {
-	        echo "<table style='padding: 5px;border:0.5px solid black;margin-left:auto;margin-right:auto;'>";
-	            echo "<tr>";
-	                echo "<th style='text-align: left;'>Id</th>";
-	                echo "<th style='text-align: left;padding-left: 5px;'>Nom</th>";
-	                echo "<th></th>";
-	            echo "</tr>";
-	        while ($row = mysqli_fetch_array($result)) {
-	            echo "<tr>";
-	                echo "<td>" . $row['id'] . "</td>";
-	                echo "<td>" . htmlspecialchars($row['username']) . "</td>";
-	                echo "<td>&nbsp;&nbsp;<i class='fa-solid fa-user-pen'></i>&nbsp;<a href='utilisateurs.php?edit=". (int)$row['id'] ."'>Editer</a></td>";
-	            echo "</tr>";
-	        }
-	        echo "</table><br>";
-	        mysqli_free_result($result);
-	    } else {
-	        echo "No records matching your query were found.";
-	    }
-	} else {
-	    echo "ERROR: Could not execute query. " . mysqli_error($con);
+		if (mysqli_num_rows($result) > 0) {
+			echo "<div>";
+			echo "<table style='width:100%;border-collapse:collapse'>";
+			echo "<tr style='border-bottom:2px solid #e0e0e3;color:#3274d6'>";
+			echo "<th style='text-align:left;padding:8px 12px'>Id</th>";
+			echo "<th style='text-align:left;padding:8px 12px'>Nom</th>";
+			echo "<th></th>";
+			echo "</tr>";
+			while ($row = mysqli_fetch_array($result)) {
+				echo "<tr style='border-bottom:1px solid #f0f0f3'>";
+				echo "<td style='padding:10px 12px;color:#888;font-size:14px'>".(int)$row['id']."</td>";
+				echo "<td style='padding:10px 12px;font-weight:600'>".htmlspecialchars($row['username'])."</td>";
+				echo "<td style='padding:10px 12px;text-align:right'><a href='utilisateurs.php?edit=".(int)$row['id']."'><i class='fa-solid fa-user-pen'></i> Éditer</a></td>";
+				echo "</tr>";
+			}
+			echo "</table>";
+			echo "<p style='text-align:right;margin-top:12px'><a href='utilisateurs.php?add=1'><i class='fa-solid fa-user-plus'></i> Ajouter un utilisateur</a></p>";
+			echo "</div>";
+			mysqli_free_result($result);
+		}
 	}
 	mysqli_close($con);
+}
 ?>
-				<p style="text-align: center;"><i class="fa-solid fa-user-plus"></i> <a href="utilisateurs.php?add=1">Ajouter</p>
-<?php
-	}
-?>
-			</div>
 		</div>
 	</body>
 </html>

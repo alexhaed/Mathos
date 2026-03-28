@@ -4,28 +4,17 @@ if (!isset($_SESSION['loggedin'])) {
 	header('Location: login.php?redirect='.urlencode(basename($_SERVER['REQUEST_URI'])));
 	exit;
 }
-?>
-<!DOCTYPE html>
-<html>
-	<head>
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<title>Mathos - Changer mon mot de passe</title>
-		<link href="style.css" rel="stylesheet" type="text/css">
-		<script src="https://kit.fontawesome.com/16b34d58e9.js" crossorigin="anonymous"></script>
-		<link rel="apple-touch-icon" sizes="180x180" href="favicon/apple-touch-icon.png">
-		<link rel="icon" type="image/png" sizes="32x32" href="favicon/favicon-32x32.png">
-		<link rel="icon" type="image/png" sizes="16x16" href="favicon/favicon-16x16.png">
-		<link rel="manifest" href="favicon/site.webmanifest">
-	</head>
-	<body class="loggedin">
-<?php
+
+$title = 'Mathos - Changer mon mot de passe';
+$body_class = 'loggedin';
+include 'header.php';
+echo "\n";
 include 'navbar.php';
 echo "\n";
 ?>
 		<div class="content">
 			<h2>Changer mon mot de passe</h2>
-			<p style="line-height: 35px;">
+			<div style="line-height: 35px;">
 <?php
 if (count($_POST)) {
 
@@ -76,19 +65,18 @@ if (count($_POST)) {
 
 } else {
 ?>
-			<form method="POST" action="changermdp.php">
-				<i class="fa-solid fa-lock"></i> Mot de passe actuel:<br>
-				<input type="password" name="actuel" required autofocus><br><br>
-				<i class="fa-solid fa-lock"></i> Nouveau mot de passe:<br>
-				<input type="password" name="nouveau" required><br><br>
-				<i class="fa-solid fa-lock"></i> Confirmer le nouveau mot de passe:<br>
-				<input type="password" name="confirme" required><br><br>
-				<input type="submit" value="Changer">
+			<form method="POST" action="changermdp.php" class="form-mdp">
+				<label><i class="fa-solid fa-lock"></i> Mot de passe actuel</label>
+				<input type="password" name="actuel" required autofocus>
+				<label><i class="fa-solid fa-lock"></i> Nouveau mot de passe</label>
+				<input type="password" name="nouveau" required>
+				<label><i class="fa-solid fa-lock"></i> Confirmer le nouveau mot de passe</label>
+				<input type="password" name="confirme" required>
+				<div><input type="submit" value="Changer le mot de passe"></div>
 			</form>
 <?php
 }
 ?>
-			</p>
+			</div>
 		</div>
-	</body>
-</html>
+<?php include 'footer.php'; ?>

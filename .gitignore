@@ -1,4 +1,5 @@
 mysql_login.php
+.env
 admin/mysql_tables_with_data.sql
 img/badge_niveau.xcf
 favicon/favicon_calculator-solid.xcf

@@ -4,22 +4,11 @@ if (!isset($_SESSION['loggedin'])) {
 	header('Location: login.php?redirect='.urlencode(basename($_SERVER['REQUEST_URI'])));
 	exit;
 }
-?>
-<!DOCTYPE html>
-<html>
-	<head>
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<title>Mathos - Scores</title>
-		<link href="style.css" rel="stylesheet" type="text/css">
-		<script src="https://kit.fontawesome.com/16b34d58e9.js" crossorigin="anonymous"></script>
-		<link rel="apple-touch-icon" sizes="180x180" href="favicon/apple-touch-icon.png">
-		<link rel="icon" type="image/png" sizes="32x32" href="favicon/favicon-32x32.png">
-		<link rel="icon" type="image/png" sizes="16x16" href="favicon/favicon-16x16.png">
-		<link rel="manifest" href="favicon/site.webmanifest">
-	</head>
-	<body class="loggedin">
-<?php
+
+$title = 'Mathos - Scores';
+$body_class = 'loggedin';
+include 'header.php';
+echo "\n";
 include 'navbar.php';
 echo "\n";
 ?>
@@ -130,8 +119,51 @@ if ($result && mysqli_num_rows($result) > 0) {
 echo "				<br>Bien joué! &#128515;\n			</p>\n";
 echo "			<p style='text-align: center'>\n				<i class='fa-solid fa-arrow-rotate-right'></i> <a href='index.php'>Continue à t'entraîner</a>\n			</p>\n";
 
+// HISTORIQUE DES SESSIONS
+$stmt = $con->prepare("SELECT timestamp, exercice, reussis, nbcalculs, temps FROM scores WHERE userid = ? ORDER BY timestamp DESC LIMIT 10");
+$stmt->bind_param('i', $id);
+$stmt->execute();
+$historique = $stmt->get_result();
+$stmt->close();
+if ($historique && mysqli_num_rows($historique) > 0) {
+	$noms = [
+		'addsous' => 'Addition et soustraction',
+		'compl' => 'Compléments',
+		'multidiv' => 'Multiplication et division',
+		'division' => 'Division avec reste',
+		'prio' => 'Priorité des opérations',
+		'relatifs' => 'Nombres relatifs',
+		'trous' => 'Calculs à trous',
+		'decimaux' => 'Nombres décimaux',
+		'doublemoitie' => 'Double et moitié',
+	];
+	echo "\t\t\t<h2><i class='fa-solid fa-clock-rotate-left'></i> Dernières sessions</h2>\n";
+	echo "\t\t\t<div style='overflow-x:auto'><table style='width:100%;border-collapse:collapse'>\n";
+	echo "\t\t\t\t<tr style='border-bottom:1px solid #e0e0e3;color:#3274d6'>\n";
+	echo "\t\t\t\t\t<th style='text-align:left;padding:8px 10px'>Date</th>\n";
+	echo "\t\t\t\t\t<th style='text-align:left;padding:8px 10px'>Exercice</th>\n";
+	echo "\t\t\t\t\t<th style='text-align:center;padding:8px 10px'>Réussis</th>\n";
+	echo "\t\t\t\t\t<th style='text-align:center;padding:8px 10px'>Durée</th>\n";
+	echo "\t\t\t\t</tr>\n";
+	while ($row = mysqli_fetch_assoc($historique)) {
+		$nom = $noms[$row['exercice']] ?? $row['exercice'];
+		$dt = new DateTime($row['timestamp']);
+		$date_str = $dt->format('d.m.Y H:i');
+		$m = floor($row['temps'] / 60);
+		$s = $row['temps'] % 60;
+		$duree_str = ($m > 0 ? $m.'min ' : '').str_pad($s, 2, '0', STR_PAD_LEFT).'s';
+		echo "\t\t\t\t<tr style='border-bottom:1px solid #f0f0f3'>\n";
+		echo "\t\t\t\t\t<td style='padding:8px 10px;font-size:14px;color:#888'>".$date_str."</td>\n";
+		echo "\t\t\t\t\t<td style='padding:8px 10px'>".$nom."</td>\n";
+		echo "\t\t\t\t\t<td style='padding:8px 10px;text-align:center'>".$row['reussis']."&nbsp;/&nbsp;".$row['nbcalculs']."</td>\n";
+		echo "\t\t\t\t\t<td style='padding:8px 10px;text-align:center'>".$duree_str."</td>\n";
+		echo "\t\t\t\t</tr>\n";
+	}
+	echo "\t\t\t</table></div>\n";
+	mysqli_free_result($historique);
+}
+
 mysqli_close($con);
 ?>
 		</div>
-	</body>
-</html>
+<?php include 'footer.php'; ?>

@@ -1,68 +1,35 @@
 <?php
-session_start();
-if (!isset($_SESSION['loggedin'])) {
-	header('Location: login.php?redirect='.urlencode(basename($_SERVER['REQUEST_URI'])));
-	exit;
-}
-?>
-<!DOCTYPE html>
-<html>
-	<head>
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<title>Mathos - Exercices</title>
-		<link href="style.css" rel="stylesheet" type="text/css">
-		<script src="https://kit.fontawesome.com/16b34d58e9.js" crossorigin="anonymous"></script>
-		<link rel="apple-touch-icon" sizes="180x180" href="favicon/apple-touch-icon.png">
-		<link rel="icon" type="image/png" sizes="32x32" href="favicon/favicon-32x32.png">
-		<link rel="icon" type="image/png" sizes="16x16" href="favicon/favicon-16x16.png">
-		<link rel="manifest" href="favicon/site.webmanifest">
-	</head>
-	<body class="loggedin">
-<?php
-include 'navbar.php';
-echo "\n";
-
-// SI SELECTION POUR L'EXERCICE DEJA FAITE
-if (count($_GET)) {
-	echo "		<script type='text/javascript'>\n";
-
-	function erreurSelection($texte) {
-		echo '</script><div class="content"><h2>Erreur</h2><p style="line-height: 35px; text-align: center;">Erreur dans la séléction ('.$texte.') &#128579;<br>';
-		echo ' <i class="fa-solid fa-arrow-rotate-left"></i> <a href="javascript:history.back();">Retour</a></p></div></body></html>';
-		exit();
-	}
-
-	if (isset($_GET['nbcalcul']) && filter_var($_GET['nbcalcul'], FILTER_VALIDATE_INT) && $_GET['nbcalcul'] > 0) {
- 		echo "			totalCalcul = ".$_GET['nbcalcul']."\n";
-	} else {
-		erreurSelection("nombre de calculs");
-	}
-
+if ($mode === 'params') {
 	if (isset($_GET['nbmax']) && filter_var($_GET['nbmax'], FILTER_VALIDATE_INT)) {
- 		echo "			nbmax = ".$_GET['nbmax']."\n";
+		echo "\t\t\tnbmax = ".$_GET['nbmax']."\n";
 	} else {
 		erreurSelection("plus grand nombre");
 	}
 
-	if (isset($_GET['duree']) && is_numeric($_GET['duree']) && $_GET['duree'] > 0) {
- 		echo "			departMinutes = ".$_GET['duree']."\n";
-	} else {
-		erreurSelection("durée");
-	}
-
-	echo "		</script>\n";
+} elseif ($mode === 'form') {
 ?>
 		<form id="formCalcul" onsubmit="checkReponseDiv();">
 			<div class="content">
 				<h2>Exercices</h2>
-				<p id="pcalcul"><span id="calcul"></span><br><br>Quotient:&nbsp;<input type="text" size="4" name="reponseQuot" placeholder="" id="reponseQuot" required autofocus> &nbsp;Reste:&nbsp;<input type="text" size="4" name="reponseReste" placeholder="" id="reponseReste" required><br><br><input type="submit" id="submit" value="Vérifier"> <span id="corrige"></span></p>
-				<p><span id="timer"></span><span id="stats"></span></p>
+				<div>
+					<div class="ex-play" id="pcalcul">
+						<div class="ex-calcul"><span id="calcul"></span></div>
+						<div class="ex-div-inputs">
+							<label class="ex-div-label">Quotient<input type="text" class="ex-input" name="reponseQuot" id="reponseQuot" required autofocus></label>
+							<label class="ex-div-label">Reste<input type="text" class="ex-input" name="reponseReste" id="reponseReste" required></label>
+						</div>
+						<div class="ex-feedback"><span id="corrige"></span></div>
+						<input type="submit" id="submit" value="Vérifier">
+					</div>
+					<div class="ex-meta">
+						<span id="timer"></span>
+						<span id="stats"></span>
+					</div>
+				</div>
 			</div>
 		</form>
 <?php
-include 'common_functions.php';
-echo "\n";
+} elseif ($mode === 'js') {
 ?>
 		<script type='text/javascript'>
 			nbcorrect = 0;
@@ -118,11 +85,11 @@ echo "\n";
 
 			nouveauCalcul();
 		</script>
-<?php 
-// SI PAS DE SELECTION POUR L'EXERCICE
-} else {
+<?php
+} elseif ($mode === 'options') {
 ?>
-		<form id="formCalcul" method="GET" action="<?php echo basename($_SERVER['PHP_SELF']); ?>">
+		<form id="formCalcul" method="GET" action="exercise.php">
+			<input type="hidden" name="type" value="division">
 			<div class="content">
 				<h2>Options de l'exercice</h2>
 				<p><i class="fa-solid fa-list"></i> Nombre de calculs:&nbsp;<input type="text" size="4" name="nbcalcul" value="20" id="nbcalcul" required><br><br>
@@ -133,5 +100,3 @@ echo "\n";
 <?php
 }
 ?>
-	</body>
-</html>

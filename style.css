@@ -10,6 +10,10 @@ body {
   	max-width: 500px;
   	margin: auto;
 }
+body.loggedin {
+	background-color: #f0f2f7;
+	max-width: 900px;
+}
 
 /* LOGIN FORM */
 .login {
@@ -94,47 +98,74 @@ body {
 
 /* NAVIGATION BAR */
 .navtop {
-	background-color: #2f3947;
-	height: 60px;
+	background-color: #1e2530;
+	border-bottom: 3px solid #3274d6;
 	width: 100%;
-	border: 10px;
 	float: left;
-	padding: 15px;
+	padding: 0 20px;
+	height: 62px;
 }
 .navtop div {
-	float: left;
-	margin: 0;
+	display: flex;
+	align-items: center;
 	width: 100%;
 	height: 100%;
 }
-.navtop div h1, .navtop div a {
-	align-items: center;
-}
 .navtop div h1 {
-	font-size: 24px;
+	font-size: 22px;
 	padding: 0;
 	margin: 0;
-	color: #eaebed;
-	font-weight: normal;
-	float: left;
+	color: #ffffff;
+	font-weight: 600;
+	flex: 1;
+	letter-spacing: 0.3px;
+}
+.navtop div h1 i {
+	color: #3274d6;
+	margin-right: 4px;
+}
+.navtop .nav-user {
+	color: #7eb3f5;
+	font-size: 14px;
+	font-weight: 600;
+	margin-right: 6px;
+	padding-right: 18px;
+	border-right: 1px solid #3a4555;
+}
+.navtop .nav-user i {
+	margin-right: 5px;
 }
 .navtop div a {
-	padding: 5px 0px;
-	margin-left: 15px;
+	padding: 6px 14px;
 	text-decoration: none;
 	color: #c1c4c8;
-	font-weight: bold;
-	float: right;
+	font-weight: 500;
+	font-size: 14px;
+	border-radius: 6px;
+	transition: background-color 0.15s, color 0.15s;
+	display: flex;
+	align-items: center;
+	gap: 6px;
+	position: relative;
 }
-.navtop div a i {
-	padding: 2px 4px 0 0;
+.navtop div a:not(:last-child)::after {
+	content: '';
+	position: absolute;
+	right: -1px;
+	top: 20%;
+	height: 60%;
+	width: 1px;
+	background-color: #3a4555;
 }
 .navtop div a:hover {
-	color: #eaebed;
+	color: #ffffff;
+	background-color: #2a3545;
 }
-body.loggedin {
-	background-color: #f3f4f7;
+.navtop div a i {
+	font-size: 13px;
 }
+
+/* CONTENT */
 .content {
 	width: 100%;
 	margin: 0 auto;
@@ -146,17 +177,18 @@ body.loggedin {
 .content h2 {
 	margin: 15px 0;
 	width: 100%;
-	padding: 15px;
+	padding: 15px 20px;
 	font-size: 22px;
 	border-bottom: 1px solid #e0e0e3;
-	color: #4a536e;
+	color: #3274d6;
 	float: left;
 }
 .content > p, .content > div {
-	box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.1);
-	margin: 15px 0;
+	box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+	margin: 10px 0;
 	padding: 25px;
 	background-color: #fff;
+	border-radius: 8px;
 }
 .content > p table td, .content > div table td {
 	padding: 5px;
@@ -168,20 +200,246 @@ body.loggedin {
 	padding: 5px;
 	margin: 0 0 10px 0;
 }
+
+/* EXERCISE CARDS GRID */
+.exercise-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(185px, 1fr));
+	gap: 12px;
+	background: transparent !important;
+	box-shadow: none !important;
+	padding: 5px 0 10px !important;
+}
+.exercise-card {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	gap: 10px;
+	min-height: 130px;
+	padding: 24px 15px 20px;
+	background: #fff;
+	border-radius: 12px;
+	text-decoration: none;
+	color: #2f3947;
+	box-shadow: 0 2px 6px rgba(0,0,0,0.07);
+	border: 1px solid #e8eaf0;
+	transition: transform 0.15s ease, box-shadow 0.15s ease, color 0.15s ease;
+	font-size: 13px;
+	font-weight: 600;
+	text-align: center;
+	position: relative;
+}
+.exercise-card:hover {
+	transform: translateY(-4px);
+	box-shadow: 0 8px 22px rgba(50, 116, 214, 0.15);
+	color: #3274d6;
+	border-color: #c5d8f7;
+}
+.exercise-card i {
+	font-size: 28px;
+	color: #3274d6;
+	transition: transform 0.15s ease;
+}
+.exercise-card:hover i {
+	transform: scale(1.12);
+}
+.exercise-card .badge-new {
+	position: absolute;
+	top: 8px;
+	right: 8px;
+	font-size: 10px;
+	background: #3274d6;
+	color: #fff;
+	padding: 2px 7px;
+	border-radius: 10px;
+	font-weight: 700;
+	letter-spacing: 0.3px;
+}
+
+/* FORM MOT DE PASSE */
+.form-mdp {
+	display: flex;
+	flex-direction: column;
+	gap: 6px;
+	width: 100%;
+	max-width: 380px;
+}
+.form-mdp label {
+	font-size: 13px;
+	font-weight: 600;
+	color: #555;
+	margin-top: 8px;
+}
+.form-mdp label i {
+	color: #3274d6;
+	margin-right: 5px;
+}
+.form-mdp input[type="password"] {
+	padding: 10px 14px;
+	border: 1px solid #dde1ea;
+	border-radius: 7px;
+	font-size: 15px;
+	outline: none;
+	transition: border-color 0.15s, box-shadow 0.15s;
+	background: #f8f9fc;
+}
+.form-mdp input[type="password"]:focus {
+	border-color: #3274d6;
+	box-shadow: 0 0 0 3px rgba(50,116,214,0.12);
+	background: #fff;
+}
+.form-mdp div {
+	margin-top: 10px;
+}
+
+/* FORMS */
 form input[type="submit"] {
 	-webkit-appearance: none;
-  	padding: 5px 15px 5px 15px;
+  	padding: 8px 20px;
  	margin-top: 5px;
  	margin-bottom: 0px;
-  	background-color: #2f3947;
+  	background-color: #3274d6;
   	border: 0;
   	cursor: pointer;
   	font-weight: bold;
   	color: #ffffff;
-  	transition: background-color 0.2s;
-  	border-radius: 0;
-  	-webkit-border-radius: 0;
+  	transition: background-color 0.2s, transform 0.1s;
+  	border-radius: 6px;
 }
+form input[type="submit"]:hover {
+	background-color: #2868c7;
+	transform: translateY(-1px);
+}
+form input[type="submit"]:active {
+	transform: translateY(0);
+}
+
+/* EXERCISE FEEDBACK ANIMATIONS */
+.feedback-correct {
+	color: #22c55e;
+	display: inline-block;
+	animation: correctPop 0.3s ease;
+}
+.feedback-wrong {
+	color: #ef4444;
+	display: inline-block;
+	animation: wrongShake 0.35s ease;
+}
+@keyframes correctPop {
+	0%   { transform: scale(1); }
+	50%  { transform: scale(1.3); }
+	100% { transform: scale(1); }
+}
+@keyframes wrongShake {
+	0%, 100% { transform: translateX(0); }
+	20%, 60% { transform: translateX(-7px); }
+	40%, 80% { transform: translateX(7px); }
+}
+
+/* EXERCISE OPTIONS FORM */
+#formCalcul[method="GET"] p {
+	line-height: 2.4;
+}
+#formCalcul[method="GET"] input[type="text"] {
+	border: 1px solid #dde1ea;
+	border-radius: 6px;
+	padding: 4px 8px;
+	width: 65px;
+	text-align: center;
+	font-size: 15px;
+}
+#formCalcul[method="GET"] label {
+	display: inline-flex;
+	align-items: center;
+	gap: 5px;
+	padding: 3px 12px;
+	border: 1px solid #dde1ea;
+	border-radius: 20px;
+	cursor: pointer;
+	font-size: 14px;
+	font-weight: 500;
+	margin: 0 3px;
+	transition: background 0.15s, border-color 0.15s;
+}
+#formCalcul[method="GET"] label:hover {
+	background: #f0f5ff;
+	border-color: #3274d6;
+}
+#formCalcul[method="GET"] label input[type="checkbox"] {
+	accent-color: #3274d6;
+}
+
+/* EXERCISE PLAY */
+.ex-play {
+	text-align: center;
+	padding: 30px 20px 20px;
+	border-bottom: 1px solid #eaeaef;
+}
+.ex-calcul {
+	font-size: 52px;
+	font-weight: 700;
+	color: #2f3947;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 12px;
+	flex-wrap: wrap;
+	margin-bottom: 16px;
+	line-height: 1.3;
+	width: 100%;
+}
+.ex-eq {
+	color: #3274d6;
+}
+.ex-input, .ex-calcul input[type="text"] {
+	font-size: 40px;
+	width: 130px;
+	text-align: center;
+	border: 2px solid #dde1ea;
+	border-radius: 12px;
+	padding: 4px 8px;
+	outline: none;
+	color: #3274d6;
+	font-weight: 700;
+	background: #f8f9fc;
+	transition: border-color 0.15s, box-shadow 0.15s;
+}
+.ex-input:focus, .ex-calcul input[type="text"]:focus {
+	border-color: #3274d6;
+	box-shadow: 0 0 0 4px rgba(50,116,214,0.12);
+	background: #fff;
+}
+.ex-feedback {
+	min-height: 32px;
+	font-size: 18px;
+	margin: 10px 0 14px;
+}
+.ex-meta {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 10px 5px;
+	font-size: 14px;
+	color: #666;
+}
+.ex-div-inputs {
+	display: flex;
+	gap: 30px;
+	justify-content: center;
+	margin: 16px 0;
+}
+.ex-div-label {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 8px;
+	font-size: 15px;
+	font-weight: 600;
+	color: #555;
+}
+
+/* MISC */
 .new {
   	animation: MoveLeftRight 1s linear infinite;
 }
@@ -193,5 +451,3 @@ form input[type="submit"] {
     padding-left: 10px;
   }
 }
-
-

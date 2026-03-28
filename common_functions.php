@@ -40,7 +40,7 @@
 
 			// ENREGISTREMENT DES RESULTATS
 			async function saveResult() {
-				const data = { userid: <?php echo $_SESSION['id']; ?>, exercice: "<?php echo basename($_SERVER['PHP_SELF'], ".php"); ?>", nbcalculs: nbcalcul, reussis: nbcorrect, duree: duree };
+				const data = { userid: <?php echo (int)$_SESSION['id']; ?>, exercice: "<?php echo $exercise_type; ?>", nbcalculs: nbcalcul, reussis: nbcorrect, duree: duree };
 				const rep = await fetch('saveresult.php', {
 				  method: 'POST',
 				  headers: {
@@ -86,9 +86,13 @@
 			function checkReponse() {
 				event.preventDefault();
 				var reponse = document.getElementById("reponse").value;
+				var corrigeEl = document.getElementById('corrige');
 				if (reponse == correct) {
 					if (essai == 1 ) nbcorrect += 1;
-					document.getElementById('corrige').innerHTML = ' Juste!&nbsp;<i class="fa-solid fa-circle-check"></i>';
+					corrigeEl.innerHTML = ' Juste!&nbsp;<i class="fa-solid fa-circle-check"></i>';
+					corrigeEl.className = '';
+					void corrigeEl.offsetWidth;
+					corrigeEl.className = 'feedback-correct';
 					document.getElementById('stats').innerHTML = ' &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa-solid fa-trophy"></i>&nbsp;Réussi:&nbsp;' + nbcorrect + '&nbsp;sur&nbsp;' + nbcalcul;
 					if(nbcalcul < totalCalcul) {
 						setTimeout(nouveauCalcul, 300);
@@ -98,7 +102,10 @@
 					}
 				}
 				else {
-					document.getElementById('corrige').innerHTML = ' Faux!&nbsp;<i class="fa-solid fa-circle-xmark"></i>';
+					corrigeEl.innerHTML = ' Faux!&nbsp;<i class="fa-solid fa-circle-xmark"></i>';
+					corrigeEl.className = '';
+					void corrigeEl.offsetWidth;
+					corrigeEl.className = 'feedback-wrong';
 					document.getElementById('reponse').value = '';
 					essai += 1;
 				}

@@ -141,6 +141,61 @@ mysqli_close($con);
 ?>
 			</p>
 			</div>
+
+<?php
+$noms = [
+	'addsous' => 'Addition et soustraction',
+	'compl' => 'Compléments',
+	'multidiv' => 'Multiplication et division',
+	'division' => 'Division avec reste',
+	'prio' => 'Priorité des opérations',
+	'relatifs' => 'Nombres relatifs',
+	'trous' => 'Calculs à trous',
+	'decimaux' => 'Nombres décimaux',
+	'doublemoitie' => 'Double et moitié',
+];
+
+include '../mysql_login.php';
+$con2 = mysqli_connect($DATABASE_HOST, $DATABASE_USER, $DATABASE_PASS, $DATABASE_NAME);
+$stmt = $con2->prepare("SELECT timestamp, exercice, reussis, nbcalculs, temps FROM scores WHERE userid = ? ORDER BY timestamp DESC LIMIT 50");
+$stmt->bind_param('i', $id);
+$stmt->execute();
+$historique = $stmt->get_result();
+$stmt->close();
+if ($historique && mysqli_num_rows($historique) > 0) {
+?>
+			<h2><i class="fa-solid fa-clock-rotate-left"></i> Historique des sessions</h2>
+			<div style="overflow-x:auto">
+				<table style="width:100%;border-collapse:collapse">
+					<tr style="border-bottom:1px solid #e0e0e3;color:#3274d6">
+						<th style="text-align:left;padding:8px 10px">Date</th>
+						<th style="text-align:left;padding:8px 10px">Exercice</th>
+						<th style="text-align:center;padding:8px 10px">Réussis</th>
+						<th style="text-align:center;padding:8px 10px">Durée</th>
+					</tr>
+<?php
+	while ($row = mysqli_fetch_assoc($historique)) {
+		$nom = $noms[$row['exercice']] ?? $row['exercice'];
+		$dt = new DateTime($row['timestamp']);
+		$date_str = $dt->format('d.m.Y H:i');
+		$m = floor($row['temps'] / 60);
+		$s = $row['temps'] % 60;
+		$duree_str = ($m > 0 ? $m.'min ' : '').str_pad($s, 2, '0', STR_PAD_LEFT).'s';
+		echo "\t\t\t\t\t<tr style='border-bottom:1px solid #f0f0f3'>\n";
+		echo "\t\t\t\t\t\t<td style='padding:8px 10px;font-size:14px;color:#888'>".$date_str."</td>\n";
+		echo "\t\t\t\t\t\t<td style='padding:8px 10px'>".$nom."</td>\n";
+		echo "\t\t\t\t\t\t<td style='padding:8px 10px;text-align:center'>".$row['reussis']."&nbsp;/&nbsp;".$row['nbcalculs']."</td>\n";
+		echo "\t\t\t\t\t\t<td style='padding:8px 10px;text-align:center'>".$duree_str."</td>\n";
+		echo "\t\t\t\t\t</tr>\n";
+	}
+	mysqli_free_result($historique);
+?>
+				</table>
+			</div>
+<?php
+}
+mysqli_close($con2);
+?>
 		</div>
 	</body>
 </html>
